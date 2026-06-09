@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+  --off-white: #f7f6f2;
+  --charcoal: #333331;
+  --border: #d8d7d2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-off-white: var(--off-white);
+  --color-charcoal: var(--charcoal);
+  --color-border: var(--border);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-cormorant);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+button,
+a,
+input,
+select {
+  border-radius: 0;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #111111;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: #111111;
+  color: #ffffff;
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 55%) 50%, transparent 80%);
+  transform: translateX(-100%);
+  animation: editorial-shimmer 1.7s ease-in-out infinite;
+}
+
+@keyframes editorial-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.page-shell {
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+}
+
+.eyebrow {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.nav-link {
+  display: inline-block;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.2rem;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.mobile-nav-link {
+  display: block;
+  border-bottom: 1px solid var(--border);
+  padding-block: 1rem;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 1.875rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 40rem) {
+  .page-shell {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .page-shell {
+    padding-inline: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .skeleton-shimmer::after {
+    display: none;
+  }
+}
