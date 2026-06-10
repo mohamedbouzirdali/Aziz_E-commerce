@@ -140,13 +140,56 @@ select:focus-visible {
 .mobile-nav-link {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  min-height: 3.25rem;
   width: 100%;
   border-bottom: 1px solid var(--border);
-  padding-block: 1rem;
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-size: 1.875rem;
-  line-height: 1.1;
+  padding-inline: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
   color: #111111;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:focus-visible {
+  background: var(--off-white);
+  padding-inline: 0.75rem;
+}
+
+.mobile-subnav-link {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding-inline: 1rem;
+  border-bottom: 1px solid rgb(216 215 210 / 70%);
+  color: #111111;
+  font-size: 0.8125rem;
+}
+
+.mobile-subnav-link:hover,
+.mobile-subnav-link:focus-visible {
+  background: #ffffff;
+}
+
+.mobile-nav-action {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  padding-inline: 0.75rem;
+  color: #111111;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.mobile-nav-action:hover,
+.mobile-nav-action:focus-visible {
+  border-color: #111111;
+  background: #111111;
+  color: #ffffff;
 }
 
 @media (min-width: 40rem) {
