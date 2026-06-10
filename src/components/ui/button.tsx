@@ -13,9 +13,9 @@ type ButtonProps = {
 
 const styles = {
   primary:
-    "border-black bg-black text-white before:absolute before:inset-0 before:origin-right before:scale-x-0 before:bg-charcoal before:transition-transform before:duration-500 hover:before:origin-left hover:before:scale-x-100",
+    "border-black bg-black text-white before:absolute before:inset-0 before:origin-right before:scale-x-0 before:bg-charcoal before:transition-transform before:duration-500 hover:border-charcoal hover:before:origin-left hover:before:scale-x-100",
   secondary:
-    "border-black bg-transparent text-black before:absolute before:inset-0 before:origin-right before:scale-x-0 before:bg-black before:transition-transform before:duration-500 hover:text-white hover:before:origin-left hover:before:scale-x-100",
+    "border-black bg-white text-black before:absolute before:inset-0 before:origin-right before:scale-x-0 before:bg-black before:transition-transform before:duration-500 hover:text-white hover:before:origin-left hover:before:scale-x-100",
   text:
     "link-underline border-transparent bg-transparent px-0 text-black",
   ghost:
@@ -33,7 +33,7 @@ export function Button({
   disabled,
   ...props
 }: ButtonProps) {
-  const classes = `relative inline-flex min-h-11 items-center justify-center overflow-hidden border px-6 text-xs font-semibold uppercase tracking-[0.16em] transition-colors duration-500 disabled:cursor-not-allowed disabled:opacity-40 ${styles[variant]} ${className}`;
+  const classes = `relative inline-flex min-h-11 cursor-pointer items-center justify-center overflow-hidden border px-6 text-xs font-semibold uppercase tracking-[0.16em] transition-colors duration-500 disabled:cursor-not-allowed disabled:opacity-40 ${styles[variant]} ${className}`;
   const content = loading ? (
     <ButtonLoadingState label={loadingLabel} />
   ) : (

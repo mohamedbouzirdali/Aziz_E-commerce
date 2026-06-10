@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
 const edits = [
@@ -70,29 +70,6 @@ export function CuratedEditsSlider() {
     setActiveIndex(closest.index);
   };
 
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return undefined;
-
-    const handleWheel = (event: WheelEvent) => {
-      const horizontalIntent = Math.abs(event.deltaX) > Math.abs(event.deltaY);
-      if (!horizontalIntent) return;
-
-      const canScrollLeft = track.scrollLeft > 0;
-      const canScrollRight =
-        track.scrollLeft < track.scrollWidth - track.clientWidth - 1;
-      const movingTowardContent =
-        (event.deltaX < 0 && canScrollLeft) || (event.deltaX > 0 && canScrollRight);
-
-      if (!movingTowardContent) return;
-      event.preventDefault();
-      track.scrollLeft += event.deltaX;
-    };
-
-    track.addEventListener("wheel", handleWheel, { passive: false });
-    return () => track.removeEventListener("wheel", handleWheel);
-  }, []);
-
   return (
     <section id="curated-edits" className="overflow-hidden border-y border-border bg-black py-14 text-white lg:py-24">
       <div className="page-shell">
@@ -112,7 +89,7 @@ export function CuratedEditsSlider() {
       <div
         ref={trackRef}
         onScroll={updateActiveCard}
-        className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[max(1.25rem,calc((100vw-80rem)/2+3rem))] pb-5 [overscroll-behavior-x:contain] [overscroll-behavior-y:auto] [scrollbar-width:none] [touch-action:pan-x_pan-y_pinch-zoom] sm:gap-6 [&::-webkit-scrollbar]:hidden"
+        className="mt-10 flex snap-x snap-proximity gap-4 overflow-x-auto overflow-y-hidden scroll-smooth px-[max(1.25rem,calc((100vw-80rem)/2+3rem))] pb-5 [overscroll-behavior-x:contain] [overscroll-behavior-y:auto] [scrollbar-width:none] [touch-action:pan-x_pan-y] sm:gap-6 [&::-webkit-scrollbar]:hidden"
       >
         {edits.map((edit, index) => (
           <motion.article

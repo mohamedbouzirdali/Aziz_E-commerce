@@ -44,6 +44,18 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+button:not(:disabled),
+a[href],
+select,
+summary,
+[role="button"] {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
@@ -126,12 +138,15 @@ select:focus-visible {
 }
 
 .mobile-nav-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  width: 100%;
   border-bottom: 1px solid var(--border);
   padding-block: 1rem;
   font-family: var(--font-cormorant), Georgia, serif;
   font-size: 1.875rem;
   line-height: 1.1;
+  color: #111111;
 }
 
 @media (min-width: 40rem) {

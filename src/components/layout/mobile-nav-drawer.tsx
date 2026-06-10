@@ -3,12 +3,13 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useCallback, useState } from "react";
-import { categories } from "@/data";
+import { categories, collections } from "@/data";
 import { useDialog } from "@/lib/use-dialog";
 import { useCommerce } from "@/components/providers/commerce-provider";
 
 export function MobileNavDrawer() {
   const [open, setOpen] = useState(false);
+  const [panel, setPanel] = useState<"main" | "shop">("main");
   const reduceMotion = useReducedMotion();
   const { cartCount, wishlistCount, setCartOpen } = useCommerce();
 
@@ -21,7 +22,10 @@ export function MobileNavDrawer() {
         ref={dialog.triggerRef}
         type="button"
         className="flex min-h-11 min-w-11 items-center gap-2 text-[10px] uppercase tracking-[0.14em] lg:hidden"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setPanel("main");
+          setOpen(true);
+        }}
         aria-expanded={open}
         aria-controls="mobile-navigation"
       >
@@ -59,27 +63,96 @@ export function MobileNavDrawer() {
                   ×
                 </button>
               </div>
-              <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5">
-                <div className="space-y-1">
-                  <Link className="mobile-nav-link" href="/shop?sort=newest" onClick={close}>New in</Link>
-                  <Link className="mobile-nav-link" href="/shop" onClick={close}>Shop all</Link>
-                  <Link className="mobile-nav-link" href="/boxes" onClick={close}>Boxes</Link>
-                  <Link className="mobile-nav-link" href="/shop?bestseller=true" onClick={close}>Best sellers</Link>
-                </div>
-                <p className="eyebrow mt-10">Categories</p>
-                <div className="mt-4 grid grid-cols-2 gap-x-4">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.id}
-                      className="border-b border-border py-3 text-sm"
-                      href={`/shop?category=${category.slug}`}
-                      onClick={close}
+              <div className="relative min-h-0 flex-1 overflow-hidden">
+                <AnimatePresence initial={false} mode="wait">
+                  {panel === "main" ? (
+                    <motion.nav
+                      key="main-menu"
+                      aria-label="Main mobile navigation"
+                      className="absolute inset-0 overflow-y-auto overscroll-contain px-5 py-4"
+                      initial={reduceMotion ? false : { x: "-16%", opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={reduceMotion ? undefined : { x: "-16%", opacity: 0 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.22 }}
                     >
-                      {category.name}
-                    </Link>
-                  ))}
-                </div>
-              </nav>
+                      <div className="border-t border-border">
+                        <Link className="mobile-nav-link" href="/shop?sort=newest" onClick={close}>
+                          New in
+                        </Link>
+                        <button
+                          type="button"
+                          className="mobile-nav-link flex w-full items-center justify-between text-left"
+                          onClick={() => setPanel("shop")}
+                          aria-label="Open Shop menu"
+                        >
+                          <span>Shop</span>
+                          <span className="text-xl" aria-hidden>→</span>
+                        </button>
+                        <Link className="mobile-nav-link" href="/boxes" onClick={close}>
+                          Boxes
+                        </Link>
+                        <Link className="mobile-nav-link" href="/shop?availability=best-seller" onClick={close}>
+                          Best sellers
+                        </Link>
+                      </div>
+                      <p className="mt-10 max-w-xs text-xs leading-5 text-charcoal/65">
+                        Contemporary womenswear, considered boxes, and seasonal edits.
+                      </p>
+                    </motion.nav>
+                  ) : (
+                    <motion.nav
+                      key="shop-menu"
+                      aria-label="Shop mobile navigation"
+                      className="absolute inset-0 overflow-y-auto overscroll-contain px-5 py-4"
+                      initial={reduceMotion ? false : { x: "16%", opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={reduceMotion ? undefined : { x: "16%", opacity: 0 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.22 }}
+                    >
+                      <button
+                        type="button"
+                        className="flex min-h-11 items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.16em]"
+                        onClick={() => setPanel("main")}
+                      >
+                        <span aria-hidden>←</span>
+                        Back
+                      </button>
+                      <div className="mt-3 border-t border-border">
+                        <Link className="mobile-nav-link" href="/shop" onClick={close}>
+                          All products
+                        </Link>
+                      </div>
+                      <p className="eyebrow mt-8 text-charcoal/60">Shop by category</p>
+                      <div className="mt-3">
+                        {categories.map((category) => (
+                          <Link
+                            key={category.id}
+                            className="flex min-h-12 items-center justify-between border-b border-border text-base"
+                            href={`/shop?category=${category.slug}`}
+                            onClick={close}
+                          >
+                            {category.name}
+                            <span aria-hidden>→</span>
+                          </Link>
+                        ))}
+                      </div>
+                      <p className="eyebrow mt-8 text-charcoal/60">Collections</p>
+                      <div className="mt-3 pb-5">
+                        {collections.map((collection) => (
+                          <Link
+                            key={collection.id}
+                            className="flex min-h-12 items-center border-b border-border text-sm"
+                            href={`/shop?collection=${collection.slug}`}
+                            onClick={close}
+                          >
+                            {collection.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.nav>
+                  )}
+                </AnimatePresence>
+              </div>
               <div className="grid shrink-0 grid-cols-2 border-t border-border pb-[env(safe-area-inset-bottom)] text-[10px] uppercase tracking-[0.12em]">
                 <Link className="border-b border-r border-border p-4" href="/account" onClick={close}>Account</Link>
                 <Link className="border-b border-border p-4" href="/wishlist" onClick={close}>Wishlist ({wishlistCount})</Link>

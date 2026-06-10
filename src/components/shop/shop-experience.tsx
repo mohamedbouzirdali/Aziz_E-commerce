@@ -28,7 +28,7 @@ const sortOptions = [
   ["price-high", "Price High–Low"],
 ] as const;
 
-const productsPerPage = 4;
+const productsPerPage = 20;
 
 function values(params: URLSearchParams, key: string) {
   return params.get(key)?.split(",").filter(Boolean) ?? [];
@@ -177,7 +177,7 @@ export function ShopExperience() {
             ref={filterDialog.triggerRef}
             type="button"
             onClick={() => setDrawerOpen(true)}
-            className="group inline-flex min-h-10 shrink-0 items-center gap-2 border border-black bg-white px-3 text-[10px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white min-[390px]:gap-3 min-[390px]:px-4 min-[390px]:text-xs min-[390px]:tracking-[0.14em]"
+            className="group inline-flex min-h-10 shrink-0 items-center gap-2 border border-black bg-white px-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-black transition-colors hover:bg-black hover:text-white min-[390px]:gap-3 min-[390px]:px-4 min-[390px]:text-xs min-[390px]:tracking-[0.14em]"
           >
             <span aria-hidden className="flex w-4 flex-col gap-[3px]">
               <span className="h-px w-full bg-current" />
@@ -213,7 +213,7 @@ export function ShopExperience() {
                 key={`${filter.key}-${filter.value}`}
                 type="button"
                 onClick={() => removeFilter(filter.key, filter.value)}
-                className="border border-border bg-off-white px-3 py-2 text-[10px] uppercase tracking-[0.12em]"
+                className="border border-border bg-off-white px-3 py-2 text-[10px] uppercase tracking-[0.12em] text-black transition-colors hover:border-black hover:bg-black hover:text-white"
               >
                 {filter.key === "priceMin" ? `From ${filter.value} TND` : filter.key === "priceMax" ? `To ${filter.value} TND` : filter.value.replaceAll("-", " ")} ×
               </button>
@@ -258,7 +258,7 @@ export function ShopExperience() {
                 className={`size-11 border text-xs transition-colors ${
                   page === currentPage
                     ? "border-black bg-black text-white"
-                    : "border-border hover:border-black"
+                    : "border-border bg-white text-black hover:border-black hover:bg-black hover:text-white"
                 }`}
               >
                 {page}
