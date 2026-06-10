@@ -137,59 +137,58 @@ select:focus-visible {
   transform-origin: left;
 }
 
-.mobile-nav-link {
+.mobile-sidebar-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 3.25rem;
+  min-height: 2.875rem;
   width: 100%;
-  border-bottom: 1px solid var(--border);
-  padding-inline: 0.25rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  padding-inline: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   line-height: 1.25;
-  text-transform: uppercase;
   color: #111111;
+  text-align: left;
+  transition: color 180ms ease, transform 180ms ease;
 }
 
-.mobile-nav-link:hover,
-.mobile-nav-link:focus-visible {
-  background: var(--off-white);
-  padding-inline: 0.75rem;
+.mobile-sidebar-link:hover,
+.mobile-sidebar-link:focus-visible {
+  color: #666660;
+  transform: translateX(0.2rem);
 }
 
-.mobile-subnav-link {
+.mobile-sidebar-subLink {
   display: flex;
-  min-height: 2.75rem;
+  min-height: 2.25rem;
   align-items: center;
-  padding-inline: 1rem;
-  border-bottom: 1px solid rgb(216 215 210 / 70%);
   color: #111111;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
+  transition: color 180ms ease, transform 180ms ease;
 }
 
-.mobile-subnav-link:hover,
-.mobile-subnav-link:focus-visible {
-  background: #ffffff;
+.mobile-sidebar-subLink:hover,
+.mobile-sidebar-subLink:focus-visible {
+  color: #666660;
+  transform: translateX(0.2rem);
 }
 
-.mobile-nav-action {
+.mobile-sidebar-utility {
   display: flex;
-  min-height: 2.75rem;
+  min-height: 2.25rem;
+  width: 100%;
   align-items: center;
-  border: 1px solid var(--border);
-  background: #ffffff;
-  padding-inline: 0.75rem;
+  justify-content: space-between;
   color: #111111;
-  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+  font-size: 0.75rem;
+  text-align: left;
+  transition: color 180ms ease;
 }
 
-.mobile-nav-action:hover,
-.mobile-nav-action:focus-visible {
-  border-color: #111111;
-  background: #111111;
-  color: #ffffff;
+.mobile-sidebar-utility:hover,
+.mobile-sidebar-utility:focus-visible {
+  color: #666660;
 }
 
 @media (min-width: 40rem) {
