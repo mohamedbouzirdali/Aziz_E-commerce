@@ -6,32 +6,40 @@ import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
 const rhythms = [
   {
-    eyebrow: "01 · Everyday",
-    title: "Move with ease",
-    description: "Fluid foundations and soft structure for days with no fixed pace.",
+    number: "01",
+    moment: "Everyday",
+    title: "Ease, uninterrupted.",
+    description: "Fluid foundations for mornings in motion and plans that unfold slowly.",
     label: "Everyday movement edit",
     href: "/shop?collection=everyday-edit",
+    cta: "Explore everyday",
   },
   {
-    eyebrow: "02 · Work",
-    title: "Hold your line",
-    description: "Relaxed tailoring that stays composed from first meeting to last.",
+    number: "02",
+    moment: "In focus",
+    title: "Soft structure. Clear intent.",
+    description: "Relaxed tailoring that remains composed without ever feeling rigid.",
     label: "Modern workwear edit",
     href: "/shop?category=tailoring",
+    cta: "Explore tailoring",
   },
   {
-    eyebrow: "03 · After dark",
-    title: "Shift the mood",
-    description: "Clean silhouettes with enough expression for the hours after sunset.",
+    number: "03",
+    moment: "After hours",
+    title: "A quieter statement.",
+    description: "Clean silhouettes, fluid lines, and subtle expression for evenings ahead.",
     label: "Evening movement edit",
     href: "/shop?collection=after-dark",
+    cta: "Explore evening",
   },
   {
-    eyebrow: "04 · Together",
-    title: "Complete the set",
-    description: "Considered capsules assembled to work as one complete wardrobe idea.",
+    number: "04",
+    moment: "Curated together",
+    title: "One complete direction.",
+    description: "Considered capsules assembled to make getting dressed feel effortless.",
     label: "Curated capsule box",
     href: "/boxes",
+    cta: "Explore capsules",
   },
 ];
 
@@ -39,46 +47,68 @@ export function ShopByRhythm() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="border-y border-border bg-white py-14 lg:py-24">
+    <section className="overflow-hidden border-y border-border bg-off-white py-16 lg:py-28">
       <div className="page-shell">
-        <div className="grid gap-5 border-b border-border pb-8 sm:grid-cols-[1fr_auto] sm:items-end">
-          <div>
-            <p className="eyebrow">Shop by rhythm</p>
-            <h2 className="mt-3 max-w-2xl font-serif text-4xl leading-[0.95] min-[390px]:text-5xl sm:text-6xl">
-              Designed around
+        <div className="grid gap-8 border-b border-black/15 pb-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-end lg:pb-14">
+          <div className="max-w-sm">
+            <p className="eyebrow">Shop by rhythm · The ÉLAN edit</p>
+            <p className="mt-5 text-sm leading-7 text-charcoal/75">
+              From first movement to evening plans, each edit is composed around how a day feels, not only how it looks.
+            </p>
+          </div>
+          <div className="lg:justify-self-end">
+            <h2 className="max-w-3xl font-serif text-[clamp(3rem,7vw,6.5rem)] leading-[0.82] tracking-[-0.035em]">
+              A wardrobe
               <br />
-              <span className="italic">the way you live.</span>
+              <span className="italic">in motion.</span>
             </h2>
           </div>
-          <p className="max-w-xs text-sm leading-6 text-charcoal sm:text-right">
-            Start with the moment, then build the wardrobe around it.
-          </p>
         </div>
       </div>
 
-      <div className="mt-8 flex snap-x snap-proximity gap-4 overflow-x-auto px-[max(1.25rem,calc((100vw-80rem)/2+3rem))] pb-4 [scrollbar-width:none] sm:gap-5 [&::-webkit-scrollbar]:hidden">
+      <div className="mt-10 flex snap-x snap-proximity gap-4 overflow-x-auto px-[max(1.25rem,calc((100vw-80rem)/2+3rem))] pb-4 [scrollbar-width:none] sm:gap-5 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:overflow-visible lg:px-12 lg:pb-0 [&::-webkit-scrollbar]:hidden">
         {rhythms.map((rhythm, index) => (
           <motion.article
             key={rhythm.title}
-            className="w-[76vw] max-w-[330px] shrink-0 snap-start sm:w-[42vw] lg:w-[24vw]"
+            className="w-[82vw] max-w-[390px] shrink-0 snap-start sm:w-[46vw] lg:w-auto lg:max-w-none"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px -40px" }}
             transition={{ duration: reduceMotion ? 0 : 0.55, delay: index * 0.05 }}
           >
-            <Link href={rhythm.href} className="group block">
-              <ImagePlaceholder label={rhythm.label} ratio="portrait" hoverZoom />
-              <div className="border-b border-border py-4">
-                <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-charcoal/50">
-                  {rhythm.eyebrow}
+            <Link
+              href={rhythm.href}
+              className="group grid h-full border border-black/15 bg-white p-2 transition-colors duration-300 hover:border-black sm:p-3 lg:grid-cols-[1.05fr_0.95fr]"
+            >
+              <div className="relative">
+                <ImagePlaceholder
+                  label={rhythm.label}
+                  ratio="portrait"
+                  className="h-full min-h-[340px] lg:min-h-[430px]"
+                  hoverZoom
+                />
+                <span className="absolute left-4 top-4 flex size-10 items-center justify-center border border-black/15 bg-white/90 text-[10px] font-semibold tracking-[0.12em]">
+                  {rhythm.number}
+                </span>
+              </div>
+              <div className="flex min-h-[250px] flex-col px-3 pb-4 pt-5 sm:px-4 lg:min-h-0 lg:px-6 lg:py-7">
+                <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-charcoal/50">
+                  {rhythm.moment}
                 </p>
-                <div className="mt-2 flex items-center justify-between gap-4">
-                  <h3 className="font-serif text-2xl">{rhythm.title}</h3>
-                  <span className="transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden>
+                <div className="mt-5">
+                  <h3 className="max-w-xs font-serif text-3xl leading-[0.95] sm:text-4xl">
+                    {rhythm.title}
+                  </h3>
+                  <p className="mt-5 max-w-xs text-xs leading-6 text-charcoal/70">
+                    {rhythm.description}
+                  </p>
+                </div>
+                <div className="mt-auto flex items-center justify-between border-t border-border pt-4 text-[9px] font-semibold uppercase tracking-[0.15em]">
+                  <span>{rhythm.cta}</span>
+                  <span className="text-base transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden>
                     →
                   </span>
                 </div>
-                <p className="mt-2 text-xs leading-5 text-charcoal/65">{rhythm.description}</p>
               </div>
             </Link>
           </motion.article>
