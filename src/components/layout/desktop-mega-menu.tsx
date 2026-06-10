@@ -62,7 +62,16 @@ export function DesktopMegaMenu() {
             : "pointer-events-none -translate-y-1 opacity-0"
         }`}
       >
-        <div className="mx-auto grid max-w-7xl grid-cols-3 gap-16 px-12 py-10">
+        <div className="mx-auto grid max-w-7xl grid-cols-[0.75fr_1fr_0.8fr_1fr] gap-12 px-12 py-10">
+          <div>
+            <p className="eyebrow">Featured</p>
+            <ul className="mt-5 space-y-3">
+              <li><Link className="nav-link font-medium" href="/shop?sort=newest" onClick={close}>New arrivals</Link></li>
+              <li><Link className="nav-link font-medium" href="/shop?availability=best-seller" onClick={close}>Best sellers</Link></li>
+              <li><Link className="nav-link" href="/shop?collection=everyday-edit" onClick={close}>Everyday edit</Link></li>
+              <li><Link className="nav-link" href="/boxes" onClick={close}>Matching capsules</Link></li>
+            </ul>
+          </div>
           <div>
             <p className="eyebrow">Shop by category</p>
             <ul className="mt-5 grid grid-cols-2 gap-x-8 gap-y-3">
@@ -90,11 +99,11 @@ export function DesktopMegaMenu() {
               ))}
             </ul>
           </div>
-          <div className="bg-off-white p-6">
-            <p className="eyebrow">Curated together</p>
-            <h3 className="mt-3 font-serif text-3xl">The Box Edit</h3>
+          <div className="border border-border bg-off-white p-6">
+            <p className="eyebrow">Build the wardrobe</p>
+            <h3 className="mt-3 font-serif text-3xl">The Capsule Edit</h3>
             <p className="mt-3 text-sm leading-6 text-charcoal">
-              Complete capsules with considered savings and individual size selection.
+              Complete looks with individual size selection and considered savings.
             </p>
             <Link className="mt-6 inline-block text-xs font-semibold uppercase tracking-[0.16em] underline" href="/boxes" onClick={close}>
               Explore boxes

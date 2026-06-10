@@ -28,7 +28,7 @@ export function Footer() {
         <div className="lg:col-span-2">
           <Link href="/" className="font-serif text-2xl tracking-[0.2em]">ÉLAN</Link>
           <p className="mt-5 max-w-sm text-sm leading-6 text-charcoal">
-            Contemporary womenswear shaped by quiet confidence, useful details, and considered form.
+            Premium womenswear shaped around movement, quiet confidence, and considered form.
           </p>
           <p className="mt-8 text-xs text-charcoal/60">Tunis, Tunisia · Prices in TND</p>
         </div>

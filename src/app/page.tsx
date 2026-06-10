@@ -7,6 +7,7 @@ import { CuratedEditsSlider } from "@/components/sections/curated-edits-slider";
 import { EditorialHero } from "@/components/sections/editorial-hero";
 import { NewsletterBlock } from "@/components/sections/newsletter-block";
 import { ServiceStrip } from "@/components/sections/service-strip";
+import { ShopByRhythm } from "@/components/sections/shop-by-rhythm";
 import { Button } from "@/components/ui/button";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { boxes, categories, products } from "@/data";
@@ -27,8 +28,9 @@ export default function HomePage() {
   return (
     <>
       <EditorialHero />
+      <ShopByRhythm />
 
-      <section className="page-shell py-16 lg:py-32">
+      <section className="page-shell py-16 lg:py-28">
         <Reveal className="mb-12 grid gap-6 sm:grid-cols-[1fr_auto] sm:items-end lg:mb-16">
           <div>
             <p className="eyebrow">Find your direction</p>
@@ -71,6 +73,30 @@ export default function HomePage() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="page-shell py-16 lg:py-28">
+        <Reveal className="mb-10 flex flex-col items-start gap-5 min-[390px]:flex-row min-[390px]:items-end min-[390px]:justify-between lg:mb-14">
+          <div>
+            <p className="eyebrow">Most considered</p>
+            <h2 className="mt-3 font-serif text-4xl leading-none min-[390px]:text-5xl sm:text-6xl">
+              Best sellers
+            </h2>
+          </div>
+          <div className="max-w-sm min-[390px]:text-right">
+            <p className="text-sm leading-6 text-charcoal">
+              A focused selection chosen for proportion, versatility, and repeat wear.
+            </p>
+            <Button href="/shop?availability=best-seller" variant="text" className="mt-4">
+              Shop best sellers
+            </Button>
+          </div>
+        </Reveal>
+        <div className="grid grid-cols-1 gap-y-12 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-3 lg:gap-x-6">
+          {products.filter((product) => product.isBestSeller).map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </section>
 

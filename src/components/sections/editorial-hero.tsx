@@ -37,7 +37,7 @@ export function EditorialHero() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
             }}
           >
-            New collection · Study 01
+            New collection · Made to move
           </motion.p>
           <motion.h1
             className="mt-5 font-serif text-[clamp(3.25rem,8vw,7.5rem)] leading-[0.82] tracking-[-0.04em]"
@@ -46,9 +46,9 @@ export function EditorialHero() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.85, ease: premiumEase } },
             }}
           >
-            Form,
+            Ease,
             <br />
-            <span className="italic">softened.</span>
+            <span className="italic">in motion.</span>
           </motion.h1>
           <motion.p
             className="mt-7 max-w-xl text-sm leading-7 text-charcoal sm:text-base"
@@ -57,7 +57,7 @@ export function EditorialHero() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.65 } },
             }}
           >
-            Contemporary pieces composed around movement, proportion, and the quiet confidence of less.
+            Premium everyday pieces designed around movement, clean proportion, and quiet confidence.
           </motion.p>
         </motion.div>
       </div>

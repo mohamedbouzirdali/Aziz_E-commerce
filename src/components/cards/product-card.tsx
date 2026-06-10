@@ -19,6 +19,7 @@ export function ProductCard({ product }: { product: Product }) {
   const saved = isWishlisted(product.id);
   const previewColor =
     product.colors.find((color) => color.id === previewColorId) ?? product.colors[0];
+  const categoryLabel = product.category.replaceAll("-", " ");
 
   return (
     <>
@@ -80,12 +81,15 @@ export function ProductCard({ product }: { product: Product }) {
             <h3 className="text-sm font-medium">
               <Link href={`/product/${product.slug}`} className="link-underline">{product.name}</Link>
             </h3>
-            <p className="mt-1.5 text-[10px] uppercase tracking-[0.12em] text-charcoal/55">
-              {product.category} · {product.colors.length} colors
+            <p className="mt-1.5 text-[10px] capitalize tracking-[0.04em] text-charcoal/55">
+              {categoryLabel} · {previewColor.name}
             </p>
           </div>
           <p className="shrink-0 text-xs font-medium">{formatTnd(product.priceTnd)}</p>
         </div>
+        <p className="line-clamp-2 min-h-10 text-xs leading-5 text-charcoal/65">
+          {product.description}
+        </p>
         <div className="mt-3 flex items-center gap-2">
           {product.colors.map((color) => (
             <button
@@ -101,6 +105,9 @@ export function ProductCard({ product }: { product: Product }) {
               <span className="block size-full" style={{ backgroundColor: color.hex }} />
             </button>
           ))}
+          <span className="text-[9px] uppercase tracking-[0.1em] text-charcoal/45">
+            {product.colors.length} {product.colors.length === 1 ? "colour" : "colours"}
+          </span>
           <button
             type="button"
             onClick={(event) => {
