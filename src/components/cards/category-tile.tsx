@@ -21,6 +21,8 @@ export function CategoryTile({ category }: { category: Category }) {
           label={category.placeholderImageLabel}
           ratio="portrait"
           hoverZoom
+          src={category.imageUrl}
+          alt={category.placeholderImageLabel}
         />
         <div className="flex min-h-[112px] items-end justify-between gap-4 border-b border-border py-4 transition-[padding] duration-300 group-hover:px-2">
           <div>

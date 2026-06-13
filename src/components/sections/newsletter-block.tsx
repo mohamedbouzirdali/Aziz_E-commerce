@@ -3,7 +3,15 @@
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 
-export function NewsletterBlock() {
+export function NewsletterBlock({
+  eyebrow = "Private list",
+  heading = "New pieces, considered edits, and quiet invitations.",
+  body,
+}: {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+}) {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
@@ -17,10 +25,15 @@ export function NewsletterBlock() {
     <section className="bg-black px-4 py-14 text-white min-[390px]:px-5 min-[390px]:py-16 sm:px-8 lg:px-12 lg:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-end">
         <div>
-          <p className="eyebrow text-white/60">Private list</p>
+          <p className="eyebrow text-white/60">{eyebrow}</p>
           <h2 className="mt-4 max-w-xl font-serif text-3xl leading-tight min-[390px]:text-4xl sm:text-5xl">
-            New pieces, considered edits, and quiet invitations.
+            {heading}
           </h2>
+          {body && (
+            <p className="mt-5 max-w-xl text-sm leading-7 text-white/60">
+              {body}
+            </p>
+          )}
         </div>
         <form className="flex flex-col gap-3 sm:flex-row" onSubmit={submit} aria-busy={status === "loading"}>
           <label htmlFor="newsletter-email" className="sr-only">Email address</label>

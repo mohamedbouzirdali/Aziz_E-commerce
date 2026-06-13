@@ -5,7 +5,16 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
-const edits = [
+export type CuratedEditItem = {
+  title: string;
+  text: string;
+  label: string;
+  href: string;
+  cta?: string;
+  imageUrl?: string;
+};
+
+const edits: CuratedEditItem[] = [
   {
     title: "Weekend Edit",
     text: "Soft layers and easy proportions for unhurried days.",
@@ -38,7 +47,17 @@ const edits = [
   },
 ];
 
-export function CuratedEditsSlider() {
+export function CuratedEditsSlider({
+  eyebrow = "For every moment",
+  heading = "Dress with intention.",
+  body = "Glide left or right to explore considered edits for work, travel, evenings, and unhurried weekends.",
+  items = edits,
+}: {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  items?: CuratedEditItem[];
+}) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const reduceMotion = useReducedMotion();
@@ -46,7 +65,7 @@ export function CuratedEditsSlider() {
   const scrollTo = (index: number) => {
     const track = trackRef.current;
     if (!track) return;
-    const nextIndex = Math.max(0, Math.min(edits.length - 1, index));
+    const nextIndex = Math.max(0, Math.min(items.length - 1, index));
     const card = track.children[nextIndex] as HTMLElement | undefined;
     card?.scrollIntoView({
       behavior: reduceMotion ? "auto" : "smooth",
@@ -75,12 +94,12 @@ export function CuratedEditsSlider() {
       <div className="page-shell">
         <div>
           <div className="max-w-xl">
-            <p className="eyebrow text-white/55">For every moment</p>
+            <p className="eyebrow text-white/55">{eyebrow}</p>
             <h2 className="mt-4 font-serif text-4xl leading-none min-[390px]:text-5xl sm:text-6xl">
-              Dress with intention.
+              {heading}
             </h2>
             <p className="mt-5 max-w-md text-sm leading-6 text-white/60">
-              Glide left or right to explore considered edits for work, travel, evenings, and unhurried weekends.
+              {body}
             </p>
           </div>
         </div>
@@ -91,7 +110,7 @@ export function CuratedEditsSlider() {
         onScroll={updateActiveCard}
         className="mt-10 flex snap-x snap-proximity gap-4 overflow-x-auto overflow-y-hidden scroll-smooth px-[max(1.25rem,calc((100vw-80rem)/2+3rem))] pb-5 [overscroll-behavior-x:contain] [overscroll-behavior-y:auto] [scrollbar-width:none] [touch-action:pan-x_pan-y] sm:gap-6 [&::-webkit-scrollbar]:hidden"
       >
-        {edits.map((edit, index) => (
+        {items.map((edit, index) => (
           <motion.article
             key={edit.title}
             className={`group w-[86vw] max-w-[390px] shrink-0 snap-start transition-opacity duration-500 min-[390px]:w-[78vw] sm:w-[44vw] lg:w-[31vw] ${
@@ -104,7 +123,13 @@ export function CuratedEditsSlider() {
             whileHover={reduceMotion ? undefined : { y: -5 }}
           >
             <Link href={edit.href} className="flex h-full flex-col">
-              <ImagePlaceholder label={edit.label} ratio="portrait" hoverZoom />
+              <ImagePlaceholder
+                label={edit.label}
+                ratio="portrait"
+                hoverZoom
+                src={edit.imageUrl}
+                alt={edit.label}
+              />
               <div className="flex min-h-[220px] flex-1 flex-col border-b border-white/25 py-5">
                 <div className="flex items-start justify-between gap-5">
                   <div>
@@ -116,7 +141,7 @@ export function CuratedEditsSlider() {
                 </div>
                 <p className="mt-3 max-w-xs text-sm leading-6 text-white/65">{edit.text}</p>
                 <span className="link-underline mt-auto inline-block self-start pt-5 text-[10px] font-semibold uppercase tracking-[0.16em]">
-                  Explore edit
+                  {edit.cta ?? "Explore edit"}
                 </span>
               </div>
             </Link>
@@ -128,8 +153,8 @@ export function CuratedEditsSlider() {
         <p className="text-[9px] uppercase tracking-[0.18em] text-white/40">
           Swipe or use two fingers to explore
         </p>
-        <div className="ml-auto flex gap-1.5" aria-label={`Edit ${activeIndex + 1} of ${edits.length}`}>
-          {edits.map((edit, index) => (
+        <div className="ml-auto flex gap-1.5" aria-label={`Edit ${activeIndex + 1} of ${items.length}`}>
+          {items.map((edit, index) => (
             <button
               key={edit.title}
               type="button"

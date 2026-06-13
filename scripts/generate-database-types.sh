@@ -62,8 +62,11 @@ returns uuid
 language sql
 stable
 as $$
-  select null::uuid;
+  select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid;
 $$;
+
+grant usage on schema auth to anon, authenticated;
+grant execute on function auth.uid() to anon, authenticated;
 
 create table storage.buckets (
   id text primary key,

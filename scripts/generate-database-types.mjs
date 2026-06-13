@@ -146,6 +146,8 @@ function mapScalarType(typeName, schemaName) {
     case "json":
     case "jsonb":
       return "Json";
+    case "void":
+      return "undefined";
     case "bytea":
       return "string";
     default:

@@ -52,7 +52,8 @@ Priority order:
 - Framer Motion
 - Supabase Postgres, Auth, Storage, and SSR clients
 - Vercel hosting and Web Analytics
-- Local typed mock catalog remains the current storefront data source
+- Local typed mock catalog remains the shop/product fallback data source
+- Homepage sections read Supabase CMS content with a controlled mock fallback
 
 Commands:
 
@@ -151,6 +152,9 @@ Storefront:
 - Product detail, related products, lightbox, cart, wishlist, search, and boxes
 - Full-height compact mobile navigation sidebar with inline Shop expansion
 - Accessible dialogs, focus trapping, reduced-motion support, skeletons, and loaders
+- Homepage section visibility, order, copy, editorial media, featured products,
+  and featured boxes can be read from Supabase with a safe mock fallback
+- Admin-only public homepage controls link directly to focused section editors
 
 Commerce state:
 
@@ -177,6 +181,10 @@ Supabase:
 - Database TypeScript types are generated from that validated local schema
 - Server-side role checks protect the complete `/admin/*` route shell
 - Signed-out authorization boundaries pass `npm run auth:verify`
+- Transactional RPCs manage compound product/variant, box/item, inventory,
+  homepage ordering, and media deletion operations
+- Protected administration is implemented for products, categories, collections,
+  inventory, boxes, homepage sections/items, and media metadata/uploads
 - The hosted database and `catalog-media` bucket have not been changed yet
 - No service-role key is currently required or stored
 - Preview environment variables are not configured because the Vercel project is
@@ -221,9 +229,9 @@ Next application phase:
 
 1. Apply and verify migrations on hosted Supabase
 2. Bootstrap the first admin role
-3. Build protected admin product, media, and homepage CRUD
-4. Add admin-only homepage edit controls
-5. Replace mock storefront reads incrementally
+3. Exercise product, inventory, box, homepage, and media writes against hosted RLS
+4. Replace remaining mock shop and product-detail reads incrementally
+5. Add persistent cart, wishlist, addresses, and order workflows
 
 ## Authorization Rules
 
@@ -268,7 +276,8 @@ npm run build
 
 Apply the validated migration chain to the hosted Supabase project, verify RLS
 using anonymous and authenticated sessions, and bootstrap the first admin role.
-Then implement product, media, and homepage CRUD inside the protected admin shell.
+Then exercise the implemented administration workflows against hosted data before
+replacing the remaining mock shop and product-detail reads.
 
 Required privileged access:
 
@@ -280,6 +289,21 @@ the hosted schema and replace mock catalog reads incrementally, keeping a
 controlled fallback during migration.
 
 ## Execution Log
+
+### 2026-06-13 — Catalog administration and homepage CMS
+
+- Added transactional product/variant, inventory, box, homepage ordering, and
+  media deletion operations with expanded migration/RLS validation
+- Added protected CRUD for products, taxonomies, inventory, boxes, homepage
+  sections/items, and the Storage-backed media library
+- Added admin-only storefront edit controls and database-backed homepage content
+  with a controlled mock fallback
+- Validation: database type generation, disposable PostgreSQL migration suite,
+  lint, typecheck, production build, auth boundary suite, and desktop/mobile
+  browser checks including native horizontal and vertical rail scrolling
+- Commit: implementation commit containing this entry
+- Production: ready to deploy; hosted Supabase schema remains unchanged until
+  project-owner migration access is available
 
 ### 2026-06-13 — Authentication and protected admin shell
 

@@ -8,6 +8,7 @@ The first commerce foundation is implemented in:
 supabase/migrations/20260613190000_core_commerce_schema.sql
 supabase/migrations/20260613191000_security_and_storage.sql
 supabase/migrations/20260613192000_seed_storefront.sql
+supabase/migrations/20260613200000_catalog_admin_operations.sql
 ```
 
 The migrations cover profiles and roles, catalog data, generic options, variants,
@@ -27,6 +28,18 @@ The application layer now includes email/password sign-in, sign-up, confirmation
 password recovery, server-side role lookup, and protected `/admin/*` routes.
 `npm run auth:verify` confirms that signed-out requests cannot render protected
 admin content.
+
+Protected administration now covers products and generated variants, categories,
+collections, inventory adjustments, boxes, homepage sections and placements, and
+the media library. Product and box compound writes are transactional database
+functions. Homepage ordering is serialized and swapped transactionally. Media
+uploads use the authenticated browser Storage session, while metadata registration
+and role checks are performed server-side.
+
+The homepage reads visible structured CMS content when the schema is available and
+falls back to the existing typed mock presentation when it is not. This permits a
+safe hosted migration without making the current production storefront dependent
+on an unapplied schema.
 
 The migration chain has not yet been applied to the hosted Supabase project.
 Applying it requires a Supabase CLI session with access to project
@@ -469,11 +482,13 @@ Important constraints:
 
 ### Phase 1
 
-- Roles and profiles
-- Catalog, variants, inventory, media
-- Homepage CMS
-- Admin product/homepage/media CRUD
-- Migrate current mock data
+- Implemented locally: roles and profiles
+- Implemented locally: catalog, variants, inventory, media, boxes
+- Implemented locally: homepage CMS and storefront fallback reader
+- Implemented locally: protected product, taxonomy, inventory, box, homepage,
+  and media administration
+- Pending: apply migrations to hosted Supabase and bootstrap the first admin
+- Pending: replace remaining mock catalog reads after hosted verification
 
 ### Phase 2
 

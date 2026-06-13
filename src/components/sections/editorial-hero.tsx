@@ -15,8 +15,33 @@ const imageMotion: Variants = {
   }),
 };
 
-export function EditorialHero() {
+export type EditorialHeroImage = {
+  label: string;
+  src?: string;
+};
+
+const defaultImages: EditorialHeroImage[] = [
+  { label: "Full-length campaign portrait" },
+  { label: "Campaign portrait in soft tailoring" },
+  { label: "Campaign portrait with fluid movement" },
+];
+
+export function EditorialHero({
+  eyebrow = "New collection · Made to move",
+  heading = "Ease, in motion.",
+  body = "Premium everyday pieces designed around movement, clean proportion, and quiet confidence.",
+  images = defaultImages,
+}: {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  images?: EditorialHeroImage[];
+}) {
   const reduceMotion = useReducedMotion();
+  const heroImages = [...images, ...defaultImages].slice(0, 3);
+  const headingParts = heading.includes(",")
+    ? [heading.slice(0, heading.indexOf(",") + 1), heading.slice(heading.indexOf(",") + 1).trim()]
+    : [heading, ""];
 
   return (
     <section className="relative overflow-hidden border-b border-border bg-off-white">
@@ -37,7 +62,7 @@ export function EditorialHero() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
             }}
           >
-            New collection · Made to move
+            {eyebrow}
           </motion.p>
           <motion.h1
             className="mt-5 font-serif text-[clamp(3.25rem,8vw,7.5rem)] leading-[0.82] tracking-[-0.04em]"
@@ -46,9 +71,13 @@ export function EditorialHero() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.85, ease: premiumEase } },
             }}
           >
-            Ease,
-            <br />
-            <span className="italic">in motion.</span>
+            {headingParts[0]}
+            {headingParts[1] && (
+              <>
+                <br />
+                <span className="italic">{headingParts[1]}</span>
+              </>
+            )}
           </motion.h1>
           <motion.p
             className="mt-7 max-w-xl text-sm leading-7 text-charcoal sm:text-base"
@@ -57,7 +86,7 @@ export function EditorialHero() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.65 } },
             }}
           >
-            Premium everyday pieces designed around movement, clean proportion, and quiet confidence.
+            {body}
           </motion.p>
         </motion.div>
       </div>
@@ -71,10 +100,12 @@ export function EditorialHero() {
             animate="visible"
           >
             <ImagePlaceholder
-              label="Full-length campaign portrait"
+              label={heroImages[0].label}
               ratio="portrait"
               className="shadow-[0_20px_55px_rgba(17,17,17,0.06)]"
               hoverZoom
+              src={heroImages[0].src}
+              alt={heroImages[0].label}
             />
           </motion.div>
 
@@ -86,10 +117,12 @@ export function EditorialHero() {
             animate="visible"
           >
             <ImagePlaceholder
-              label="Campaign portrait in soft tailoring"
+              label={heroImages[1].label}
               ratio="portrait"
               className="shadow-[0_24px_70px_rgba(17,17,17,0.08)]"
               hoverZoom
+              src={heroImages[1].src}
+              alt={heroImages[1].label}
             />
           </motion.div>
 
@@ -101,10 +134,12 @@ export function EditorialHero() {
             animate="visible"
           >
             <ImagePlaceholder
-              label="Campaign portrait with fluid movement"
+              label={heroImages[2].label}
               ratio="portrait"
               className="shadow-[0_20px_55px_rgba(17,17,17,0.06)]"
               hoverZoom
+              src={heroImages[2].src}
+              alt={heroImages[2].label}
             />
           </motion.div>
       </div>

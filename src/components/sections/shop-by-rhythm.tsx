@@ -4,7 +4,19 @@ import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
-const rhythms = [
+export type RhythmItem = {
+  number?: string;
+  moment?: string;
+  title: string;
+  description: string;
+  label: string;
+  href: string;
+  cta?: string;
+  note?: string;
+  imageUrl?: string;
+};
+
+const rhythms: RhythmItem[] = [
   {
     number: "01",
     moment: "Everyday",
@@ -47,24 +59,43 @@ const rhythms = [
   },
 ];
 
-export function ShopByRhythm() {
+export function ShopByRhythm({
+  eyebrow = "The ÉLAN edits · Shop by rhythm",
+  heading = "A wardrobe for every movement.",
+  body = "Four considered directions for the pace, purpose, and atmosphere of your day.",
+  items = rhythms,
+}: {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  items?: RhythmItem[];
+}) {
   const reduceMotion = useReducedMotion();
+  const headingParts = heading.toLowerCase().includes("every movement")
+    ? [heading.slice(0, heading.toLowerCase().indexOf("every movement")), "every movement."]
+    : [heading, ""];
 
   return (
     <section className="overflow-hidden border-y border-border bg-off-white py-16 lg:py-24">
       <div className="page-shell">
         <div className="grid gap-8 border-b border-black/15 pb-10 md:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.55fr)] md:items-end lg:pb-12">
           <div>
-            <p className="eyebrow">The ÉLAN edits · Shop by rhythm</p>
+            <p className="eyebrow">{eyebrow}</p>
             <h2 className="mt-4 font-serif text-[clamp(2.5rem,11vw,6rem)] leading-[0.88] tracking-[-0.035em]">
-              A wardrobe for
-              <br />
-              <span className="whitespace-nowrap italic">every movement.</span>
+              {headingParts[0]}
+              {headingParts[1] && (
+                <>
+                  <br />
+                  <span className="whitespace-nowrap italic">
+                    {headingParts[1]}
+                  </span>
+                </>
+              )}
             </h2>
           </div>
           <div className="max-w-sm md:justify-self-end md:pb-1">
             <p className="text-sm leading-7 text-charcoal/75">
-              Four considered directions for the pace, purpose, and atmosphere of your day.
+              {body}
             </p>
             <Link
               href="/shop"
@@ -77,7 +108,7 @@ export function ShopByRhythm() {
       </div>
 
       <div className="mt-10 flex snap-x snap-proximity gap-4 overflow-x-auto px-[max(1.25rem,calc((100vw-80rem)/2+3rem))] pb-4 [scrollbar-width:none] sm:gap-5 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-4 lg:overflow-visible lg:px-12 lg:pb-0 [&::-webkit-scrollbar]:hidden">
-        {rhythms.map((rhythm, index) => (
+        {items.map((rhythm, index) => (
           <motion.article
             key={rhythm.title}
             className="w-[82vw] max-w-[360px] shrink-0 snap-start sm:w-[44vw] lg:w-auto lg:max-w-none"
@@ -96,19 +127,21 @@ export function ShopByRhythm() {
                   ratio="portrait"
                   className="w-full"
                   hoverZoom
+                  src={rhythm.imageUrl}
+                  alt={rhythm.label}
                 />
                 <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
                   <span className="flex size-9 items-center justify-center border border-black/15 bg-white/90 text-[9px] font-semibold tracking-[0.12em]">
-                    {rhythm.number}
+                    {rhythm.number ?? String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="bg-white/90 px-3 py-2 text-[8px] font-semibold uppercase tracking-[0.16em]">
-                    {rhythm.moment}
+                    {rhythm.moment ?? "ÉLAN edit"}
                   </span>
                 </div>
               </div>
               <div className="flex min-h-[235px] flex-1 flex-col border-x border-b border-black/15 px-5 pb-5 pt-6 transition-colors duration-300 group-hover:border-black">
                 <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-charcoal/45">
-                  {rhythm.note}
+                  {rhythm.note ?? "Considered dressing"}
                 </p>
                 <h3 className="mt-3 min-h-[3.5rem] font-serif text-3xl leading-[0.95]">
                   {rhythm.title}
@@ -117,7 +150,7 @@ export function ShopByRhythm() {
                   {rhythm.description}
                 </p>
                 <div className="mt-auto flex items-center justify-between border-t border-border pt-4 text-[9px] font-semibold uppercase tracking-[0.15em]">
-                  <span>{rhythm.cta}</span>
+                  <span>{rhythm.cta ?? "Explore edit"}</span>
                   <span className="text-base transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden>
                     →
                   </span>

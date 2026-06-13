@@ -963,6 +963,47 @@ export type Database = {
     }
     Views: Record<PropertyKey, never>
     Functions: {
+      "admin_adjust_inventory": {
+        Args: {
+          "requested_inventory_level_id": string
+          "requested_stocked_quantity": number
+          "requested_low_stock_threshold": number
+          "requested_note": string
+        }
+        Returns: undefined
+      }
+      "admin_delete_media_asset": {
+        Args: {
+          "requested_media_asset_id": string
+        }
+        Returns: Json
+      }
+      "admin_move_homepage_item": {
+        Args: {
+          "requested_item_id": string
+          "requested_direction": number
+        }
+        Returns: undefined
+      }
+      "admin_move_homepage_section": {
+        Args: {
+          "requested_section_id": string
+          "requested_direction": number
+        }
+        Returns: undefined
+      }
+      "admin_save_box": {
+        Args: {
+          "payload": Json
+        }
+        Returns: string
+      }
+      "admin_save_product": {
+        Args: {
+          "payload": Json
+        }
+        Returns: string
+      }
       "can_manage_content": {
         Args: Record<PropertyKey, never>
         Returns: boolean

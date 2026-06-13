@@ -57,3 +57,13 @@ export async function requireStaff() {
 
   return auth;
 }
+
+export async function requireAdmin() {
+  const auth = await requireStaff();
+
+  if (!auth.roles.includes("admin")) {
+    redirect("/admin?notice=admin-required");
+  }
+
+  return auth;
+}

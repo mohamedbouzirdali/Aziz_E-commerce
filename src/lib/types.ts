@@ -21,6 +21,7 @@ export type Category = {
   name: string;
   description: string;
   placeholderImageLabel: string;
+  imageUrl?: string;
 };
 
 export type Collection = {
