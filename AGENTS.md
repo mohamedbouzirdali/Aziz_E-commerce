@@ -61,6 +61,9 @@ npm run dev
 npm run lint
 npm run typecheck
 npm run build
+npm run db:types
+npm run db:validate
+npm run auth:verify
 ```
 
 ## Next.js Rule
@@ -80,6 +83,8 @@ runtime.
 ```text
 src/app/                       App Router pages and global layout
 src/components/cards/          Product, category, and box cards
+src/components/account/        Authentication and account experiences
+src/components/admin/          Protected admin workspace components
 src/components/commerce/       Cart, wishlist, and quick-view experiences
 src/components/layout/         Header, desktop mega menu, mobile sidebar, footer
 src/components/loaders/        Brand-aligned loading system
@@ -90,6 +95,7 @@ src/components/shop/           Shop listing, filters, sorting, pagination
 src/components/ui/             Design-system primitives
 src/data/                      Current typed mock catalog
 src/lib/supabase/              Browser, server, config, and session helpers
+src/lib/auth/                  Auth form contracts, redirects, and role checks
 docs/database-architecture.md  Planned commerce schema and admin architecture
 supabase/migrations/           Versioned schema, security, and seed migrations
 scripts/validate-supabase-migrations.sh  Disposable PostgreSQL migration test
@@ -151,7 +157,9 @@ Commerce state:
 - Cart and wishlist are currently client-side MVP state
 - No payment integration
 - No persistent orders
-- No production authentication UI yet
+- Email/password sign-in, sign-up, confirmation, recovery, update, and sign-out
+  flows are implemented
+- Authenticated account state is rendered server-side from verified claims
 
 Supabase:
 
@@ -166,6 +174,9 @@ Supabase:
   deterministic storefront seed
 - The migration suite passes a disposable PostgreSQL 17 execution and
   idempotency test through `npm run db:validate`
+- Database TypeScript types are generated from that validated local schema
+- Server-side role checks protect the complete `/admin/*` route shell
+- Signed-out authorization boundaries pass `npm run auth:verify`
 - The hosted database and `catalog-media` bucket have not been changed yet
 - No service-role key is currently required or stored
 - Preview environment variables are not configured because the Vercel project is
@@ -209,10 +220,10 @@ Implemented database foundation:
 Next application phase:
 
 1. Apply and verify migrations on hosted Supabase
-2. Generate database TypeScript types
-3. Add authentication UI
-4. Build protected admin product, media, and homepage CRUD
-5. Add admin-only homepage edit controls
+2. Bootstrap the first admin role
+3. Build protected admin product, media, and homepage CRUD
+4. Add admin-only homepage edit controls
+5. Replace mock storefront reads incrementally
 
 ## Authorization Rules
 
@@ -256,18 +267,32 @@ npm run build
 ## Active Next Phase
 
 Apply the validated migration chain to the hosted Supabase project, verify RLS
-using anonymous and authenticated sessions, and generate TypeScript database
-types. Then implement authentication and the protected admin shell.
+using anonymous and authenticated sessions, and bootstrap the first admin role.
+Then implement product, media, and homepage CRUD inside the protected admin shell.
 
 Required privileged access:
 
 - Supabase CLI login plus database password, or
 - Migration SQL executed through the Supabase SQL Editor
 
-After migration, generate database TypeScript types and replace mock catalog reads
-incrementally, keeping a controlled fallback during migration.
+After applying the hosted migration, regenerate database TypeScript types from
+the hosted schema and replace mock catalog reads incrementally, keeping a
+controlled fallback during migration.
 
 ## Execution Log
+
+### 2026-06-13 — Authentication and protected admin shell
+
+- Generated typed Supabase clients directly from the validated migration schema
+- Added sign-in, sign-up, email confirmation, password recovery/update, sign-out,
+  and authenticated account states
+- Added centralized verified-claim and role checks plus protected admin routes
+- Added responsive admin navigation, live overview metrics, and management routes
+- Validation: database types, database migration suite, auth boundary suite, lint,
+  typecheck, production build, and desktop/mobile browser checks
+- Commit: implementation commit containing this entry
+- Production: staff tools remain inactive until hosted migrations and the first
+  admin role are applied
 
 ### 2026-06-13 — Commerce database foundation
 

@@ -19,6 +19,15 @@ Run `npm run db:validate` to execute the full migration chain against a temporar
 PostgreSQL 17 database, reapply the seed, verify expected record counts, confirm
 RLS coverage, and check that anonymous users cannot read exact inventory.
 
+Run `npm run db:types` to regenerate the typed Supabase contract directly from
+that validated schema. Browser, server, and middleware clients all consume the
+generated `Database` type.
+
+The application layer now includes email/password sign-in, sign-up, confirmation,
+password recovery, server-side role lookup, and protected `/admin/*` routes.
+`npm run auth:verify` confirms that signed-out requests cannot render protected
+admin content.
+
 The migration chain has not yet been applied to the hosted Supabase project.
 Applying it requires a Supabase CLI session with access to project
 `whmodhorpeivabfguhcm`, or execution through that project's SQL Editor.

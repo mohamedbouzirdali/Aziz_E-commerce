@@ -1,6 +1,7 @@
 # Élan Fashion Ecommerce MVP
 
-Phase 1 architecture for an English-language women’s fashion storefront with TND pricing.
+Premium English-language women’s fashion storefront with TND pricing, Supabase
+authentication, and a protected commerce administration foundation.
 
 ## Stack
 
@@ -8,6 +9,7 @@ Phase 1 architecture for an English-language women’s fashion storefront with T
 - TypeScript
 - Tailwind CSS
 - Framer Motion
+- Supabase Postgres, Auth, Storage, and SSR clients
 - Local typed mock data
 
 ## Structure
@@ -17,12 +19,17 @@ src/
 ├── app/                 Routes, global layout, and page composition
 ├── components/
 │   ├── cards/           Product, category, and box cards
+│   ├── account/         Authentication and account experience
+│   ├── admin/           Protected admin workspace components
 │   ├── layout/          Header, navigation, announcement, and footer
 │   ├── motion/          Reduced-motion-aware page transition
 │   ├── sections/        Shared page and marketing sections
 │   └── ui/              Reusable design-system primitives
 ├── data/                Typed mock catalog and merchandising data
-└── lib/                 Shared types and formatting utilities
+└── lib/                 Shared utilities, auth checks, and Supabase clients
+
+supabase/
+└── migrations/          Schema, RLS/Storage, and deterministic storefront seed
 ```
 
 ## Commands
@@ -32,6 +39,9 @@ npm run dev
 npm run lint
 npm run typecheck
 npm run build
+npm run db:types
+npm run db:validate
+npm run auth:verify
 ```
 
 ## Supabase
@@ -46,10 +56,11 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 ```
 
-`SUPABASE_SERVICE_ROLE_KEY` is intentionally not required yet. Add it only
-when privileged server-only admin operations are implemented, and never expose
-it through a `NEXT_PUBLIC_` variable.
+`SUPABASE_SERVICE_ROLE_KEY` is intentionally not required. Authenticated admin
+operations use the publishable key with server-side role checks and Postgres RLS.
+Never expose a service-role key through a `NEXT_PUBLIC_` variable.
 
-The Supabase connection foundation is present. Catalog migrations, authentication
-screens, admin tools, payments, persistent cart state, and real imagery are
-implemented in later phases.
+The repository contains validated catalog migrations, generated database types,
+email/password authentication screens, recovery flows, and a server-protected
+admin shell. The migrations must be applied to the hosted Supabase project before
+staff roles and catalog administration can work against production data.
