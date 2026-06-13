@@ -301,9 +301,10 @@ controlled fallback during migration.
 - Validation: database type generation, disposable PostgreSQL migration suite,
   lint, typecheck, production build, auth boundary suite, and desktop/mobile
   browser checks including native horizontal and vertical rail scrolling
-- Commit: implementation commit containing this entry
-- Production: ready to deploy; hosted Supabase schema remains unchanged until
-  project-owner migration access is available
+- Commit: `3bf25f1`
+- Production: deployed to `https://aziz-e-commerce.vercel.app` and smoke tested;
+  hosted Supabase schema remains unchanged until project-owner migration access
+  is available
 
 ### 2026-06-13 — Authentication and protected admin shell
 
