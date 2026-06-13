@@ -1,5 +1,28 @@
 # ÉLAN Commerce Database Architecture
 
+## Implementation Status
+
+The first commerce foundation is implemented in:
+
+```text
+supabase/migrations/20260613190000_core_commerce_schema.sql
+supabase/migrations/20260613191000_security_and_storage.sql
+supabase/migrations/20260613192000_seed_storefront.sql
+```
+
+The migrations cover profiles and roles, catalog data, generic options, variants,
+inventory, media metadata, boxes, homepage content, audit logging, RLS, and the
+`catalog-media` Storage bucket. The current local storefront catalog is seeded
+with deterministic UUIDs.
+
+Run `npm run db:validate` to execute the full migration chain against a temporary
+PostgreSQL 17 database, reapply the seed, verify expected record counts, confirm
+RLS coverage, and check that anonymous users cannot read exact inventory.
+
+The migration chain has not yet been applied to the hosted Supabase project.
+Applying it requires a Supabase CLI session with access to project
+`whmodhorpeivabfguhcm`, or execution through that project's SQL Editor.
+
 ## Design Goals
 
 - Keep products separate from sellable color/size variants.
@@ -24,11 +47,12 @@ erDiagram
   CATEGORIES ||--o{ PRODUCTS : classifies
   COLLECTIONS ||--o{ PRODUCT_COLLECTIONS : groups
   PRODUCTS ||--o{ PRODUCT_COLLECTIONS : belongs_to
-  PRODUCTS ||--o{ PRODUCT_OPTIONS : defines
-  PRODUCT_OPTIONS ||--o{ PRODUCT_OPTION_VALUES : contains
+  OPTION_TYPES ||--o{ OPTION_VALUES : contains
+  PRODUCTS ||--o{ PRODUCT_OPTION_VALUES : enables
+  OPTION_VALUES ||--o{ PRODUCT_OPTION_VALUES : enabled_as
   PRODUCTS ||--o{ PRODUCT_VARIANTS : sells_as
   PRODUCT_VARIANTS ||--o{ VARIANT_OPTION_VALUES : configured_by
-  PRODUCT_OPTION_VALUES ||--o{ VARIANT_OPTION_VALUES : selected_as
+  OPTION_VALUES ||--o{ VARIANT_OPTION_VALUES : selected_as
   PRODUCTS ||--o{ PRODUCT_MEDIA : displays
   PRODUCT_VARIANTS ||--o{ PRODUCT_MEDIA : may_override
   MEDIA_ASSETS ||--o{ PRODUCT_MEDIA : supplies
@@ -91,8 +115,9 @@ created_at / updated_at
 Use generic options rather than hardcoding only color and size:
 
 ```text
-product_options: Color, Size
-product_option_values: Black, Ivory, XS, S, M
+option_types: Color, Size
+option_values: Black, Ivory, XS, S, M
+product_option_values: values enabled for a product
 product_variants: SKU, price override, barcode, active state
 variant_option_values: links one variant to its selected values
 ```
@@ -106,7 +131,7 @@ each color as a separate product.
 ```text
 id uuid PK
 variant_id uuid FK
-location_code text
+location_id uuid FK inventory_locations
 stocked_quantity integer
 reserved_quantity integer
 low_stock_threshold integer
@@ -415,7 +440,7 @@ products(status, published_at)
 products(category_id, status)
 product_variants(product_id, is_active)
 product_variants(sku)
-inventory_levels(variant_id, location_code)
+inventory_levels(variant_id, location_id)
 homepage_sections(position, is_visible)
 homepage_section_items(section_id, position)
 orders(user_id, created_at desc)
@@ -457,4 +482,3 @@ Important constraints:
 ### Phase 4
 
 - Promotions, reviews, localized content, advanced reporting
-

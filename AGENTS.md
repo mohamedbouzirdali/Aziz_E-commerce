@@ -91,6 +91,8 @@ src/components/ui/             Design-system primitives
 src/data/                      Current typed mock catalog
 src/lib/supabase/              Browser, server, config, and session helpers
 docs/database-architecture.md  Planned commerce schema and admin architecture
+supabase/migrations/           Versioned schema, security, and seed migrations
+scripts/validate-supabase-migrations.sh  Disposable PostgreSQL migration test
 ```
 
 ## Current Routes
@@ -160,7 +162,11 @@ Supabase:
 - Vercel Production and Development contain the public Supabase URL and
   publishable key
 - Auth and Data API connectivity have been verified
-- No database migrations or Storage buckets have been created yet
+- Versioned migrations now define the commerce schema, RLS, Storage policy, and
+  deterministic storefront seed
+- The migration suite passes a disposable PostgreSQL 17 execution and
+  idempotency test through `npm run db:validate`
+- The hosted database and `catalog-media` bucket have not been changed yet
 - No service-role key is currently required or stored
 - Preview environment variables are not configured because the Vercel project is
   not connected to its GitHub repository
@@ -192,16 +198,21 @@ Core decisions:
 - Historic order items snapshot names, prices, SKUs, and imagery
 - Products and historical records are archived rather than destructively deleted
 
-Target first implementation phase:
+Implemented database foundation:
 
 1. Profiles and protected user roles
 2. Catalog, variants, inventory, media, boxes
 3. Homepage CMS
 4. RLS and Storage policies
 5. Seed current mock data
-6. Authentication UI
-7. Protected admin product, media, and homepage CRUD
-8. Admin-only homepage edit controls
+
+Next application phase:
+
+1. Apply and verify migrations on hosted Supabase
+2. Generate database TypeScript types
+3. Add authentication UI
+4. Build protected admin product, media, and homepage CRUD
+5. Add admin-only homepage edit controls
 
 ## Authorization Rules
 
@@ -244,18 +255,9 @@ npm run build
 
 ## Active Next Phase
 
-Create and apply the first Supabase migration for:
-
-- profiles
-- user roles
-- categories and collections
-- products, options, values, variants
-- inventory
-- media metadata
-- boxes
-- homepage CMS
-- RLS helper functions and policies
-- Storage bucket policies
+Apply the validated migration chain to the hosted Supabase project, verify RLS
+using anonymous and authenticated sessions, and generate TypeScript database
+types. Then implement authentication and the protected admin shell.
 
 Required privileged access:
 
@@ -266,6 +268,17 @@ After migration, generate database TypeScript types and replace mock catalog rea
 incrementally, keeping a controlled fallback during migration.
 
 ## Execution Log
+
+### 2026-06-13 — Commerce database foundation
+
+- Added versioned schema, RLS/Storage, and deterministic storefront seed migrations
+- Added roles, catalog variants, inventory, boxes, homepage CMS, and audit logging
+- Added `npm run db:validate` with PostgreSQL execution, idempotency, count, RLS,
+  public catalog, and private inventory checks
+- Validation: `npm run db:validate`, lint, typecheck, and production build
+- Commit: implementation commit containing this entry
+- Production: hosted Supabase migrations intentionally not applied because the
+  active CLI account does not own the project
 
 ### 2026-06-13 — Canonical project context
 

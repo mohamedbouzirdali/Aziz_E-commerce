@@ -1,0 +1,2 @@
+-- Storefront seed data is versioned as migration
+-- 20260613192000_seed_storefront.sql so production and local resets match.
