@@ -191,6 +191,8 @@ Supabase:
 - The owner Auth record has customer and admin roles; password setup was sent by
   email and must be completed before the first interactive admin session
 - No service-role key is currently required or stored
+- Missing public Supabase configuration now degrades to the mock storefront and a
+  signed-out session instead of crashing middleware or server-rendered routes
 - Preview environment variables are not configured because the Vercel project is
   not connected to its GitHub repository
 
@@ -284,6 +286,18 @@ mock catalog reads incrementally, keeping the controlled fallback until each
 storefront route is verified against hosted data.
 
 ## Execution Log
+
+### 2026-06-14 — Duplicate Vercel deployment resilience
+
+- Traced `aziz-e-commerce-eight.vercel.app` to a duplicate Vercel ownership
+  context that serves the same assets but lacks the active project's Supabase
+  environment configuration
+- Made middleware session refresh, server auth detection, and client-side admin
+  controls tolerate missing public Supabase variables
+- Verified lint, typecheck, configured production build, and a production build
+  with `.env.local` removed
+- Verified `/`, `/shop`, `/account`, `/admin`, and `/robots.txt` return HTTP 200
+  in the no-environment production smoke test
 
 ### 2026-06-14 — Hosted Supabase activation
 

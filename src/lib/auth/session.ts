@@ -16,7 +16,14 @@ export type AuthContext = {
 };
 
 export const getAuthContext = cache(async (): Promise<AuthContext | null> => {
-  const supabase = await createClient();
+  let supabase: Awaited<ReturnType<typeof createClient>>;
+
+  try {
+    supabase = await createClient();
+  } catch {
+    return null;
+  }
+
   const { data: claimsData, error: claimsError } = await supabase.auth.getClaims();
 
   if (claimsError || !claimsData?.claims.sub) {

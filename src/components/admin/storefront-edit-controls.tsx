@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { hasSupabaseConfig } from "@/lib/supabase/config";
 
 type AdminStorefrontContextValue = {
   isAdmin: boolean;
@@ -33,6 +34,8 @@ export function AdminStorefrontControlsProvider({
     let active = true;
 
     async function loadAdminControls() {
+      if (!hasSupabaseConfig()) return;
+
       const supabase = createClient();
       const {
         data: { user },

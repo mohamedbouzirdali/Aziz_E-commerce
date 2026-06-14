@@ -1,9 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { getSupabaseConfig } from "./config";
+import { getSupabaseConfig, hasSupabaseConfig } from "./config";
 import type { Database } from "./database.types";
 
 export async function updateSession(request: NextRequest) {
+  if (!hasSupabaseConfig()) {
+    return NextResponse.next({ request });
+  }
+
   let response = NextResponse.next({ request });
   const { url, publishableKey } = getSupabaseConfig();
 
