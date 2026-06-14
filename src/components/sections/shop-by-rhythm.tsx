@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
+import { AdminEditableImage } from "@/components/admin/storefront-edit-controls";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
 export type RhythmItem = {
@@ -14,6 +15,7 @@ export type RhythmItem = {
   cta?: string;
   note?: string;
   imageUrl?: string;
+  itemId?: string;
 };
 
 const rhythms: RhythmItem[] = [
@@ -117,19 +119,20 @@ export function ShopByRhythm({
             viewport={{ once: true, margin: "0px -40px" }}
             transition={{ duration: reduceMotion ? 0 : 0.55, delay: index * 0.05 }}
           >
-            <Link
-              href={rhythm.href}
-              className="group flex h-full flex-col bg-white"
-            >
+            <div className="group flex h-full flex-col bg-white">
               <div className="relative overflow-hidden">
-                <ImagePlaceholder
-                  label={rhythm.label}
-                  ratio="portrait"
-                  className="w-full"
-                  hoverZoom
-                  src={rhythm.imageUrl}
-                  alt={rhythm.label}
-                />
+                <AdminEditableImage itemId={rhythm.itemId} label={rhythm.label}>
+                  <Link href={rhythm.href} className="block">
+                    <ImagePlaceholder
+                      label={rhythm.label}
+                      ratio="portrait"
+                      className="w-full"
+                      hoverZoom
+                      src={rhythm.imageUrl}
+                      alt={rhythm.label}
+                    />
+                  </Link>
+                </AdminEditableImage>
                 <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
                   <span className="flex size-9 items-center justify-center border border-black/15 bg-white/90 text-[9px] font-semibold tracking-[0.12em]">
                     {rhythm.number ?? String(index + 1).padStart(2, "0")}
@@ -139,7 +142,10 @@ export function ShopByRhythm({
                   </span>
                 </div>
               </div>
-              <div className="flex min-h-[235px] flex-1 flex-col border-x border-b border-black/15 px-5 pb-5 pt-6 transition-colors duration-300 group-hover:border-black">
+              <Link
+                href={rhythm.href}
+                className="flex min-h-[235px] flex-1 flex-col border-x border-b border-black/15 px-5 pb-5 pt-6 transition-colors duration-300 group-hover:border-black"
+              >
                 <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-charcoal/45">
                   {rhythm.note ?? "Considered dressing"}
                 </p>
@@ -155,8 +161,8 @@ export function ShopByRhythm({
                     →
                   </span>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </motion.article>
         ))}
       </div>

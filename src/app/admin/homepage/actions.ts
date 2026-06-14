@@ -2,8 +2,26 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { requireStaff } from "@/lib/auth/session";
+import { requireAdmin, requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+
+const allowedImageMimeTypes = new Set([
+  "image/avif",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+]);
+const maxImageFileSize = 10 * 1024 * 1024;
+
+type ReplaceHomepageImageInput = {
+  itemId: string;
+  objectPath: string;
+  altText: string;
+  width: number | null;
+  height: number | null;
+  mimeType: string;
+  fileSizeBytes: number;
+};
 
 function value(formData: FormData, key: string) {
   const entry = formData.get(key);
@@ -19,6 +37,108 @@ function revalidateHomepage(sectionId?: string) {
   revalidatePath("/admin");
   revalidatePath("/admin/homepage");
   if (sectionId) revalidatePath(`/admin/homepage/${sectionId}`);
+}
+
+export async function replaceHomepageItemImageAction(
+  input: ReplaceHomepageImageInput,
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  const auth = await requireAdmin();
+  const expectedPrefix = `catalog/${auth.userId}/`;
+  const validDimensions =
+    (input.width === null || (Number.isInteger(input.width) && input.width > 0)) &&
+    (input.height === null ||
+      (Number.isInteger(input.height) && input.height > 0));
+
+  if (
+    !/^[0-9a-f-]{36}$/i.test(input.itemId) ||
+    !input.objectPath.startsWith(expectedPrefix) ||
+    !/^catalog\/[0-9a-f-]{36}\/[0-9a-f-]{36}\.(?:avif|jpe?g|png|webp)$/i.test(
+      input.objectPath,
+    ) ||
+    input.altText.trim().length < 3 ||
+    !allowedImageMimeTypes.has(input.mimeType) ||
+    !Number.isInteger(input.fileSizeBytes) ||
+    input.fileSizeBytes <= 0 ||
+    input.fileSizeBytes > maxImageFileSize ||
+    !validDimensions
+  ) {
+    return { ok: false, message: "The selected image or metadata is invalid." };
+  }
+
+  const supabase = await createClient();
+  const { data: item, error: itemError } = await supabase
+    .from("homepage_section_items")
+    .select("section_id, media_asset_id")
+    .eq("id", input.itemId)
+    .maybeSingle();
+
+  if (itemError || !item) {
+    return { ok: false, message: "This homepage image placement was not found." };
+  }
+
+  const { data: media, error: mediaError } = await supabase
+    .from("media_assets")
+    .insert({
+      bucket: "catalog-media",
+      object_path: input.objectPath,
+      alt_text: input.altText.trim(),
+      width: input.width,
+      height: input.height,
+      mime_type: input.mimeType,
+      file_size_bytes: input.fileSizeBytes,
+      created_by: auth.userId,
+    })
+    .select("id")
+    .single();
+
+  if (mediaError || !media) {
+    return { ok: false, message: "The uploaded image could not be registered." };
+  }
+
+  const { error: updateError } = await supabase
+    .from("homepage_section_items")
+    .update({
+      product_id: null,
+      box_id: null,
+      media_asset_id: media.id,
+      placeholder_label: input.altText.trim(),
+    })
+    .eq("id", input.itemId);
+
+  if (updateError) {
+    await Promise.all([
+      supabase.from("media_assets").delete().eq("id", media.id),
+      supabase.storage.from("catalog-media").remove([input.objectPath]),
+    ]);
+    return { ok: false, message: "The homepage placement could not be updated." };
+  }
+
+  if (item.media_asset_id) {
+    const { data: deletedMedia } = await supabase.rpc(
+      "admin_delete_media_asset",
+      {
+        requested_media_asset_id: item.media_asset_id,
+      },
+    );
+    const deleted =
+      deletedMedia &&
+      typeof deletedMedia === "object" &&
+      !Array.isArray(deletedMedia)
+        ? (deletedMedia as { bucket?: unknown; objectPath?: unknown })
+        : null;
+
+    if (
+      typeof deleted?.bucket === "string" &&
+      typeof deleted.objectPath === "string"
+    ) {
+      await supabase.storage
+        .from(deleted.bucket)
+        .remove([deleted.objectPath]);
+    }
+  }
+
+  revalidateHomepage(item.section_id);
+  return { ok: true };
 }
 
 export async function saveHomepageSectionAction(formData: FormData) {

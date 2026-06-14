@@ -3,9 +3,16 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import type { Category } from "@/lib/types";
+import { AdminEditableImage } from "@/components/admin/storefront-edit-controls";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
-export function CategoryTile({ category }: { category: Category }) {
+export function CategoryTile({
+  category,
+  homepageItemId,
+}: {
+  category: Category;
+  homepageItemId?: string;
+}) {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -16,15 +23,25 @@ export function CategoryTile({ category }: { category: Category }) {
       transition={{ duration: reduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
       whileHover={reduceMotion ? undefined : { y: -5 }}
     >
-      <Link href={`/shop?category=${category.slug}`} className="group block">
-        <ImagePlaceholder
+      <div className="group">
+        <AdminEditableImage
+          itemId={homepageItemId}
           label={category.placeholderImageLabel}
-          ratio="portrait"
-          hoverZoom
-          src={category.imageUrl}
-          alt={category.placeholderImageLabel}
-        />
-        <div className="flex min-h-[112px] items-end justify-between gap-4 border-b border-border py-4 transition-[padding] duration-300 group-hover:px-2">
+        >
+          <Link href={`/shop?category=${category.slug}`} className="block">
+            <ImagePlaceholder
+              label={category.placeholderImageLabel}
+              ratio="portrait"
+              hoverZoom
+              src={category.imageUrl}
+              alt={category.placeholderImageLabel}
+            />
+          </Link>
+        </AdminEditableImage>
+        <Link
+          href={`/shop?category=${category.slug}`}
+          className="flex min-h-[112px] items-end justify-between gap-4 border-b border-border py-4 transition-[padding] duration-300 group-hover:px-2"
+        >
           <div>
             <h3 className="font-serif text-2xl sm:text-3xl">{category.name}</h3>
             <p className="mt-1 text-xs leading-5 text-charcoal/65">{category.description}</p>
@@ -32,8 +49,8 @@ export function CategoryTile({ category }: { category: Category }) {
           <span className="text-lg transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden>
             →
           </span>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </motion.article>
   );
 }

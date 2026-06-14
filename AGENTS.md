@@ -185,6 +185,9 @@ Supabase:
   homepage ordering, and media deletion operations
 - Protected administration is implemented for products, categories, collections,
   inventory, boxes, homepage sections/items, and media metadata/uploads
+- Authenticated admins can replace image-only homepage placements directly from
+  `/` through a responsive upload dialog backed by Storage, media metadata, and
+  server-side role enforcement
 - All four migrations are applied to hosted project `whmodhorpeivabfguhcm`
 - The hosted schema has 21 RLS-enabled public tables, seeded catalog/CMS data,
   and the configured `catalog-media` bucket
@@ -220,8 +223,8 @@ Core decisions:
 - Homepage content uses structured `homepage_sections` and
   `homepage_section_items`
 - Customers, editors, and admins use protected roles plus RLS
-- Admin controls on the public homepage are visible only after a server-side role
-  check and link to focused editors
+- Admin controls on the public homepage are role-gated, link to focused editors,
+  and support direct replacement of frequently changed editorial imagery
 - Historic order items snapshot names, prices, SKUs, and imagery
 - Products and historical records are archived rather than destructively deleted
 
@@ -288,6 +291,19 @@ mock catalog reads incrementally, keeping the controlled fallback until each
 storefront route is verified against hosted data.
 
 ## Execution Log
+
+### 2026-06-14 — Inline homepage image editing
+
+- Added admin-only `Change image` controls to 19 CMS-backed homepage placements
+- Added a responsive upload dialog with image preview, required alt text,
+  validation, progress feedback, and reduced-motion-compatible transitions
+- Added a protected server action that registers the upload, updates the exact
+  homepage placement, revalidates storefront content, and removes an old media
+  asset when it is no longer referenced
+- Verified desktop and mobile admin controls and confirmed customer accounts see
+  no editing controls
+- Verified lint, typecheck, production build, database migration validation, and
+  authentication boundary checks
 
 ### 2026-06-14 — Hosted Auth role verification
 

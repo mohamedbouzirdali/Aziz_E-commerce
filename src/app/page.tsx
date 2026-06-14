@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import {
+  AdminEditableImage,
   AdminSectionEditLink,
   AdminStorefrontControlsProvider,
 } from "@/components/admin/storefront-edit-controls";
@@ -72,6 +73,7 @@ function editorialImage(item: HomepageContentItem): EditorialHeroImage {
       item.title_override ||
       "ÉLAN editorial image",
     src: item.media?.url,
+    itemId: item.id,
   };
 }
 
@@ -163,6 +165,7 @@ export default async function HomePage() {
                 ? item.settings.note
                 : "Considered dressing",
             imageUrl: item.media?.url,
+            itemId: item.id,
           }),
         );
 
@@ -244,9 +247,12 @@ export default async function HomePage() {
             </Reveal>
 
             <div className="grid grid-cols-1 gap-y-12 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-16">
-              {displayCategories.map((category) => (
+              {displayCategories.map((category, index) => (
                 <div key={category.id} className="min-w-0">
-                  <CategoryTile category={category} />
+                  <CategoryTile
+                    category={category}
+                    homepageItemId={section?.items[index]?.id}
+                  />
                 </div>
               ))}
             </div>
@@ -267,6 +273,7 @@ export default async function HomePage() {
             href: itemHref(item),
             cta: item.cta_label || "Explore edit",
             imageUrl: item.media?.url,
+            itemId: item.id,
           }),
         );
 
@@ -396,14 +403,20 @@ export default async function HomePage() {
             <AdminSectionEditLink sectionKey={sectionKey} />
             <div className="page-shell grid gap-0 lg:grid-cols-2 lg:items-stretch">
               <Reveal className="min-w-0" distance={30}>
-                <ImagePlaceholder
+                <AdminEditableImage
+                  itemId={storyCta?.id}
                   label={image.label}
-                  src={image.src}
-                  alt={image.label}
-                  ratio="portrait"
-                  className="h-full min-h-[380px] min-[390px]:min-h-[460px] lg:min-h-[620px]"
-                  hoverZoom
-                />
+                  className="h-full"
+                >
+                  <ImagePlaceholder
+                    label={image.label}
+                    src={image.src}
+                    alt={image.label}
+                    ratio="portrait"
+                    className="h-full min-h-[380px] min-[390px]:min-h-[460px] lg:min-h-[620px]"
+                    hoverZoom
+                  />
+                </AdminEditableImage>
               </Reveal>
 
               <Reveal

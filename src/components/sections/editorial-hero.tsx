@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { AdminEditableImage } from "@/components/admin/storefront-edit-controls";
 import { Button } from "@/components/ui/button";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { premiumEase } from "@/lib/motion";
@@ -18,6 +19,7 @@ const imageMotion: Variants = {
 export type EditorialHeroImage = {
   label: string;
   src?: string;
+  itemId?: string;
 };
 
 const defaultImages: EditorialHeroImage[] = [
@@ -99,14 +101,16 @@ export function EditorialHero({
             initial={reduceMotion ? false : "hidden"}
             animate="visible"
           >
-            <ImagePlaceholder
-              label={heroImages[0].label}
-              ratio="portrait"
-              className="shadow-[0_20px_55px_rgba(17,17,17,0.06)]"
-              hoverZoom
-              src={heroImages[0].src}
-              alt={heroImages[0].label}
-            />
+            <AdminEditableImage itemId={heroImages[0].itemId} label={heroImages[0].label}>
+              <ImagePlaceholder
+                label={heroImages[0].label}
+                ratio="portrait"
+                className="shadow-[0_20px_55px_rgba(17,17,17,0.06)]"
+                hoverZoom
+                src={heroImages[0].src}
+                alt={heroImages[0].label}
+              />
+            </AdminEditableImage>
           </motion.div>
 
           <motion.div
@@ -116,14 +120,16 @@ export function EditorialHero({
             initial={reduceMotion ? false : "hidden"}
             animate="visible"
           >
-            <ImagePlaceholder
-              label={heroImages[1].label}
-              ratio="portrait"
-              className="shadow-[0_24px_70px_rgba(17,17,17,0.08)]"
-              hoverZoom
-              src={heroImages[1].src}
-              alt={heroImages[1].label}
-            />
+            <AdminEditableImage itemId={heroImages[1].itemId} label={heroImages[1].label}>
+              <ImagePlaceholder
+                label={heroImages[1].label}
+                ratio="portrait"
+                className="shadow-[0_24px_70px_rgba(17,17,17,0.08)]"
+                hoverZoom
+                src={heroImages[1].src}
+                alt={heroImages[1].label}
+              />
+            </AdminEditableImage>
           </motion.div>
 
           <motion.div
@@ -133,14 +139,16 @@ export function EditorialHero({
             initial={reduceMotion ? false : "hidden"}
             animate="visible"
           >
-            <ImagePlaceholder
-              label={heroImages[2].label}
-              ratio="portrait"
-              className="shadow-[0_20px_55px_rgba(17,17,17,0.06)]"
-              hoverZoom
-              src={heroImages[2].src}
-              alt={heroImages[2].label}
-            />
+            <AdminEditableImage itemId={heroImages[2].itemId} label={heroImages[2].label}>
+              <ImagePlaceholder
+                label={heroImages[2].label}
+                ratio="portrait"
+                className="shadow-[0_20px_55px_rgba(17,17,17,0.06)]"
+                hoverZoom
+                src={heroImages[2].src}
+                alt={heroImages[2].label}
+              />
+            </AdminEditableImage>
           </motion.div>
       </div>
 

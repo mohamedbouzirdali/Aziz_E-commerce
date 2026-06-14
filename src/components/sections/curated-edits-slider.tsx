@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { AdminEditableImage } from "@/components/admin/storefront-edit-controls";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
 export type CuratedEditItem = {
@@ -12,6 +13,7 @@ export type CuratedEditItem = {
   href: string;
   cta?: string;
   imageUrl?: string;
+  itemId?: string;
 };
 
 const edits: CuratedEditItem[] = [
@@ -122,15 +124,22 @@ export function CuratedEditsSlider({
             transition={{ duration: reduceMotion ? 0 : 0.65, delay: index * 0.05 }}
             whileHover={reduceMotion ? undefined : { y: -5 }}
           >
-            <Link href={edit.href} className="flex h-full flex-col">
-              <ImagePlaceholder
-                label={edit.label}
-                ratio="portrait"
-                hoverZoom
-                src={edit.imageUrl}
-                alt={edit.label}
-              />
-              <div className="flex min-h-[220px] flex-1 flex-col border-b border-white/25 py-5">
+            <div className="flex h-full flex-col">
+              <AdminEditableImage itemId={edit.itemId} label={edit.label}>
+                <Link href={edit.href} className="block">
+                  <ImagePlaceholder
+                    label={edit.label}
+                    ratio="portrait"
+                    hoverZoom
+                    src={edit.imageUrl}
+                    alt={edit.label}
+                  />
+                </Link>
+              </AdminEditableImage>
+              <Link
+                href={edit.href}
+                className="flex min-h-[220px] flex-1 flex-col border-b border-white/25 py-5"
+              >
                 <div className="flex items-start justify-between gap-5">
                   <div>
                     <p className="text-[9px] uppercase tracking-[0.18em] text-white/45">
@@ -143,8 +152,8 @@ export function CuratedEditsSlider({
                 <span className="link-underline mt-auto inline-block self-start pt-5 text-[10px] font-semibold uppercase tracking-[0.16em]">
                   {edit.cta ?? "Explore edit"}
                 </span>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </motion.article>
         ))}
       </div>
