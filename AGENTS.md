@@ -198,6 +198,8 @@ Supabase:
 - No service-role key is currently required or stored
 - Missing public Supabase configuration now degrades to the mock storefront and a
   signed-out session instead of crashing middleware or server-rendered routes
+- The stale `aziz-e-commerce-eight.vercel.app` duplicate redirects to the
+  canonical Supabase-connected production domain
 - Preview environment variables are not configured because the Vercel project is
   not connected to its GitHub repository
 
@@ -304,6 +306,8 @@ storefront route is verified against hosted data.
   no editing controls
 - Verified lint, typecheck, production build, database migration validation, and
   authentication boundary checks
+- Redirected the stale `-eight` Vercel duplicate to canonical production so
+  authentication and inline editing always use the configured Supabase project
 
 ### 2026-06-14 — Hosted Auth role verification
 
