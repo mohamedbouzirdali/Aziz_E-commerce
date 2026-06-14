@@ -9,7 +9,7 @@ export function Header() {
   const { wishlistCount, cartCount, setCartOpen } = useCommerce();
 
   return (
-    <header className="sticky top-0 z-30 border-b border-border bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-[60] border-b border-border bg-white/95 backdrop-blur">
       <div className="relative mx-auto flex h-16 max-w-[1600px] items-center justify-between px-3 min-[390px]:px-5 sm:px-8 lg:h-[72px] lg:px-12">
         <div className="flex h-full items-center">
           <MobileNavDrawer />

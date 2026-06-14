@@ -297,6 +297,8 @@ storefront route is verified against hosted data.
 ### 2026-06-14 — Inline homepage image editing
 
 - Added admin-only `Change image` controls to 19 CMS-backed homepage placements
+- Kept the sticky navigation above all inline homepage edit controls while
+  preserving higher layers for drawers and dialogs
 - Added a responsive upload dialog with image preview, required alt text,
   validation, progress feedback, and reduced-motion-compatible transitions
 - Added a protected server action that registers the upload, updates the exact
