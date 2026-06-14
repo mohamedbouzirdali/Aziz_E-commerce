@@ -185,7 +185,11 @@ Supabase:
   homepage ordering, and media deletion operations
 - Protected administration is implemented for products, categories, collections,
   inventory, boxes, homepage sections/items, and media metadata/uploads
-- The hosted database and `catalog-media` bucket have not been changed yet
+- All four migrations are applied to hosted project `whmodhorpeivabfguhcm`
+- The hosted schema has 21 RLS-enabled public tables, seeded catalog/CMS data,
+  and the configured `catalog-media` bucket
+- The owner Auth record has customer and admin roles; password setup was sent by
+  email and must be completed before the first interactive admin session
 - No service-role key is currently required or stored
 - Preview environment variables are not configured because the Vercel project is
   not connected to its GitHub repository
@@ -227,11 +231,11 @@ Implemented database foundation:
 
 Next application phase:
 
-1. Apply and verify migrations on hosted Supabase
-2. Bootstrap the first admin role
-3. Exercise product, inventory, box, homepage, and media writes against hosted RLS
-4. Replace remaining mock shop and product-detail reads incrementally
-5. Add persistent cart, wishlist, addresses, and order workflows
+1. Complete the owner password setup email
+2. Exercise product, inventory, box, homepage, and media writes through the live
+   authenticated admin UI
+3. Replace remaining mock shop and product-detail reads incrementally
+4. Add persistent cart, wishlist, addresses, and order workflows
 
 ## Authorization Rules
 
@@ -274,21 +278,25 @@ npm run build
 
 ## Active Next Phase
 
-Apply the validated migration chain to the hosted Supabase project, verify RLS
-using anonymous and authenticated sessions, and bootstrap the first admin role.
-Then exercise the implemented administration workflows against hosted data before
-replacing the remaining mock shop and product-detail reads.
-
-Required privileged access:
-
-- Supabase CLI login plus database password, or
-- Migration SQL executed through the Supabase SQL Editor
-
-After applying the hosted migration, regenerate database TypeScript types from
-the hosted schema and replace mock catalog reads incrementally, keeping a
-controlled fallback during migration.
+Complete the owner password setup email, then exercise the implemented
+administration workflows through a real hosted Auth session. After that, replace
+mock catalog reads incrementally, keeping the controlled fallback until each
+storefront route is verified against hosted data.
 
 ## Execution Log
+
+### 2026-06-14 — Hosted Supabase activation
+
+- Applied all four validated migrations to project `whmodhorpeivabfguhcm`
+- Verified migration history, 21/21 RLS-enabled public tables, public catalog
+  reads, private inventory behavior, seed counts, Storage bucket configuration,
+  and hosted admin-role claims
+- Created the owner Auth record, assigned the admin role, and sent the standard
+  password-setup email without storing or reusing the database password
+- Verified repeated production HTTP 200 responses, core routes, live browser
+  rendering, signed-out admin redirect, and zero Vercel/browser runtime errors
+- Commit: documentation commit containing this entry
+- Production: `https://aziz-e-commerce.vercel.app` healthy; no redeploy required
 
 ### 2026-06-13 — Catalog administration and homepage CMS
 

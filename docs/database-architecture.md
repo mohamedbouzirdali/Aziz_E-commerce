@@ -41,9 +41,11 @@ falls back to the existing typed mock presentation when it is not. This permits 
 safe hosted migration without making the current production storefront dependent
 on an unapplied schema.
 
-The migration chain has not yet been applied to the hosted Supabase project.
-Applying it requires a Supabase CLI session with access to project
-`whmodhorpeivabfguhcm`, or execution through that project's SQL Editor.
+The migration chain is applied to hosted Supabase project
+`whmodhorpeivabfguhcm`. The hosted schema, RLS policies, deterministic seed,
+transactional administration functions, and `catalog-media` bucket were verified
+on June 14, 2026. The owner Auth record has the `admin` role and must complete the
+emailed password-setup flow before the first interactive admin session.
 
 ## Design Goals
 
@@ -487,7 +489,8 @@ Important constraints:
 - Implemented locally: homepage CMS and storefront fallback reader
 - Implemented locally: protected product, taxonomy, inventory, box, homepage,
   and media administration
-- Pending: apply migrations to hosted Supabase and bootstrap the first admin
+- Hosted: migrations applied and first admin role assigned
+- Pending: owner completes the emailed password setup and interactive CRUD smoke test
 - Pending: replace remaining mock catalog reads after hosted verification
 
 ### Phase 2
