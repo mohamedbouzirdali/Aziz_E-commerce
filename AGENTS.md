@@ -190,6 +190,8 @@ Supabase:
   and the configured `catalog-media` bucket
 - The owner Auth record has customer and admin roles; password setup was sent by
   email and must be completed before the first interactive admin session
+- Confirmed test accounts exist for admin and customer authorization testing;
+  their temporary passwords are intentionally not stored in the repository
 - No service-role key is currently required or stored
 - Missing public Supabase configuration now degrades to the mock storefront and a
   signed-out session instead of crashing middleware or server-rendered routes
@@ -286,6 +288,16 @@ mock catalog reads incrementally, keeping the controlled fallback until each
 storefront route is verified against hosted data.
 
 ## Execution Log
+
+### 2026-06-14 — Hosted Auth role verification
+
+- Created confirmed `admin.test@elan.tn` and `customer.test@elan.tn` test accounts
+- Assigned the admin account `customer` and `admin` roles; the customer account
+  has only the `customer` role
+- Verified password authentication against hosted Supabase
+- Verified the admin account reaches the live admin workspace and database totals
+- Verified the customer account is denied `/admin` and redirected with the
+  `staff-required` notice
 
 ### 2026-06-14 — Duplicate Vercel deployment resilience
 
