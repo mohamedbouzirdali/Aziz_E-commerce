@@ -67,7 +67,7 @@ export default async function AdminHomepagePage({
               id={`section-${section.id}`}
               className="border border-border bg-white"
             >
-              <div className="flex flex-col gap-5 border-b border-border p-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <p className="text-[9px] uppercase tracking-[0.16em] text-charcoal">
                     {String(index + 1).padStart(2, "0")} ·{" "}
@@ -76,10 +76,17 @@ export default async function AdminHomepagePage({
                   <h2 className="mt-2 font-serif text-3xl">
                     {section.heading || section.section_key}
                   </h2>
-                  <p className="mt-2 text-xs text-charcoal">
-                    {section.homepage_section_items[0]?.count ?? 0} items ·{" "}
-                    {section.is_visible ? "Visible" : "Hidden"}
-                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <span className="border border-border bg-off-white px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.14em]">
+                      {section.homepage_section_items[0]?.count ?? 0} items
+                    </span>
+                    <span className="border border-border bg-off-white px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.14em]">
+                      {section.is_visible ? "Visible" : "Hidden"}
+                    </span>
+                    <span className="border border-border bg-off-white px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.14em]">
+                      {section.theme.replace("_", " ")}
+                    </span>
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <form action={moveHomepageSectionAction}>
@@ -112,74 +119,80 @@ export default async function AdminHomepagePage({
                 </div>
               </div>
 
-              <form
-                action={saveHomepageSectionAction}
-                className="grid gap-5 p-5 lg:grid-cols-2"
-              >
-                <input type="hidden" name="id" value={section.id} />
-                <div>
-                  <label className={labelClass} htmlFor={`${section.id}-eyebrow`}>
-                    Eyebrow
-                  </label>
-                  <input
-                    id={`${section.id}-eyebrow`}
-                    name="eyebrow"
-                    defaultValue={section.eyebrow ?? ""}
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className={labelClass} htmlFor={`${section.id}-heading`}>
-                    Heading
-                  </label>
-                  <input
-                    id={`${section.id}-heading`}
-                    name="heading"
-                    defaultValue={section.heading ?? ""}
-                    className={inputClass}
-                  />
-                </div>
-                <div className="lg:col-span-2">
-                  <label className={labelClass} htmlFor={`${section.id}-body`}>
-                    Supporting copy
-                  </label>
-                  <textarea
-                    id={`${section.id}-body`}
-                    name="body"
-                    defaultValue={section.body ?? ""}
-                    className="mt-2 min-h-24 w-full border border-border px-3 py-3 text-sm leading-6 outline-none focus:border-black"
-                  />
-                </div>
-                <div>
-                  <label className={labelClass} htmlFor={`${section.id}-theme`}>
-                    Theme
-                  </label>
-                  <select
-                    id={`${section.id}-theme`}
-                    name="theme"
-                    defaultValue={section.theme}
-                    className={inputClass}
-                  >
-                    <option value="light">Light</option>
-                    <option value="off_white">Off white</option>
-                    <option value="dark">Dark</option>
-                  </select>
-                </div>
-                <div className="flex flex-wrap items-end justify-between gap-4">
-                  <label className="flex min-h-11 items-center gap-2 text-xs">
+              <details className="border-t border-border">
+                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 text-[10px] font-semibold uppercase tracking-[0.16em] [&::-webkit-details-marker]:hidden">
+                  Section copy and visibility
+                  <span aria-hidden className="text-base">+</span>
+                </summary>
+                <form
+                  action={saveHomepageSectionAction}
+                  className="grid gap-5 border-t border-border p-5 lg:grid-cols-2"
+                >
+                  <input type="hidden" name="id" value={section.id} />
+                  <div>
+                    <label className={labelClass} htmlFor={`${section.id}-eyebrow`}>
+                      Eyebrow
+                    </label>
                     <input
-                      type="checkbox"
-                      name="isVisible"
-                      defaultChecked={section.is_visible}
-                      className="size-4 accent-black"
+                      id={`${section.id}-eyebrow`}
+                      name="eyebrow"
+                      defaultValue={section.eyebrow ?? ""}
+                      className={inputClass}
                     />
-                    Visible on storefront
-                  </label>
-                  <Button type="submit" variant="secondary">
-                    Save section
-                  </Button>
-                </div>
-              </form>
+                  </div>
+                  <div>
+                    <label className={labelClass} htmlFor={`${section.id}-heading`}>
+                      Heading
+                    </label>
+                    <input
+                      id={`${section.id}-heading`}
+                      name="heading"
+                      defaultValue={section.heading ?? ""}
+                      className={inputClass}
+                    />
+                  </div>
+                  <div className="lg:col-span-2">
+                    <label className={labelClass} htmlFor={`${section.id}-body`}>
+                      Supporting copy
+                    </label>
+                    <textarea
+                      id={`${section.id}-body`}
+                      name="body"
+                      defaultValue={section.body ?? ""}
+                      className="mt-2 min-h-24 w-full border border-border px-3 py-3 text-sm leading-6 outline-none focus:border-black"
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass} htmlFor={`${section.id}-theme`}>
+                      Theme
+                    </label>
+                    <select
+                      id={`${section.id}-theme`}
+                      name="theme"
+                      defaultValue={section.theme}
+                      className={inputClass}
+                    >
+                      <option value="light">Light</option>
+                      <option value="off_white">Off white</option>
+                      <option value="dark">Dark</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-wrap items-end justify-between gap-4">
+                    <label className="flex min-h-11 items-center gap-2 text-xs">
+                      <input
+                        type="checkbox"
+                        name="isVisible"
+                        defaultChecked={section.is_visible}
+                        className="size-4 accent-black"
+                      />
+                      Visible on storefront
+                    </label>
+                    <Button type="submit" variant="secondary" loadingLabel="Saving section...">
+                      Save section
+                    </Button>
+                  </div>
+                </form>
+              </details>
             </article>
           ))}
         </div>

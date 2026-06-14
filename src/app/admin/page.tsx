@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
@@ -76,38 +77,60 @@ export default async function AdminDashboardPage() {
         ))}
       </section>
 
-      <section className="mt-12">
-        <div className="flex items-end justify-between gap-5">
-          <div>
-            <p className="eyebrow">Management areas</p>
-            <h2 className="mt-3 font-serif text-4xl">Core operations</h2>
-          </div>
-          <p className="hidden max-w-xs text-right text-xs leading-5 text-charcoal sm:block">
-            Every write action will recheck staff permissions server-side.
+      <section className="mt-12 grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
+        <div className="border border-border bg-off-white p-6 sm:p-7">
+          <p className="eyebrow">Quick start</p>
+          <h2 className="mt-3 font-serif text-4xl">Daily controls</h2>
+          <p className="mt-4 text-sm leading-7 text-charcoal">
+            Keep frequent tasks close: homepage edits, image management, product
+            updates, and inventory review.
           </p>
+          <div className="mt-7 flex flex-col gap-3">
+            <Button href="/admin/homepage" className="w-full justify-center">
+              Edit homepage
+            </Button>
+            <Button href="/admin/products" variant="secondary" className="w-full justify-center">
+              Manage products
+            </Button>
+            <Button href="/admin/media" variant="ghost" className="w-full justify-between">
+              Open media library
+            </Button>
+          </div>
         </div>
 
-        <div className="mt-7 grid gap-px border border-border bg-border md:grid-cols-2">
-          {managementAreas.map((area) => (
-            <Link
-              key={area.href}
-              href={area.href}
-              className="group bg-white p-6 transition-colors hover:bg-black hover:text-white"
-            >
-              <div className="flex items-start justify-between gap-5">
-                <h3 className="font-serif text-3xl">{area.title}</h3>
-                <span
-                  aria-hidden
-                  className="transition-transform group-hover:translate-x-1.5"
-                >
-                  →
-                </span>
-              </div>
-              <p className="mt-4 max-w-md text-xs leading-6 text-charcoal transition-colors group-hover:text-white/65">
-                {area.description}
-              </p>
-            </Link>
-          ))}
+        <div>
+          <div className="flex items-end justify-between gap-5">
+            <div>
+              <p className="eyebrow">Management areas</p>
+              <h2 className="mt-3 font-serif text-4xl">Core operations</h2>
+            </div>
+            <p className="hidden max-w-xs text-right text-xs leading-5 text-charcoal sm:block">
+              Every write action rechecks staff permissions server-side.
+            </p>
+          </div>
+
+          <div className="mt-7 grid gap-px border border-border bg-border md:grid-cols-2">
+            {managementAreas.map((area) => (
+              <Link
+                key={area.href}
+                href={area.href}
+                className="group bg-white p-6 transition-colors hover:bg-black hover:text-white"
+              >
+                <div className="flex items-start justify-between gap-5">
+                  <h3 className="font-serif text-3xl">{area.title}</h3>
+                  <span
+                    aria-hidden
+                    className="transition-transform group-hover:translate-x-1.5"
+                  >
+                    →
+                  </span>
+                </div>
+                <p className="mt-4 max-w-md text-xs leading-6 text-charcoal transition-colors group-hover:text-white/65">
+                  {area.description}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </div>

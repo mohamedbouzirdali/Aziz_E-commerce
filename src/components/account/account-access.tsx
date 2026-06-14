@@ -11,7 +11,7 @@ export function AccountAccess({
   notice?: string;
 }) {
   return (
-    <div className="grid border border-border bg-white lg:grid-cols-[0.82fr_1.18fr]">
+    <div className="grid border border-border bg-white lg:grid-cols-[0.78fr_1.22fr]">
       <div className="flex min-h-64 flex-col justify-between bg-black p-7 text-white sm:p-10 lg:min-h-[560px]">
         <p className="eyebrow text-white/55">ÉLAN client account</p>
         <div>
@@ -21,9 +21,20 @@ export function AccountAccess({
             <span className="italic">kept close.</span>
           </h2>
           <p className="mt-6 max-w-sm text-sm leading-7 text-white/65">
-            Save considered pieces, manage your details, and access future order
-            history from one quiet place.
+            Save considered pieces, track access, and return to a calmer shopping
+            flow without friction.
           </p>
+          <div className="mt-8 grid gap-px bg-white/10">
+            {[
+              "Saved wishlist across sessions",
+              "Staff workspace access when assigned",
+              "Password recovery and secure sign-in",
+            ].map((item) => (
+              <div key={item} className="bg-black/30 px-4 py-3 text-[10px] uppercase tracking-[0.14em] text-white/78">
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
         <Link
           href="/shop"
@@ -76,7 +87,7 @@ export function AccountAccess({
             </p>
           )}
 
-          <div className="mt-8">
+          <div className="mt-8 rounded-none border border-border bg-off-white/45 p-5 sm:p-6">
             <AuthForm mode={mode} next={next} />
           </div>
         </div>

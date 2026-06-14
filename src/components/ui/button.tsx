@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { useFormStatus } from "react-dom";
 import { ButtonLoadingState } from "@/components/loaders/button-loading-state";
 
 type ButtonProps = {
@@ -33,9 +36,12 @@ export function Button({
   disabled,
   ...props
 }: ButtonProps) {
+  const { pending } = useFormStatus();
+  const submitPending = !href && type === "submit" && pending;
+  const isLoading = loading || submitPending;
   const classes = `relative inline-flex min-h-11 cursor-pointer items-center justify-center overflow-hidden border px-6 text-xs font-semibold uppercase tracking-[0.16em] transition-colors duration-500 disabled:cursor-not-allowed disabled:opacity-40 ${styles[variant]} ${className}`;
-  const content = loading ? (
-    <ButtonLoadingState label={loadingLabel} />
+  const content = isLoading ? (
+    <ButtonLoadingState label={loadingLabel || "Processing..."} />
   ) : (
     <span className="relative z-10 flex items-center gap-3">
       {children}
@@ -56,7 +62,13 @@ export function Button({
   }
 
   return (
-    <button type={type} className={classes} aria-busy={loading || undefined} disabled={loading || disabled} {...props}>
+    <button
+      type={type}
+      className={classes}
+      aria-busy={isLoading || undefined}
+      disabled={isLoading || disabled}
+      {...props}
+    >
       {content}
     </button>
   );

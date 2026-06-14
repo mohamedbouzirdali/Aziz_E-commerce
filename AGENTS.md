@@ -155,6 +155,8 @@ Storefront:
 - Homepage section visibility, order, copy, editorial media, featured products,
   and featured boxes can be read from Supabase with a safe mock fallback
 - Admin-only public homepage controls link directly to focused section editors
+- Shared buttons now expose built-in pending/loading states for form submits so
+  uploads, saves, and sign-out actions visibly lock while work is in progress
 
 Commerce state:
 
@@ -164,6 +166,8 @@ Commerce state:
 - Email/password sign-in, sign-up, confirmation, recovery, update, and sign-out
   flows are implemented
 - Authenticated account state is rendered server-side from verified claims
+- Account access and signed-in account surfaces now use a more presentable
+  premium layout for both customers and staff
 
 Supabase:
 
@@ -293,6 +297,20 @@ mock catalog reads incrementally, keeping the controlled fallback until each
 storefront route is verified against hosted data.
 
 ## Execution Log
+
+### 2026-06-14 — Admin and account interface refinement
+
+- Simplified the admin dashboard and homepage section editor so frequent actions
+  are clearer and less visually dense
+- Refined the signed-out and signed-in account experiences with stronger layout,
+  clearer status cues, and better-presented customer/staff actions
+- Integrated automatic pending/loading button states for shared submit buttons so
+  uploads, saves, and sign-out actions disable during execution and reduce
+  duplicate submissions
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local app
+  route verification for `/account` and `/admin`
+- Commit: current commit containing this entry
+- Production: pending deployment
 
 ### 2026-06-14 — Inline homepage image editing
 
