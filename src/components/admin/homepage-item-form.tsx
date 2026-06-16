@@ -31,12 +31,14 @@ export function HomepageItemForm({
   products,
   boxes,
   media,
+  placementLabel,
 }: {
   sectionId: string;
   item?: Tables<"homepage_section_items">;
   products: ProductChoice[];
   boxes: BoxChoice[];
   media: MediaChoice[];
+  placementLabel?: string;
 }) {
   return (
     <form
@@ -45,6 +47,19 @@ export function HomepageItemForm({
     >
       <input type="hidden" name="sectionId" value={sectionId} />
       {item && <input type="hidden" name="id" value={item.id} />}
+
+      <div className="lg:col-span-2">
+        <div className="border border-border bg-off-white px-4 py-4 text-xs leading-6 text-charcoal">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-black">
+            {placementLabel || "Homepage placement"}
+          </p>
+          <p className="mt-2">
+            Use <strong>Media</strong> for image-led homepage sections. Use
+            <strong> Products</strong> or <strong>Boxes</strong> only where the
+            placement should link directly to merchandise.
+          </p>
+        </div>
+      </div>
 
       <div>
         <label className={labelClass} htmlFor={`${item?.id ?? "new"}-target`}>
@@ -162,11 +177,14 @@ export function HomepageItemForm({
               type="submit"
               formAction={deleteHomepageItemAction}
               variant="secondary"
+              loadingLabel="Deleting item..."
             >
               Delete
             </Button>
           )}
-          <Button type="submit">{item ? "Save item" : "Add item"}</Button>
+          <Button type="submit" loadingLabel={item ? "Saving item..." : "Adding item..."}>
+            {item ? "Save item" : "Add item"}
+          </Button>
         </div>
       </div>
     </form>

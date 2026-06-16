@@ -279,10 +279,10 @@ export function AdminEditableImage({
           setMessage(null);
           setOpen(true);
         }}
-        className="absolute bottom-3 right-3 z-30 flex min-h-10 items-center gap-2 border border-white/25 bg-black px-3 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] transition-colors hover:bg-charcoal focus-visible:outline-white"
+        className="absolute left-3 top-3 z-30 flex min-h-10 items-center gap-2 border border-white/25 bg-black/95 px-3.5 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_10px_28px_rgba(0,0,0,0.2)] transition-colors hover:bg-charcoal focus-visible:outline-white"
       >
         <span aria-hidden>+</span>
-        Change image
+        Edit image
       </button>
 
       <AnimatePresence>
@@ -328,6 +328,14 @@ export function AdminEditableImage({
                 Upload a replacement for “{label}”. The placement updates
                 immediately without changing the surrounding text or order.
               </p>
+              <div className="mt-4">
+                <Link
+                  href="/admin/homepage"
+                  className="text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/70 underline underline-offset-4"
+                >
+                  Open homepage manager
+                </Link>
+              </div>
 
               <form
                 ref={formRef}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   AdminEditableImage,
   AdminSectionEditLink,
@@ -216,38 +217,49 @@ export default async function HomePage() {
             })
           : undefined;
         const displayCategories = cmsCategories ?? categories.slice(0, 6);
+        const featuredCategories = displayCategories.slice(0, 3);
+        const remainingCategories = displayCategories.slice(3);
 
         return (
           <section
             key={sectionKey}
-            className="page-shell relative py-16 lg:py-28"
+            className="page-shell relative py-16 lg:py-24"
           >
             <AdminSectionEditLink sectionKey={sectionKey} />
-            <Reveal className="mb-12 grid gap-6 sm:grid-cols-[1fr_auto] sm:items-end lg:mb-16">
-              <div>
+            <Reveal className="grid gap-7 border-b border-border pb-10 sm:grid-cols-2 sm:items-start lg:pb-12">
+              <div className="max-w-xl">
                 <p className="eyebrow">
                   {sectionText(section, "eyebrow", "Find your direction")}
                 </p>
-                <h2 className="mt-4 max-w-2xl font-serif text-4xl leading-none min-[390px]:text-5xl sm:text-6xl">
+                <h2 className="mt-4 font-serif text-4xl leading-[0.92] min-[390px]:text-5xl sm:text-6xl">
                   {sectionText(section, "heading", "A wardrobe, considered.")}
                 </h2>
-              </div>
-              <div className="max-w-xs sm:text-right">
-                <p className="text-sm leading-6 text-charcoal">
+                <p className="mt-6 text-sm leading-7 text-charcoal">
                   {sectionText(
                     section,
                     "body",
-                    "Explore by form, function, or the feeling you want to carry.",
+                    "A homepage led by atmosphere first, then by the few categories that define the collection most clearly.",
                   )}
                 </p>
-                <Button href="/shop" variant="text" className="mt-5">
+              </div>
+              <div className="grid gap-5 sm:justify-items-end">
+                <div className="max-w-sm sm:text-right">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
+                    Everyday clarity
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-charcoal/75">
+                    Defined by clean categories, but presented with the breathing
+                    room of an editorial front page.
+                  </p>
+                </div>
+                <Button href="/shop" variant="text">
                   View all categories
                 </Button>
               </div>
             </Reveal>
 
-            <div className="grid grid-cols-1 gap-y-12 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-16">
-              {displayCategories.map((category, index) => (
+            <div className="mt-10 grid gap-8 lg:grid-cols-3 lg:gap-6">
+              {featuredCategories.map((category, index) => (
                 <div key={category.id} className="min-w-0">
                   <CategoryTile
                     category={category}
@@ -256,6 +268,20 @@ export default async function HomePage() {
                 </div>
               ))}
             </div>
+
+            {remainingCategories.length > 0 && (
+              <div className="mt-8 flex flex-wrap gap-x-5 gap-y-3 border-t border-border pt-6">
+                {remainingCategories.map((category) => (
+                  <Link
+                    key={category.id}
+                    href={`/shop?category=${category.slug}`}
+                    className="text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/65 transition-colors hover:text-black"
+                  >
+                    {category.name}
+                  </Link>
+                ))}
+              </div>
+            )}
           </section>
         );
       }
@@ -305,31 +331,46 @@ export default async function HomePage() {
               .filter((product): product is (typeof products)[number] =>
                 Boolean(product),
               )
-          : products.slice(0, 4);
+              .slice(0, 5)
+          : products.slice(0, 5);
 
         return (
           <section
             key={sectionKey}
-            className="relative bg-off-white py-16 lg:py-28"
+            id="new-arrivals"
+            className="relative overflow-hidden border-y border-border bg-off-white py-16 lg:py-24"
           >
             <AdminSectionEditLink sectionKey={sectionKey} />
             <div className="page-shell">
-              <Reveal className="mb-12 flex flex-col items-start gap-5 min-[390px]:flex-row min-[390px]:items-end min-[390px]:justify-between">
+              <Reveal className="grid gap-7 border-b border-border pb-10 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end lg:pb-12">
                 <div>
                   <p className="eyebrow">
                     {sectionText(section, "eyebrow", "Just arrived")}
                   </p>
-                  <h2 className="mt-3 font-serif text-4xl leading-none min-[390px]:text-5xl sm:text-6xl">
-                    {sectionText(section, "heading", "New forms")}
+                  <h2 className="mt-3 font-serif text-4xl leading-[0.92] min-[390px]:text-5xl sm:text-6xl">
+                    {sectionText(section, "heading", "Selected pieces")}
                   </h2>
+                  <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
+                    {sectionText(
+                      section,
+                      "body",
+                      "Only a focused row of products lives on the homepage. The rest of the page keeps the brand image-led.",
+                    )}
+                  </p>
                 </div>
                 <Button href="/shop?sort=newest" variant="text">
                   Shop new in
                 </Button>
               </Reveal>
-              <div className="grid grid-cols-1 gap-y-12 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-4 lg:gap-x-6">
+
+              <div className="mt-10 -mr-5 flex snap-x snap-proximity gap-4 overflow-x-auto pb-4 pr-5 [scrollbar-width:none] sm:gap-5 lg:gap-6 [&::-webkit-scrollbar]:hidden">
                 {selectedProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <div
+                    key={product.id}
+                    className="w-[82vw] max-w-[350px] shrink-0 snap-start sm:w-[44vw] lg:w-[23rem]"
+                  >
+                    <ProductCard product={product} />
+                  </div>
                 ))}
               </div>
             </div>
@@ -338,52 +379,136 @@ export default async function HomePage() {
       }
 
       case "best-sellers": {
-        const selectedProducts = section
-          ? section.items
-              .map((item) =>
-                products.find((product) => product.slug === item.productSlug),
-              )
-              .filter((product): product is (typeof products)[number] =>
-                Boolean(product),
-              )
-          : products.filter((product) => product.isBestSeller);
+        const editorialItems =
+          section?.items.map((item, index) => ({
+            id: item.id,
+            title:
+              item.title_override ||
+              item.productName ||
+              `Editorial study ${index + 1}`,
+            text:
+              item.body_override ||
+              "A quieter image-led moment between shopping sections.",
+            href: itemHref(item, "/shop"),
+            cta: item.cta_label || "Explore",
+            label:
+              item.media?.altText ||
+              item.placeholder_label ||
+              item.productName ||
+              `Editorial image ${index + 1}`,
+            imageUrl: item.media?.url,
+          })) ?? [
+            {
+              id: "fallback-story-1",
+              title: "Soft structure",
+              text: "Modern tailoring shown with more space and less noise.",
+              href: "/shop?category=tailoring",
+              cta: "Shop tailoring",
+              label: "Soft structure editorial image",
+              imageUrl: undefined,
+            },
+            {
+              id: "fallback-story-2",
+              title: "Quiet foundations",
+              text: "Pieces that hold a wardrobe together without overstatement.",
+              href: "/shop?category=tops",
+              cta: "Shop tops",
+              label: "Quiet foundations editorial image",
+              imageUrl: undefined,
+            },
+            {
+              id: "fallback-story-3",
+              title: "After hours",
+              text: "Evening direction without visual excess.",
+              href: "/shop?collection=after-dark",
+              cta: "Shop evening",
+              label: "After hours editorial image",
+              imageUrl: undefined,
+            },
+          ];
 
         return (
           <section
             key={sectionKey}
-            className="page-shell relative py-16 lg:py-28"
+            className="relative border-y border-border bg-white py-16 lg:py-24"
           >
             <AdminSectionEditLink sectionKey={sectionKey} />
-            <Reveal className="mb-10 flex flex-col items-start gap-5 min-[390px]:flex-row min-[390px]:items-end min-[390px]:justify-between lg:mb-14">
-              <div>
-                <p className="eyebrow">
-                  {sectionText(section, "eyebrow", "Most considered")}
-                </p>
-                <h2 className="mt-3 font-serif text-4xl leading-none min-[390px]:text-5xl sm:text-6xl">
-                  {sectionText(section, "heading", "Best sellers")}
-                </h2>
+            <div className="page-shell grid gap-8 lg:grid-cols-[0.44fr_0.56fr] lg:gap-10">
+              <Reveal className="flex flex-col justify-between border border-border bg-off-white p-6 sm:p-8 lg:min-h-[43rem] lg:p-10">
+                <div>
+                  <p className="eyebrow">
+                    {sectionText(section, "eyebrow", "The ÉLAN perspective")}
+                  </p>
+                  <h2 className="mt-4 font-serif text-4xl leading-[0.92] min-[390px]:text-5xl sm:text-6xl">
+                    {sectionText(section, "heading", "More image, less noise.")}
+                  </h2>
+                  <p className="mt-6 max-w-md text-sm leading-7 text-charcoal">
+                    {sectionText(
+                      section,
+                      "body",
+                      "The homepage should feel like a campaign front page that still knows how to sell. Imagery leads. Commerce appears only where it matters.",
+                    )}
+                  </p>
+                </div>
+                <div className="mt-8 border-t border-border pt-5">
+                  <Button href="/about" variant="text">
+                    Read the brand story
+                  </Button>
+                </div>
+              </Reveal>
+
+              <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+                {editorialItems.slice(0, 3).map((item, index) => (
+                  <Reveal
+                    key={item.id}
+                    className={index === 0 ? "sm:col-span-2" : ""}
+                    delay={index * 0.06}
+                  >
+                    <article className="group h-full">
+                      <AdminEditableImage itemId={item.id} label={item.label}>
+                        <Link href={item.href} className="block">
+                          <ImagePlaceholder
+                            label={item.label}
+                            src={item.imageUrl}
+                            alt={item.label}
+                            ratio={index === 0 ? "landscape" : "portrait"}
+                            className={
+                              index === 0
+                                ? "aspect-[16/9] min-h-[290px] lg:min-h-[360px]"
+                                : "min-h-[320px]"
+                            }
+                            hoverZoom
+                          />
+                        </Link>
+                      </AdminEditableImage>
+                      <Link
+                        href={item.href}
+                        className="block border-b border-border py-4 transition-[padding] duration-300 group-hover:px-2"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <h3 className="font-serif text-3xl leading-none">
+                              {item.title}
+                            </h3>
+                            <p className="mt-3 max-w-md text-xs leading-6 text-charcoal/72">
+                              {item.text}
+                            </p>
+                          </div>
+                          <span
+                            aria-hidden
+                            className="pt-1 text-base transition-transform duration-300 group-hover:translate-x-1.5"
+                          >
+                            →
+                          </span>
+                        </div>
+                        <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/75">
+                          {item.cta}
+                        </p>
+                      </Link>
+                    </article>
+                  </Reveal>
+                ))}
               </div>
-              <div className="max-w-sm min-[390px]:text-right">
-                <p className="text-sm leading-6 text-charcoal">
-                  {sectionText(
-                    section,
-                    "body",
-                    "A focused selection chosen for proportion, versatility, and repeat wear.",
-                  )}
-                </p>
-                <Button
-                  href="/shop?availability=best-seller"
-                  variant="text"
-                  className="mt-4"
-                >
-                  Shop best sellers
-                </Button>
-              </div>
-            </Reveal>
-            <div className="grid grid-cols-1 gap-y-12 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-3 lg:gap-x-6">
-              {selectedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
             </div>
           </section>
         );

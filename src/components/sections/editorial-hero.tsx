@@ -7,7 +7,7 @@ import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { premiumEase } from "@/lib/motion";
 
 const imageMotion: Variants = {
-  hidden: { opacity: 0, y: 30, scale: 0.985 },
+  hidden: { opacity: 0, y: 24, scale: 0.985 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
@@ -23,9 +23,9 @@ export type EditorialHeroImage = {
 };
 
 const defaultImages: EditorialHeroImage[] = [
-  { label: "Full-length campaign portrait" },
-  { label: "Campaign portrait in soft tailoring" },
-  { label: "Campaign portrait with fluid movement" },
+  { label: "Primary campaign banner" },
+  { label: "Editorial detail portrait" },
+  { label: "Editorial movement portrait" },
 ];
 
 export function EditorialHero({
@@ -41,134 +41,119 @@ export function EditorialHero({
 }) {
   const reduceMotion = useReducedMotion();
   const heroImages = [...images, ...defaultImages].slice(0, 3);
-  const headingParts = heading.includes(",")
-    ? [heading.slice(0, heading.indexOf(",") + 1), heading.slice(heading.indexOf(",") + 1).trim()]
-    : [heading, ""];
 
   return (
     <section className="relative overflow-hidden border-b border-border bg-off-white">
-      <div className="page-shell relative pt-12 sm:pt-16 lg:pt-20">
+      <div className="page-shell py-5 sm:py-6 lg:py-8">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-5">
+          <motion.div
+            initial={reduceMotion ? false : "hidden"}
+            animate="visible"
+            variants={imageMotion}
+            custom={0.08}
+          >
+            <AdminEditableImage
+              itemId={heroImages[0].itemId}
+              label={heroImages[0].label}
+            >
+              <div className="group relative isolate overflow-hidden bg-black text-white">
+                <ImagePlaceholder
+                  label={heroImages[0].label}
+                  src={heroImages[0].src}
+                  alt={heroImages[0].label}
+                  ratio="landscape"
+                  className="min-h-[440px] aspect-[16/10] sm:min-h-[540px] lg:min-h-[700px] lg:aspect-[16/8]"
+                  hoverZoom
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,12,12,0.62)_0%,rgba(12,12,12,0.28)_36%,rgba(12,12,12,0.06)_68%,rgba(12,12,12,0.04)_100%)]" />
+                <div className="absolute inset-x-0 bottom-0 top-0 flex items-end">
+                  <motion.div
+                    className="w-full max-w-xl px-5 pb-7 sm:px-8 sm:pb-9 lg:px-12 lg:pb-12"
+                    initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: reduceMotion ? 0 : 0.85,
+                      delay: reduceMotion ? 0 : 0.22,
+                      ease: premiumEase,
+                    }}
+                  >
+                    <p className="eyebrow text-white/65">{eyebrow}</p>
+                    <h1 className="mt-4 font-serif text-[clamp(3rem,8vw,6.6rem)] leading-[0.86] tracking-[-0.045em]">
+                      {heading}
+                    </h1>
+                    <p className="mt-5 max-w-md text-sm leading-7 text-white/78 sm:text-base">
+                      {body}
+                    </p>
+                    <div className="mt-7 flex flex-col gap-3 min-[390px]:flex-row min-[390px]:flex-wrap">
+                      <Button
+                        href="/shop?sort=newest"
+                        className="border-white bg-white text-black before:bg-off-white"
+                      >
+                        Shop New In
+                      </Button>
+                      <Button
+                        href="/boxes"
+                        variant="secondary"
+                        className="border-white bg-transparent text-white before:bg-white hover:text-black"
+                      >
+                        Explore Boxes
+                      </Button>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </AdminEditableImage>
+          </motion.div>
+
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:grid-rows-2">
+            {heroImages.slice(1).map((image, index) => (
+              <motion.div
+                key={image.itemId ?? image.label}
+                initial={reduceMotion ? false : "hidden"}
+                animate="visible"
+                variants={imageMotion}
+                custom={0.18 + index * 0.12}
+              >
+                <AdminEditableImage itemId={image.itemId} label={image.label}>
+                  <ImagePlaceholder
+                    label={image.label}
+                    src={image.src}
+                    alt={image.label}
+                    ratio="portrait"
+                    className="aspect-[5/6] h-full min-h-[210px] lg:min-h-[338px]"
+                    hoverZoom
+                  />
+                </AdminEditableImage>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
         <motion.div
-          className="relative z-10 max-w-3xl"
-          initial={reduceMotion ? false : "hidden"}
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+          className="mt-5 flex flex-col gap-4 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between"
+          initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.65,
+            delay: reduceMotion ? 0 : 0.55,
+            ease: premiumEase,
           }}
         >
-          <motion.p
-            className="eyebrow"
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-            }}
-          >
-            {eyebrow}
-          </motion.p>
-          <motion.h1
-            className="mt-5 font-serif text-[clamp(3.25rem,8vw,7.5rem)] leading-[0.82] tracking-[-0.04em]"
-            variants={{
-              hidden: { opacity: 0, y: 24 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.85, ease: premiumEase } },
-            }}
-          >
-            {headingParts[0]}
-            {headingParts[1] && (
-              <>
-                <br />
-                <span className="italic">{headingParts[1]}</span>
-              </>
-            )}
-          </motion.h1>
-          <motion.p
-            className="mt-7 max-w-xl text-sm leading-7 text-charcoal sm:text-base"
-            variants={{
-              hidden: { opacity: 0, y: 16 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.65 } },
-            }}
-          >
-            {body}
-          </motion.p>
-        </motion.div>
-      </div>
-
-      <div className="mx-auto mt-12 grid w-full grid-cols-3 items-start gap-3 px-4 pb-10 sm:mt-14 sm:gap-6 sm:px-8 sm:pb-14 lg:mt-16 lg:gap-8 lg:px-[4vw] lg:pb-20">
-          <motion.div
-            className="min-w-0"
-            variants={imageMotion}
-            custom={0.18}
-            initial={reduceMotion ? false : "hidden"}
-            animate="visible"
-          >
-            <AdminEditableImage itemId={heroImages[0].itemId} label={heroImages[0].label}>
-              <ImagePlaceholder
-                label={heroImages[0].label}
-                ratio="portrait"
-                className="shadow-[0_20px_55px_rgba(17,17,17,0.06)]"
-                hoverZoom
-                src={heroImages[0].src}
-                alt={heroImages[0].label}
-              />
-            </AdminEditableImage>
-          </motion.div>
-
-          <motion.div
-            className="min-w-0"
-            variants={imageMotion}
-            custom={0.34}
-            initial={reduceMotion ? false : "hidden"}
-            animate="visible"
-          >
-            <AdminEditableImage itemId={heroImages[1].itemId} label={heroImages[1].label}>
-              <ImagePlaceholder
-                label={heroImages[1].label}
-                ratio="portrait"
-                className="shadow-[0_24px_70px_rgba(17,17,17,0.08)]"
-                hoverZoom
-                src={heroImages[1].src}
-                alt={heroImages[1].label}
-              />
-            </AdminEditableImage>
-          </motion.div>
-
-          <motion.div
-            className="min-w-0"
-            variants={imageMotion}
-            custom={0.5}
-            initial={reduceMotion ? false : "hidden"}
-            animate="visible"
-          >
-            <AdminEditableImage itemId={heroImages[2].itemId} label={heroImages[2].label}>
-              <ImagePlaceholder
-                label={heroImages[2].label}
-                ratio="portrait"
-                className="shadow-[0_20px_55px_rgba(17,17,17,0.06)]"
-                hoverZoom
-                src={heroImages[2].src}
-                alt={heroImages[2].label}
-              />
-            </AdminEditableImage>
-          </motion.div>
-      </div>
-
-      <div className="page-shell pb-12 sm:pb-16 lg:pb-20">
-        <motion.div
-          className="flex flex-col gap-5 border-t border-border pt-7 sm:flex-row sm:items-center sm:justify-between"
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: reduceMotion ? 0 : 0.75, duration: 0.65 }}
-        >
-          <div className="flex w-full flex-col gap-3 min-[390px]:w-auto min-[390px]:flex-row min-[390px]:flex-wrap">
-            <Button href="/shop?sort=newest" className="w-full min-[390px]:w-auto">Shop New In</Button>
-            <Button href="/boxes" variant="secondary" className="w-full min-[390px]:w-auto">Explore Boxes</Button>
-          </div>
+          <p className="max-w-xl text-xs leading-6 text-charcoal/75">
+            A homepage led by campaign imagery, with selected pieces surfaced only
+            where they sharpen the story.
+          </p>
           <a
-            href="#curated-edits"
-            className="group flex items-center justify-between gap-5 border-b border-black pb-2 text-[10px] font-semibold uppercase tracking-[0.18em]"
+            href="#new-arrivals"
+            className="group flex items-center gap-3 self-start text-[10px] font-semibold uppercase tracking-[0.18em]"
           >
-            Discover the edit
-            <span className="transition-transform duration-300 group-hover:translate-x-2" aria-hidden>→</span>
+            View selected pieces
+            <span
+              aria-hidden
+              className="transition-transform duration-300 group-hover:translate-x-1.5"
+            >
+              →
+            </span>
           </a>
         </motion.div>
       </div>

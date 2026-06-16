@@ -4,6 +4,7 @@ import { moveHomepageItemAction } from "@/app/admin/homepage/actions";
 import { HomepageItemForm } from "@/components/admin/homepage-item-form";
 import { Button } from "@/components/ui/button";
 import { requireStaff } from "@/lib/auth/session";
+import type { Tables } from "@/lib/supabase/database.types";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "Homepage Section" };
@@ -19,6 +20,52 @@ const notices: Record<string, string> = {
   "item-move-failed": "The homepage item could not be moved.",
   "item-delete-failed": "The homepage item could not be deleted.",
 };
+
+function placementLabel(sectionKey: string, index: number) {
+  const labels: Record<string, string[]> = {
+    hero: ["Primary banner", "Supporting image 01", "Supporting image 02"],
+    "shop-by-rhythm": [
+      "Editorial card 01",
+      "Editorial card 02",
+      "Editorial card 03",
+      "Editorial card 04",
+    ],
+    categories: [
+      "Featured category 01",
+      "Featured category 02",
+      "Featured category 03",
+      "Additional category 01",
+      "Additional category 02",
+      "Additional category 03",
+    ],
+    "curated-edits": [
+      "Slider card 01",
+      "Slider card 02",
+      "Slider card 03",
+      "Slider card 04",
+      "Slider card 05",
+    ],
+    "new-arrivals": [
+      "Selected product 01",
+      "Selected product 02",
+      "Selected product 03",
+      "Selected product 04",
+      "Selected product 05",
+    ],
+    "best-sellers": ["Story image 01", "Story image 02", "Story image 03"],
+    "editorial-story": ["Feature story image"],
+    boxes: ["Featured box 01", "Featured box 02"],
+  };
+
+  return labels[sectionKey]?.[index] || `Placement ${String(index + 1).padStart(2, "0")}`;
+}
+
+function targetSummary(item: Tables<"homepage_section_items">) {
+  if (item.product_id) return "Product";
+  if (item.box_id) return "Box";
+  if (item.media_asset_id) return "Media";
+  return "Placeholder";
+}
 
 export default async function HomepageSectionPage({
   params,
@@ -98,6 +145,7 @@ export default async function HomepageSectionPage({
             products={products ?? []}
             boxes={boxes ?? []}
             media={media ?? []}
+            placementLabel={`New ${placementLabel(section.section_key, items?.length ?? 0)}`}
           />
         </div>
       </section>
@@ -108,12 +156,15 @@ export default async function HomepageSectionPage({
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border bg-off-white px-5 py-4">
               <div>
                 <p className="text-[9px] uppercase tracking-[0.16em] text-charcoal">
-                  Placement {String(index + 1).padStart(2, "0")}
+                  {placementLabel(section.section_key, index)}
                 </p>
                 <p className="mt-1 text-sm">
                   {item.title_override ||
                     item.placeholder_label ||
                     "Canonical record"}
+                </p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-charcoal/55">
+                  {targetSummary(item)}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -152,6 +203,7 @@ export default async function HomepageSectionPage({
                 products={products ?? []}
                 boxes={boxes ?? []}
                 media={media ?? []}
+                placementLabel={placementLabel(section.section_key, index)}
               />
             </div>
           </article>
