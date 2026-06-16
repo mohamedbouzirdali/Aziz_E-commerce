@@ -341,6 +341,8 @@ storefront route is verified against hosted data.
   the layout compresses
 - Simplified the desktop lifestyle section to a plain two-column grid after the
   custom template still allowed the text block to drop beneath the image
+- Moved that lifestyle split breakpoint down to `md` and tightened intermediate
+  spacing so narrow desktop windows no longer keep the stacked mobile layout
 - Validation: `npm run lint`, `npm run typecheck`, `npm run build`
 - Commit: current commit containing this entry
 - Production: pending redeploy in this pass
