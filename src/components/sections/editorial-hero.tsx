@@ -24,21 +24,25 @@ export type EditorialHeroImage = {
 
 const defaultImages: EditorialHeroImage[] = [
   {
-    label: "Women fashion editorial campaign on warm court",
-    src: "https://images.unsplash.com/photo-1599440681946-4ea0bc957b68?auto=format&fit=crop&w=2400&q=85",
+    label: "Premium activewear campaign",
+    src: "/images/homepage/evoflex-hero-reference.png",
   },
 ];
 
 export function EditorialHero({
-  eyebrow = "New collection · Made to move",
-  heading = "Ease, in motion.",
-  body = "Premium everyday pieces designed around movement, clean proportion, and quiet confidence.",
+  eyebrow = "Premium activewear",
+  heading = "Move with intention.",
+  body = "Premium activewear for women building a lifestyle of confidence, balance, and discipline.",
   images = defaultImages,
+  primaryCta = { href: "/shop?sort=newest", label: "Shop Collection" },
+  secondaryCta = { href: "#lifestyle", label: "Discover the Lifestyle" },
 }: {
   eyebrow?: string;
   heading?: string;
   body?: string;
   images?: EditorialHeroImage[];
+  primaryCta?: { href: string; label: string };
+  secondaryCta?: { href: string; label: string };
 }) {
   const reduceMotion = useReducedMotion();
   const configuredHero = images[0];
@@ -49,10 +53,10 @@ export function EditorialHero({
   };
 
   return (
-    <section className="relative overflow-hidden border-b border-border bg-black">
+    <section className="relative overflow-hidden border-b border-black/10 bg-[#f8f5ef]">
       <AdminEditableImage itemId={heroImage.itemId} label={heroImage.label}>
         <motion.div
-          className="relative min-h-[520px] h-[78svh] max-h-[860px] w-full text-white sm:min-h-[620px] lg:h-[calc(100svh-4rem)]"
+          className="relative h-[74svh] min-h-[620px] max-h-[940px] w-full sm:min-h-[700px] lg:h-[calc(100svh-4rem)]"
           initial={reduceMotion ? false : "hidden"}
           animate="visible"
           variants={imageMotion}
@@ -65,14 +69,14 @@ export function EditorialHero({
               fill
               priority
               sizes="100vw"
-              className="object-cover object-center"
+              className="object-cover object-[68%_center]"
             />
           )}
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,8,0.68)_0%,rgba(8,8,8,0.38)_38%,rgba(8,8,8,0.06)_74%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(8,8,8,0.34)_0%,rgba(8,8,8,0)_46%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,245,239,0.88)_0%,rgba(248,245,239,0.68)_26%,rgba(248,245,239,0.2)_48%,rgba(248,245,239,0.03)_66%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0)_24%,rgba(16,16,16,0.08)_100%)]" />
           <div className="page-shell relative flex h-full items-center">
             <motion.div
-              className="max-w-2xl pt-8"
+              className="max-w-[29rem] pt-12"
               initial={reduceMotion ? false : { opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -81,26 +85,26 @@ export function EditorialHero({
                 ease: premiumEase,
               }}
             >
-              <p className="eyebrow text-white/70">{eyebrow}</p>
-              <h1 className="mt-5 font-serif text-5xl leading-[0.9] min-[390px]:text-6xl sm:text-7xl lg:text-8xl">
+              <p className="eyebrow text-black/55">{eyebrow}</p>
+              <h1 className="mt-5 font-serif text-[3.6rem] leading-[0.88] text-[#1e1e1e] min-[390px]:text-[4.4rem] sm:text-[5.2rem] lg:text-[6.2rem]">
                 {heading}
               </h1>
-              <p className="mt-6 max-w-md text-sm leading-7 text-white/78 sm:text-base">
+              <p className="mt-6 max-w-md text-sm leading-7 text-black/68 sm:text-base">
                 {body}
               </p>
               <div className="mt-8 flex flex-col gap-3 min-[390px]:flex-row min-[390px]:flex-wrap">
                 <Button
-                  href="/shop?sort=newest"
-                  className="border-white bg-white text-black before:bg-off-white"
+                  href={primaryCta.href}
+                  className="border-[#1e1e1e] bg-[#1e1e1e] px-6 text-[#f8f5ef] before:bg-[#343434] hover:border-[#343434]"
                 >
-                  Shop Collection
+                  {primaryCta.label}
                 </Button>
                 <Button
-                  href="/boxes"
+                  href={secondaryCta.href}
                   variant="secondary"
-                  className="border-white bg-transparent text-white before:bg-white hover:text-black"
+                  className="border-[#1e1e1e]/25 bg-[#f8f5ef]/78 px-6 text-[#1e1e1e] before:bg-white hover:border-[#1e1e1e]"
                 >
-                  Explore Boxes
+                  {secondaryCta.label}
                 </Button>
               </div>
             </motion.div>

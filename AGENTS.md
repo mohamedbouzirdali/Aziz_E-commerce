@@ -143,11 +143,12 @@ Planned protected routes:
 
 Storefront:
 
-- Responsive premium homepage with a full-width editorial banner hero directly
-  below the unchanged site header
-- Shop-by-rhythm merchandising section
-- Categories, an expanded 8-item homepage product rail, one editorial story
-  block, curated edit rail, boxes, and newsletter sections
+- Responsive premium homepage with a full-width editorial hero directly below
+  the unchanged site header, using the provided warm-neutral campaign image as
+  the default visual fallback
+- Homepage now follows a tighter image-led rhythm: hero, philosophy, featured
+  four-product collection, lifestyle split block, quality strip, community
+  gallery, newsletter, and premium footer
 - Native horizontal touchpad/swipe behavior for editorial rails
 - Responsive shop filters, sorting, URL pagination at 20 products per page
 - Product cards with wishlist, color preview, quick view, and selection actions
@@ -321,6 +322,24 @@ storefront route is verified against hosted data.
   homepage verification on `http://localhost:3001/`
 - Commit: not created
 - Production: not deployed in this pass
+
+### 2026-06-16 — Homepage rebuilt around the activewear reference
+
+- Replaced the previous mixed editorial homepage composition with the requested
+  premium activewear structure: warm image-led hero, philosophy split,
+  four-card featured collection, lifestyle editorial block, quality strip,
+  community gallery, newsletter, and refined footer
+- Tightened hero CTA contrast and shared product/newsletter/footer styling so
+  the homepage reads closer to the supplied reference while staying inside the
+  existing Next.js/Tailwind/Supabase storefront architecture
+- Added the supplied generated hero image into `public/images/homepage/` as the
+  default homepage visual and preserved existing admin image-replacement hooks
+  for CMS-managed homepage media
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local
+  browser verification on `http://localhost:3001/` at desktop and mobile widths,
+  plus browser console error check
+- Commit: current commit containing this entry
+- Production: deployed after push in this pass
 
 ### 2026-06-16 — Homepage simplification and expanded product rail
 

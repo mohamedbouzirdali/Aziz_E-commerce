@@ -31,7 +31,7 @@ export function ProductCard({ product }: { product: Product }) {
         whileHover={reduceMotion ? undefined : { y: -4 }}
         className="group min-w-0"
       >
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden border border-black/10 bg-white">
           <Link href={`/product/${product.slug}`} aria-label={`View ${product.name}`}>
             <ImagePlaceholder
               label={previewColor.imagePlaceholderLabel}
@@ -39,6 +39,7 @@ export function ProductCard({ product }: { product: Product }) {
               hoverZoom
               src={previewColor.imageUrl}
               alt={previewColor.imagePlaceholderLabel}
+              className="bg-[#f3efe7]"
             />
           </Link>
           <div className="absolute left-3 top-3 flex flex-wrap gap-1">
@@ -49,7 +50,7 @@ export function ProductCard({ product }: { product: Product }) {
             aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name}`}
             aria-pressed={saved}
             onClick={() => toggleWishlist(product.id)}
-            className="absolute right-3 top-3 flex size-10 items-center justify-center border border-black/10 bg-white/90 text-xl transition-colors duration-300 hover:bg-black hover:text-white"
+            className="absolute right-3 top-3 flex size-10 items-center justify-center rounded-full border border-black/10 bg-white/92 text-xl backdrop-blur transition-colors duration-300 hover:bg-black hover:text-white"
           >
             <motion.span
               aria-hidden
@@ -59,14 +60,14 @@ export function ProductCard({ product }: { product: Product }) {
               {saved ? "♥" : "♡"}
             </motion.span>
           </button>
-          <div className="absolute inset-x-3 bottom-3 hidden translate-y-12 grid-cols-2 gap-px bg-border opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 sm:grid">
+          <div className="absolute inset-x-3 bottom-3 hidden translate-y-12 grid-cols-2 gap-px bg-black/10 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 sm:grid">
             <button
               type="button"
               onClick={(event) => {
                 quickViewTriggerRef.current = event.currentTarget;
                 setQuickViewOpen(true);
               }}
-              className="min-h-11 bg-white px-3 text-[10px] font-semibold uppercase tracking-[0.14em] hover:bg-off-white"
+              className="min-h-11 bg-[#fbf8f2] px-3 text-[10px] font-semibold uppercase tracking-[0.14em] hover:bg-white"
             >
               Quick view
             </button>
@@ -78,7 +79,7 @@ export function ProductCard({ product }: { product: Product }) {
               }}
               className="min-h-11 bg-black px-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-white"
             >
-              Select size
+              Add to bag
             </button>
           </div>
         </div>
@@ -93,7 +94,7 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
           <p className="shrink-0 text-xs font-medium">{formatTnd(product.priceTnd)}</p>
         </div>
-        <p className="line-clamp-2 min-h-10 text-xs leading-5 text-charcoal/65">
+        <p className="line-clamp-2 min-h-10 text-xs leading-5 text-charcoal/58">
           {product.description}
         </p>
         <div className="mt-3 flex items-center gap-2">
