@@ -33,7 +33,13 @@ export function ProductCard({ product }: { product: Product }) {
       >
         <div className="relative overflow-hidden">
           <Link href={`/product/${product.slug}`} aria-label={`View ${product.name}`}>
-            <ImagePlaceholder label={previewColor.imagePlaceholderLabel} ratio="portrait" hoverZoom />
+            <ImagePlaceholder
+              label={previewColor.imagePlaceholderLabel}
+              ratio="portrait"
+              hoverZoom
+              src={previewColor.imageUrl}
+              alt={previewColor.imagePlaceholderLabel}
+            />
           </Link>
           <div className="absolute left-3 top-3 flex flex-wrap gap-1">
             {product.badges.map((badge) => <Badge key={badge}>{badge}</Badge>)}

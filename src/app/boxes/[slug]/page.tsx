@@ -47,7 +47,12 @@ export default async function BoxPage({ params }: BoxPageProps) {
         ]} />
       </div>
       <div className="page-shell grid gap-10 pb-16 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
-        <ImagePlaceholder label={box.placeholderImageLabel} ratio="square" />
+        <ImagePlaceholder
+          label={box.placeholderImageLabel}
+          ratio="square"
+          src={box.imageUrl}
+          alt={box.placeholderImageLabel}
+        />
         <div className="lg:py-8">
           <p className="eyebrow">{box.occasion} edit · {included.length} pieces</p>
           <h1 className="mt-4 font-serif text-4xl leading-none min-[390px]:text-5xl sm:text-6xl">{box.name}</h1>

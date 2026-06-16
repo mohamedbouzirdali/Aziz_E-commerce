@@ -28,6 +28,8 @@ const rhythms: RhythmItem[] = [
     href: "/shop?collection=everyday-edit",
     cta: "Shop the edit",
     note: "Fluid layers · Repeat wear",
+    imageUrl:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=82",
   },
   {
     number: "02",
@@ -38,6 +40,8 @@ const rhythms: RhythmItem[] = [
     href: "/shop?category=tailoring",
     cta: "Shop tailoring",
     note: "Clean lines · Soft structure",
+    imageUrl:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
   },
   {
     number: "03",
@@ -48,6 +52,8 @@ const rhythms: RhythmItem[] = [
     href: "/shop?collection=after-dark",
     cta: "Shop evening",
     note: "Fluid forms · Quiet impact",
+    imageUrl:
+      "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1200&q=82",
   },
   {
     number: "04",
@@ -58,6 +64,8 @@ const rhythms: RhythmItem[] = [
     href: "/boxes",
     cta: "Discover boxes",
     note: "Complete looks · Considered value",
+    imageUrl:
+      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=82",
   },
 ];
 

@@ -160,6 +160,9 @@ Storefront:
 - Homepage storytelling is now more image-first, with a fixed hero-then-rail
   sequence and remote fashion-image fallbacks when CMS media has not been
   replaced yet
+- Homepage, box, product-card, quick-view, cart, and product-gallery surfaces
+  can now use remote mock imagery for previewing the premium visual direction
+  without uploading final assets
 - Homepage spacing is intentionally calmer, with fewer hard section dividers and
   the redundant homepage best-sellers and service bands removed in favor of a
   more continuous editorial flow
@@ -305,6 +308,19 @@ mock catalog reads incrementally, keeping the controlled fallback until each
 storefront route is verified against hosted data.
 
 ## Execution Log
+
+### 2026-06-16 — Remote mock imagery across homepage and product surfaces
+
+- Replaced the remaining homepage editorial placeholders with remote fashion
+  imagery for categories, edits, boxes, and the editorial story block so the
+  landing page can be judged visually without uploading assets first
+- Extended the same remote mock-image pattern into product colors, product
+  cards, quick view, cart surfaces, and box detail media so more of the store
+  now previews with real imagery instead of label-only placeholders
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local
+  homepage verification on `http://localhost:3001/`
+- Commit: not created
+- Production: not deployed in this pass
 
 ### 2026-06-16 — Homepage simplification and expanded product rail
 

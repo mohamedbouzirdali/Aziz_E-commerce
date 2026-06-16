@@ -66,6 +66,24 @@ const fashionFallbackImages = [
   "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=82",
 ];
 
+const rhythmFallbackImages = [
+  "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=82",
+];
+
+const curatedEditFallbackImages = [
+  "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1506629905607-c52b1ea7d3f6?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=82",
+];
+
+const editorialStoryFallbackImage =
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=82";
+
 const hiddenHomepageSections = new Set(["best-sellers", "services"]);
 
 function sectionText(
@@ -181,6 +199,43 @@ function featuredHomepageProducts(
   return [...selected, ...supplemental].slice(0, desiredCount);
 }
 
+function imageWithFallback(
+  imageUrl: string | undefined,
+  fallback: string,
+) {
+  return imageUrl || fallback;
+}
+function Button({
+  href,
+  children,
+  className = "",
+}: {
+  href?: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const classes = [
+    "relative inline-flex min-h-11 cursor-pointer items-center justify-center overflow-hidden border px-6 text-xs font-semibold uppercase tracking-[0.16em] transition-colors duration-500 disabled:cursor-not-allowed disabled:opacity-40",
+    "before:absolute before:inset-0 before:origin-right before:scale-x-0 before:transition-transform before:duration-500 hover:before:origin-left hover:before:scale-x-100",
+    className,
+  ].join(" ");
+
+  const content = <span className="relative z-10">{children}</span>;
+
+  if (href) {
+    return (
+      <a href={href} className={classes}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <button className={classes}>
+      {content}
+    </button>
+  );
+}
 export default async function HomePage() {
   const cmsSections = await getHomepageContent();
   const sectionMap = new Map(
@@ -244,7 +299,10 @@ export default async function HomePage() {
               typeof item.settings.note === "string"
                 ? item.settings.note
                 : "Considered dressing",
-            imageUrl: item.media?.url,
+            imageUrl: imageWithFallback(
+              item.media?.url,
+              rhythmFallbackImages[index % rhythmFallbackImages.length],
+            ),
             itemId: item.id,
           }),
         );
@@ -290,7 +348,11 @@ export default async function HomePage() {
                     item.media?.altText ||
                     item.placeholder_label ||
                     `${slug} editorial`,
-                  ...(item.media?.url ? { imageUrl: item.media.url } : {}),
+                  imageUrl: imageWithFallback(
+                    item.media?.url,
+                    categories[index]?.imageUrl ||
+                      fashionFallbackImages[index % fashionFallbackImages.length],
+                  ),
                 },
               ];
             })
@@ -377,7 +439,10 @@ export default async function HomePage() {
               "Editorial styling",
             href: itemHref(item),
             cta: item.cta_label || "Explore edit",
-            imageUrl: item.media?.url,
+            imageUrl: imageWithFallback(
+              item.media?.url,
+              curatedEditFallbackImages[index % curatedEditFallbackImages.length],
+            ),
             itemId: item.id,
           }),
         );
@@ -646,8 +711,17 @@ export default async function HomePage() {
 
       case "editorial-story": {
         const image = section?.items[0]
-          ? editorialImage(section.items[0])
-          : { label: "Architectural tailoring in motion" };
+          ? {
+              ...editorialImage(section.items[0]),
+              src: imageWithFallback(
+                section.items[0].media?.url,
+                editorialStoryFallbackImage,
+              ),
+            }
+          : {
+              label: "Architectural tailoring in motion",
+              src: editorialStoryFallbackImage,
+            };
         const storyCta = section?.items[0];
 
         return (
@@ -703,7 +777,7 @@ export default async function HomePage() {
                   <div className="mt-9 flex flex-wrap items-center gap-6">
                     <Button
                       href={storyCta ? itemHref(storyCta) : "/shop?collection=new-form"}
-                      className="border-white bg-white text-black before:bg-off-white"
+                     className="!border-white !bg-white !text-black before:!bg-black hover:!bg-black hover:!text-white [&_*]:!text-black hover:[&_*]:!text-white"
                     >
                       {storyCta?.cta_label || "Shop the edit"}
                     </Button>
@@ -723,11 +797,18 @@ export default async function HomePage() {
 
       case "boxes": {
         const selectedBoxes = section
-          ? section.items
-              .map((item) =>
-                boxes.find((box) => box.slug === item.boxSlug),
-              )
-              .filter((box): box is (typeof boxes)[number] => Boolean(box))
+          ? section.items.flatMap((item, index) => {
+                const box = boxes.find((entry) => entry.slug === item.boxSlug);
+                if (!box) return [];
+                return [{
+                  ...box,
+                  imageUrl: imageWithFallback(
+                    item.media?.url,
+                    box.imageUrl ||
+                      fashionFallbackImages[index % fashionFallbackImages.length],
+                  ),
+                }];
+              })
           : boxes.slice(0, 2);
 
         return (

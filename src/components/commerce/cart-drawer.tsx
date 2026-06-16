@@ -67,7 +67,12 @@ export function CartDrawer() {
                     const color = product.colors.find((candidate) => candidate.id === item.colorId);
                     return (
                       <li key={item.key} className="grid grid-cols-[76px_1fr] gap-3 py-5 min-[390px]:grid-cols-[92px_1fr] min-[390px]:gap-4">
-                        <ImagePlaceholder label={color?.imagePlaceholderLabel ?? product.placeholderImageLabel} ratio="portrait" />
+                        <ImagePlaceholder
+                          label={color?.imagePlaceholderLabel ?? product.placeholderImageLabel}
+                          ratio="portrait"
+                          src={color?.imageUrl}
+                          alt={color?.imagePlaceholderLabel ?? product.placeholderImageLabel}
+                        />
                         <div>
                           <div className="flex flex-col gap-2 min-[390px]:flex-row min-[390px]:justify-between min-[390px]:gap-3">
                             <Link href={`/product/${product.slug}`} onClick={() => setCartOpen(false)} className="text-sm font-medium">{product.name}</Link>

@@ -1,13 +1,71 @@
 import type { Product } from "@/lib/types";
 import { colors as palette } from "./colors";
 
-function productColors(ids: string[], productName: string) {
+const productImageMap: Record<string, Partial<Record<string, string>>> = {
+  "sculpted-midi-dress": {
+    black:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=82",
+    ivory:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1400&q=82",
+  },
+  "relaxed-linen-blazer": {
+    charcoal:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1400&q=82",
+    stone:
+      "https://images.unsplash.com/photo-1506629905607-c52b1ea7d3f6?auto=format&fit=crop&w=1400&q=82",
+  },
+  "fluid-wide-leg-trousers": {
+    black:
+      "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1400&q=82",
+    stone:
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1400&q=82",
+  },
+  "draped-neck-top": {
+    ivory:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1400&q=82",
+    burgundy:
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1400&q=82",
+    black:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=82",
+  },
+  "column-knit-dress": {
+    black:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=82",
+    burgundy:
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1400&q=82",
+  },
+  "minimal-shoulder-bag": {
+    black:
+      "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1400&q=82",
+    stone:
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1400&q=82",
+  },
+  "soft-tailored-waistcoat": {
+    ivory:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1400&q=82",
+    charcoal:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1400&q=82",
+  },
+  "asymmetric-satin-skirt": {
+    black:
+      "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1400&q=82",
+    burgundy:
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1400&q=82",
+  },
+};
+
+function productColors(
+  ids: string[],
+  productName: string,
+  imageUrls: Partial<Record<string, string>> = {},
+) {
   return ids.map((id) => {
     const color = palette.find((item) => item.id === id);
     if (!color) throw new Error(`Unknown product color: ${id}`);
     return {
       ...color,
       imagePlaceholderLabel: `${productName} — ${color.name} view`,
+      imageUrl: imageUrls[id],
     };
   });
 }
@@ -27,7 +85,11 @@ export const products: Product[] = [
     priceTnd: 289,
     category: "dresses",
     collection: "new-form",
-    colors: productColors(["black", "ivory"], "Sculpted Midi Dress"),
+    colors: productColors(
+      ["black", "ivory"],
+      "Sculpted Midi Dress",
+      productImageMap["sculpted-midi-dress"],
+    ),
     defaultColor: "black",
     sizes: ["xs", "s", "m", "l"],
     unavailableSizes: ["xs"],
@@ -50,7 +112,11 @@ export const products: Product[] = [
     priceTnd: 329,
     category: "tailoring",
     collection: "new-form",
-    colors: productColors(["charcoal", "stone"], "Relaxed Linen Blazer"),
+    colors: productColors(
+      ["charcoal", "stone"],
+      "Relaxed Linen Blazer",
+      productImageMap["relaxed-linen-blazer"],
+    ),
     defaultColor: "charcoal",
     sizes: ["xs", "s", "m", "l", "xl"],
     unavailableSizes: ["xl"],
@@ -73,7 +139,11 @@ export const products: Product[] = [
     priceTnd: 189,
     category: "bottoms",
     collection: "everyday-edit",
-    colors: productColors(["black", "stone"], "Fluid Wide-Leg Trousers"),
+    colors: productColors(
+      ["black", "stone"],
+      "Fluid Wide-Leg Trousers",
+      productImageMap["fluid-wide-leg-trousers"],
+    ),
     defaultColor: "black",
     sizes: ["xs", "s", "m", "l", "xl"],
     unavailableSizes: [],
@@ -96,7 +166,11 @@ export const products: Product[] = [
     priceTnd: 129,
     category: "tops",
     collection: "after-dark",
-    colors: productColors(["ivory", "burgundy", "black"], "Draped-Neck Top"),
+    colors: productColors(
+      ["ivory", "burgundy", "black"],
+      "Draped-Neck Top",
+      productImageMap["draped-neck-top"],
+    ),
     defaultColor: "ivory",
     sizes: ["xs", "s", "m", "l"],
     unavailableSizes: ["l"],
@@ -119,7 +193,11 @@ export const products: Product[] = [
     priceTnd: 249,
     category: "dresses",
     collection: "after-dark",
-    colors: productColors(["black", "burgundy"], "Column Knit Dress"),
+    colors: productColors(
+      ["black", "burgundy"],
+      "Column Knit Dress",
+      productImageMap["column-knit-dress"],
+    ),
     defaultColor: "black",
     sizes: ["xs", "s", "m", "l"],
     unavailableSizes: ["s"],
@@ -142,7 +220,11 @@ export const products: Product[] = [
     priceTnd: 159,
     category: "accessories",
     collection: "everyday-edit",
-    colors: productColors(["black", "stone"], "Minimal Shoulder Bag"),
+    colors: productColors(
+      ["black", "stone"],
+      "Minimal Shoulder Bag",
+      productImageMap["minimal-shoulder-bag"],
+    ),
     defaultColor: "black",
     sizes: ["one-size"],
     unavailableSizes: [],
@@ -165,7 +247,11 @@ export const products: Product[] = [
     priceTnd: 179,
     category: "tailoring",
     collection: "new-form",
-    colors: productColors(["ivory", "charcoal"], "Soft Tailored Waistcoat"),
+    colors: productColors(
+      ["ivory", "charcoal"],
+      "Soft Tailored Waistcoat",
+      productImageMap["soft-tailored-waistcoat"],
+    ),
     defaultColor: "ivory",
     sizes: ["xs", "s", "m", "l"],
     unavailableSizes: [],
@@ -188,7 +274,11 @@ export const products: Product[] = [
     priceTnd: 169,
     category: "bottoms",
     collection: "after-dark",
-    colors: productColors(["black", "burgundy"], "Asymmetric Satin Skirt"),
+    colors: productColors(
+      ["black", "burgundy"],
+      "Asymmetric Satin Skirt",
+      productImageMap["asymmetric-satin-skirt"],
+    ),
     defaultColor: "black",
     sizes: ["xs", "s", "m", "l", "xl"],
     unavailableSizes: ["xs", "xl"],

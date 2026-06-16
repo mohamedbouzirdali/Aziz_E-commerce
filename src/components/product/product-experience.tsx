@@ -64,6 +64,8 @@ export function ProductExperience({ product, related }: { product: Product; rela
                 label={`${product.name} — ${color.name} ${view}`}
                 ratio="portrait"
                 hoverZoom
+                src={color.imageUrl}
+                alt={`${product.name} — ${color.name} ${view}`}
               />
               <span className="mt-2 block text-[9px] uppercase tracking-[0.14em] text-charcoal/55">
                 {String(index + 1).padStart(2, "0")} · {view}
@@ -155,6 +157,7 @@ export function ProductExperience({ product, related }: { product: Product; rela
       <GalleryLightbox
         product={product}
         colorName={color.name}
+        colorImageUrl={color.imageUrl}
         index={lightboxIndex}
         onIndexChange={setLightboxIndex}
         onClose={() => setLightboxIndex(null)}
@@ -166,12 +169,14 @@ export function ProductExperience({ product, related }: { product: Product; rela
 function GalleryLightbox({
   product,
   colorName,
+  colorImageUrl,
   index,
   onIndexChange,
   onClose,
 }: {
   product: Product;
   colorName: string;
+  colorImageUrl?: string;
   index: number | null;
   onIndexChange: (index: number) => void;
   onClose: () => void;
@@ -207,7 +212,13 @@ function GalleryLightbox({
             exit={{ opacity: 0, scale: 0.98 }}
           >
             <button type="button" onClick={onClose} aria-label="Close gallery" className="absolute right-0 top-0 z-10 size-12 bg-white text-2xl">×</button>
-            <ImagePlaceholder label={`${product.name} — ${colorName} ${views[index ?? 0]}`} ratio="portrait" className="mx-auto max-h-[82svh] max-w-[650px]" />
+            <ImagePlaceholder
+              label={`${product.name} — ${colorName} ${views[index ?? 0]}`}
+              ratio="portrait"
+              className="mx-auto max-h-[82svh] max-w-[650px]"
+              src={colorImageUrl}
+              alt={`${product.name} — ${colorName} ${views[index ?? 0]}`}
+            />
             <button type="button" aria-label="Previous image" onClick={() => onIndexChange(((index ?? 0) - 1 + views.length) % views.length)} className="absolute left-0 top-1/2 size-10 -translate-y-1/2 bg-white text-lg min-[390px]:size-12 min-[390px]:text-xl">←</button>
             <button type="button" aria-label="Next image" onClick={() => onIndexChange(((index ?? 0) + 1) % views.length)} className="absolute right-0 top-1/2 size-10 -translate-y-1/2 bg-white text-lg min-[390px]:size-12 min-[390px]:text-xl">→</button>
             <p className="mt-3 text-center text-xs uppercase tracking-[0.14em] text-white">{(index ?? 0) + 1} / {views.length}</p>

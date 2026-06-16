@@ -8,6 +8,7 @@ export type Color = {
 
 export type ProductColor = Color & {
   imagePlaceholderLabel: string;
+  imageUrl?: string;
 };
 
 export type Size = {
@@ -70,4 +71,5 @@ export type ProductBox = {
   savingsTnd: number;
   occasion: string;
   placeholderImageLabel: string;
+  imageUrl?: string;
 };

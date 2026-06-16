@@ -73,7 +73,12 @@ export function QuickViewModal({
             transition={{ duration: reduceMotion ? 0 : 0.28 }}
           >
             <div className="mx-auto w-2/3 pt-4 min-[430px]:w-1/2 sm:w-full sm:pt-0">
-              <ImagePlaceholder label={color.imagePlaceholderLabel} ratio="portrait" />
+              <ImagePlaceholder
+                label={color.imagePlaceholderLabel}
+                ratio="portrait"
+                src={color.imageUrl}
+                alt={color.imagePlaceholderLabel}
+              />
             </div>
             <div className="p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] min-[390px]:p-6 sm:p-8">
               <button

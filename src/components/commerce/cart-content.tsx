@@ -45,7 +45,12 @@ export function CartContent() {
                 const color = product.colors.find((candidate) => candidate.id === item.colorId);
                 return (
                   <li key={item.key} className="grid grid-cols-[82px_1fr] gap-3 py-5 min-[390px]:grid-cols-[110px_1fr] min-[390px]:gap-5 min-[390px]:py-6 sm:grid-cols-[150px_1fr]">
-                    <ImagePlaceholder label={color?.imagePlaceholderLabel ?? product.placeholderImageLabel} ratio="portrait" />
+                    <ImagePlaceholder
+                      label={color?.imagePlaceholderLabel ?? product.placeholderImageLabel}
+                      ratio="portrait"
+                      src={color?.imageUrl}
+                      alt={color?.imagePlaceholderLabel ?? product.placeholderImageLabel}
+                    />
                     <div className="flex flex-col">
                       <div className="flex flex-col gap-2 min-[390px]:flex-row min-[390px]:justify-between min-[390px]:gap-4">
                         <div>

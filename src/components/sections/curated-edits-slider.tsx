@@ -22,30 +22,40 @@ const edits: CuratedEditItem[] = [
     text: "Soft layers and easy proportions for unhurried days.",
     label: "Relaxed weekend styling",
     href: "/boxes/weekend-light-box",
+    imageUrl:
+      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=82",
   },
   {
     title: "Office Edit",
     text: "Tailoring that holds its line without feeling rigid.",
     label: "Modern office tailoring",
     href: "/boxes/modern-workday-box",
+    imageUrl:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
   },
   {
     title: "Evening Edit",
     text: "Quietly expressive silhouettes for after dark.",
     label: "Evening silhouettes",
     href: "/boxes/evening-edit-box",
+    imageUrl:
+      "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1200&q=82",
   },
   {
     title: "Soft Tailoring",
     text: "Structure reconsidered through fluid cloth and ease.",
     label: "Soft tailoring details",
     href: "/shop?category=tailoring",
+    imageUrl:
+      "https://images.unsplash.com/photo-1506629905607-c52b1ea7d3f6?auto=format&fit=crop&w=1200&q=82",
   },
   {
     title: "Travel Capsule",
     text: "A compact wardrobe designed to move beautifully.",
     label: "Travel capsule wardrobe",
     href: "/shop?collection=everyday-edit",
+    imageUrl:
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=82",
   },
 ];
 

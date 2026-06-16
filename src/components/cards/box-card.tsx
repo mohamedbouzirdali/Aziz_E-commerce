@@ -21,7 +21,13 @@ export function BoxCard({ box }: { box: ProductBox }) {
     >
       <Link href={`/boxes/${box.slug}`} className="group flex h-full flex-col">
         <div className="relative">
-          <ImagePlaceholder label={box.placeholderImageLabel} ratio="landscape" hoverZoom />
+          <ImagePlaceholder
+            label={box.placeholderImageLabel}
+            ratio="landscape"
+            hoverZoom
+            src={box.imageUrl}
+            alt={box.placeholderImageLabel}
+          />
           <div className="absolute left-3 top-3 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1">
             <Badge>Save {formatTnd(box.savingsTnd)}</Badge>
           </div>
