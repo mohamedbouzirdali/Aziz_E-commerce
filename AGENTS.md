@@ -343,6 +343,8 @@ storefront route is verified against hosted data.
   custom template still allowed the text block to drop beneath the image
 - Moved that lifestyle split breakpoint down to `md` and tightened intermediate
   spacing so narrow desktop windows no longer keep the stacked mobile layout
+- Removed the fixed landscape aspect ratio from that image tile on desktop so it
+  stops imposing extra width and pushing the text panel out of the section
 - Validation: `npm run lint`, `npm run typecheck`, `npm run build`
 - Commit: current commit containing this entry
 - Production: pending redeploy in this pass

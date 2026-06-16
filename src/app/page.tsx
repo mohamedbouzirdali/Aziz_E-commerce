@@ -304,7 +304,7 @@ export default async function HomePage() {
                   "Image éditoriale lifestyle"
                 }
                 ratio="landscape"
-                className="h-full min-h-[300px] min-w-0 border-b border-black/10 md:min-h-[420px] md:border-b-0 md:border-r lg:min-h-[460px]"
+                className="h-full min-h-[300px] min-w-0 border-b border-black/10 md:min-h-[420px] md:aspect-auto md:border-b-0 md:border-r lg:min-h-[460px]"
               />
               <div className="flex min-w-0 flex-col justify-center px-6 py-10 sm:px-8 md:px-7 md:py-8 lg:px-12 lg:py-10">
                 <p className="eyebrow text-black/55">
