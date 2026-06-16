@@ -146,8 +146,8 @@ Storefront:
 - Responsive premium homepage with a full-width editorial banner hero directly
   below the unchanged site header
 - Shop-by-rhythm merchandising section
-- Categories, curated 4-item homepage product rail, editorial story blocks,
-  boxes, newsletter, and service sections
+- Categories, an expanded 8-item homepage product rail, one editorial story
+  block, curated edit rail, boxes, and newsletter sections
 - Native horizontal touchpad/swipe behavior for editorial rails
 - Responsive shop filters, sorting, URL pagination at 20 products per page
 - Product cards with wishlist, color preview, quick view, and selection actions
@@ -160,6 +160,9 @@ Storefront:
 - Homepage storytelling is now more image-first, with a fixed hero-then-rail
   sequence and remote fashion-image fallbacks when CMS media has not been
   replaced yet
+- Homepage spacing is intentionally calmer, with fewer hard section dividers and
+  the redundant homepage best-sellers and service bands removed in favor of a
+  more continuous editorial flow
 - Shared buttons now expose built-in pending/loading states for form submits so
   uploads, saves, and sign-out actions visibly lock while work is in progress
 
@@ -302,6 +305,20 @@ mock catalog reads incrementally, keeping the controlled fallback until each
 storefront route is verified against hosted data.
 
 ## Execution Log
+
+### 2026-06-16 — Homepage simplification and expanded product rail
+
+- Expanded the homepage fashion rail from a tight 4-product set to an 8-piece
+  sliding edit while preserving the image-first premium treatment
+- Removed the redundant homepage best-sellers and service bands and softened the
+  remaining section boundaries so the homepage reads more like one continuous
+  editorial experience
+- Tightened categories, shop-by-rhythm, editorial story, and boxes spacing to
+  stay closer to the calmer premium composition now targeted for the storefront
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local route
+  verification on `/` including 8 visible homepage product cards
+- Commit: pending
+- Production: pending deployment
 
 ### 2026-06-16 — Reference-aligned hero and 4-item homepage rail
 

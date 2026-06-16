@@ -78,9 +78,9 @@ export function ShopByRhythm({
     : [heading, ""];
 
   return (
-    <section className="overflow-hidden border-y border-border bg-off-white py-16 lg:py-24">
+    <section className="overflow-hidden bg-off-white py-14 lg:py-20">
       <div className="page-shell">
-        <div className="grid gap-8 border-b border-black/15 pb-10 md:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.55fr)] md:items-end lg:pb-12">
+        <div className="grid gap-8 border-t border-black/10 pt-10 md:grid-cols-[minmax(0,1.15fr)_minmax(260px,0.55fr)] md:items-end lg:pt-12">
           <div>
             <p className="eyebrow">{eyebrow}</p>
             <h2 className="mt-4 font-serif text-[clamp(2.5rem,11vw,6rem)] leading-[0.88] tracking-[-0.035em]">

@@ -17,7 +17,6 @@ import {
   type EditorialHeroImage,
 } from "@/components/sections/editorial-hero";
 import { NewsletterBlock } from "@/components/sections/newsletter-block";
-import { ServiceStrip } from "@/components/sections/service-strip";
 import {
   ShopByRhythm,
   type RhythmItem,
@@ -52,9 +51,7 @@ const defaultSectionOrder = [
   "categories",
   "editorial-story",
   "curated-edits",
-  "best-sellers",
   "boxes",
-  "services",
   "newsletter",
 ];
 
@@ -63,7 +60,13 @@ const fashionFallbackImages = [
   "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
   "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1200&q=82",
   "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1506629905607-c52b1ea7d3f6?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=82",
 ];
+
+const hiddenHomepageSections = new Set(["best-sellers", "services"]);
 
 function sectionText(
   section: HomepageContentSection | undefined,
@@ -142,13 +145,40 @@ function withAdminControl(
 function homepageSectionOrder(cmsSections: HomepageContentSection[] | null) {
   if (!cmsSections) return defaultSectionOrder;
 
-  const visibleKeys = new Set(cmsSections.map((section) => section.section_key));
+  const visibleKeys = new Set(
+    cmsSections
+      .map((section) => section.section_key)
+      .filter((key) => !hiddenHomepageSections.has(key)),
+  );
   const knownKeys = defaultSectionOrder.filter((key) => visibleKeys.has(key));
   const extraKeys = cmsSections
     .map((section) => section.section_key)
-    .filter((key) => !defaultSectionOrder.includes(key));
+    .filter(
+      (key) =>
+        !hiddenHomepageSections.has(key) && !defaultSectionOrder.includes(key),
+    );
 
   return [...knownKeys, ...extraKeys];
+}
+
+function featuredHomepageProducts(
+  section: HomepageContentSection | undefined,
+  desiredCount = 8,
+) {
+  const selected = section
+    ? section.items
+        .map((item) =>
+          products.find((product) => product.slug === item.productSlug),
+        )
+        .filter((product): product is (typeof products)[number] =>
+          Boolean(product),
+        )
+    : [];
+
+  const selectedIds = new Set(selected.map((product) => product.id));
+  const supplemental = products.filter((product) => !selectedIds.has(product.id));
+
+  return [...selected, ...supplemental].slice(0, desiredCount);
 }
 
 export default async function HomePage() {
@@ -272,10 +302,10 @@ export default async function HomePage() {
         return (
           <section
             key={sectionKey}
-            className="page-shell relative py-16 lg:py-24"
+            className="page-shell relative bg-off-white pb-16 pt-6 lg:pb-20 lg:pt-8"
           >
             <AdminSectionEditLink sectionKey={sectionKey} />
-            <Reveal className="grid gap-7 border-b border-border pb-10 sm:grid-cols-2 sm:items-start lg:pb-12">
+            <Reveal className="grid gap-7 border-t border-black/10 pt-10 sm:grid-cols-2 sm:items-start lg:pt-12">
               <div className="max-w-xl">
                 <p className="eyebrow">
                   {sectionText(section, "eyebrow", "Find your direction")}
@@ -372,26 +402,17 @@ export default async function HomePage() {
       }
 
       case "new-arrivals": {
-        const selectedProducts = section
-          ? section.items
-              .map((item) =>
-                products.find((product) => product.slug === item.productSlug),
-              )
-              .filter((product): product is (typeof products)[number] =>
-                Boolean(product),
-              )
-              .slice(0, 4)
-          : products.slice(0, 4);
+        const selectedProducts = featuredHomepageProducts(section);
 
         return (
           <section
             key={sectionKey}
             id="new-arrivals"
-            className="relative overflow-hidden border-b border-border bg-off-white py-14 lg:py-20"
+            className="relative overflow-hidden bg-off-white pb-12 pt-14 lg:pb-14 lg:pt-20"
           >
             <AdminSectionEditLink sectionKey={sectionKey} />
             <div className="page-shell">
-              <Reveal className="mx-auto max-w-3xl text-center">
+              <Reveal className="mx-auto max-w-2xl text-center">
                 <div>
                   <p className="eyebrow">
                     {selectedProductsSectionText(
@@ -411,14 +432,14 @@ export default async function HomePage() {
                     {selectedProductsSectionText(
                       section,
                       "body",
-                      "Four selected pieces, chosen by the admin, presented with image-first focus.",
+                      "A broader edit of selected pieces, presented with image-first focus and enough range to feel like a real collection.",
                     )}
                   </p>
                 </div>
               </Reveal>
             </div>
 
-            <div className="mt-9 grid grid-cols-2 gap-2 px-2 sm:flex sm:snap-x sm:snap-proximity sm:gap-3 sm:overflow-x-auto sm:scroll-smooth sm:px-[max(1rem,calc((100vw-80rem)/2+2rem))] sm:pb-4 sm:[scrollbar-width:none] sm:[touch-action:pan-x_pan-y] lg:gap-4 [&::-webkit-scrollbar]:hidden">
+            <div className="mt-10 flex snap-x snap-proximity gap-3 overflow-x-auto px-[max(1rem,calc((100vw-80rem)/2+1.5rem))] pb-4 scroll-smooth [scrollbar-width:none] [touch-action:pan-x_pan-y] sm:gap-4 sm:px-[max(1.25rem,calc((100vw-80rem)/2+2.25rem))] lg:gap-5 [&::-webkit-scrollbar]:hidden">
               {selectedProducts.map((product, index) => {
                 const color =
                   product.colors.find(
@@ -430,7 +451,7 @@ export default async function HomePage() {
                 return (
                   <article
                     key={product.id}
-                    className="group min-w-0 snap-start bg-white sm:w-[42vw] sm:min-w-[42vw] lg:w-[30vw] lg:min-w-[30vw] xl:w-[26vw] xl:min-w-[26vw]"
+                    className="group w-[70vw] min-w-[70vw] max-w-[320px] shrink-0 snap-start bg-white min-[390px]:w-[64vw] min-[390px]:min-w-[64vw] sm:w-[35vw] sm:min-w-[35vw] lg:w-[22vw] lg:min-w-[22vw] xl:w-[18vw] xl:min-w-[18vw]"
                   >
                     <Link
                       href={`/product/${product.slug}`}
@@ -452,7 +473,7 @@ export default async function HomePage() {
                         hoverZoom
                       />
                     </Link>
-                    <div className="grid min-h-[104px] gap-3 border-b border-border px-2.5 py-3 sm:grid-cols-[1fr_auto] sm:px-3 sm:py-4">
+                    <div className="grid min-h-[102px] gap-3 border-b border-border px-3 py-3.5 sm:grid-cols-[1fr_auto] sm:px-3.5 sm:py-4">
                       <div className="min-w-0">
                         <h3 className="truncate text-xs font-semibold sm:text-sm">
                           <Link
@@ -632,7 +653,7 @@ export default async function HomePage() {
         return (
           <section
             key={sectionKey}
-            className="relative border-y border-border bg-white py-16 lg:py-28"
+            className="relative bg-off-white py-12 lg:py-20"
           >
             <AdminSectionEditLink sectionKey={sectionKey} />
             <div className="page-shell grid gap-0 lg:grid-cols-2 lg:items-stretch">
@@ -712,7 +733,7 @@ export default async function HomePage() {
         return (
           <section
             key={sectionKey}
-            className="page-shell relative py-16 lg:py-32"
+            className="page-shell relative border-t border-black/10 py-16 lg:py-24"
           >
             <AdminSectionEditLink sectionKey={sectionKey} />
             <Reveal className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
@@ -752,7 +773,7 @@ export default async function HomePage() {
       }
 
       case "services":
-        return withAdminControl(sectionKey, <ServiceStrip />);
+        return null;
 
       case "newsletter":
         return withAdminControl(
