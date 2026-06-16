@@ -317,8 +317,8 @@ storefront route is verified against hosted data.
   stay closer to the calmer premium composition now targeted for the storefront
 - Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local route
   verification on `/` including 8 visible homepage product cards
-- Commit: pending
-- Production: pending deployment
+- Commit: current commit containing this entry
+- Production: deployed to `https://aziz-e-commerce.vercel.app`
 
 ### 2026-06-16 — Reference-aligned hero and 4-item homepage rail
 
