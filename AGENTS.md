@@ -143,6 +143,8 @@ Planned protected routes:
 
 Storefront:
 
+- Public homepage branding is now `evoflex` with the supplied `/hero.png`
+  campaign image as the canonical hero visual
 - Responsive premium homepage with a full-width editorial hero directly below
   the unchanged site header, using the provided warm-neutral campaign image as
   the default visual fallback
@@ -169,6 +171,8 @@ Storefront:
   more continuous editorial flow
 - Shared buttons now expose built-in pending/loading states for form submits so
   uploads, saves, and sign-out actions visibly lock while work is in progress
+- Storefront edit overlays now stay hidden in normal public rendering unless
+  `NEXT_PUBLIC_ENABLE_STOREFRONT_EDITING=true` is explicitly set
 
 Commerce state:
 
@@ -338,6 +342,24 @@ storefront route is verified against hosted data.
 - Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local
   browser verification on `http://localhost:3001/` at desktop and mobile widths,
   plus browser console error check
+- Commit: current commit containing this entry
+- Production: deployed after push in this pass
+
+### 2026-06-16 — Evoflex branding and public hero cleanup
+
+- Replaced the remaining public homepage ÉLAN branding with `evoflex` across
+  header, footer, announcement bar, homepage copy, newsletter CTA, metadata, and
+  supporting public route metadata
+- Forced the homepage hero to use the supplied local asset at `/hero.png`
+  instead of CMS or older fallback imagery, and kept the premium CTA contrast
+  treatment readable on desktop and mobile
+- Disabled storefront edit overlays in normal public rendering behind the
+  `NEXT_PUBLIC_ENABLE_STOREFRONT_EDITING` flag so production homepage visitors
+  no longer see edit badges or image controls
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local
+  browser verification on `http://localhost:3001/` for desktop and mobile,
+  explicit check that hero image resolves from `/hero.png`, and explicit checks
+  that no edit overlays or ÉLAN strings remain on the public homepage
 - Commit: current commit containing this entry
 - Production: deployed after push in this pass
 

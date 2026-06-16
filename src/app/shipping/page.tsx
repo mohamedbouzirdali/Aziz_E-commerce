@@ -3,7 +3,7 @@ import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
   title: "Shipping",
-  description: "Information about Élan delivery timing and shipping across Tunisia.",
+  description: "Information about evoflex delivery timing and shipping across Tunisia.",
   alternates: { canonical: "/shipping" },
 };
 

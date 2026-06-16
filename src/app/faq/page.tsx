@@ -4,7 +4,7 @@ import { Accordion } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
-  description: "Answers about Élan sizing, delivery in Tunisia, returns, and the shopping experience.",
+  description: "Answers about evoflex sizing, delivery in Tunisia, returns, and the shopping experience.",
   alternates: { canonical: "/faq" },
 };
 

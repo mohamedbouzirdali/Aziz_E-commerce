@@ -1,9 +1,9 @@
 export const siteConfig = {
-  name: "Élan",
-  url: "https://elan.tn",
+  name: "evoflex",
+  url: "https://aziz-e-commerce.vercel.app",
   description:
-    "Contemporary women’s fashion in Tunisia, with considered dresses, tailoring, separates, and curated wardrobe boxes.",
-  ogImage: "/og-placeholder.svg",
+    "Premium activewear and lifestyle pieces for women building a life of confidence, balance, and discipline.",
+  ogImage: "/hero.png",
 };
 
 export function absoluteUrl(path = "/") {

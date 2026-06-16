@@ -4,12 +4,12 @@ import { ShopExperience } from "@/components/shop/shop-experience";
 import { ProductSkeletonGrid } from "@/components/loaders";
 
 export const metadata: Metadata = {
-  title: "Shop Women’s Clothing",
-  description: "Shop contemporary dresses, tailoring, tops, bottoms, sets, and accessories in TND.",
+  title: "Shop Activewear",
+  description: "Shop premium activewear, lifestyle essentials, and elevated daily pieces in TND.",
   alternates: { canonical: "/shop" },
   openGraph: {
-    title: "Shop Women’s Clothing | Élan",
-    description: "Explore contemporary women’s fashion and curated wardrobe pieces.",
+    title: "Shop Activewear | evoflex",
+    description: "Explore premium activewear, lifestyle essentials, and elevated daily pieces.",
     url: "/shop",
   },
 };

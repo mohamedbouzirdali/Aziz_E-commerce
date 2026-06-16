@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  AdminEditableImage,
-  AdminSectionEditLink,
   AdminStorefrontControlsProvider,
 } from "@/components/admin/storefront-edit-controls";
 import { ProductCard } from "@/components/cards/product-card";
@@ -19,23 +17,24 @@ import {
   type HomepageContentItem,
   type HomepageContentSection,
 } from "@/lib/homepage/content";
-import { siteConfig } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Contemporary Womenswear in Tunisia",
-  description: siteConfig.description,
+  title: "evoflex | Premium Activewear and Lifestyle",
+  description:
+    "Premium activewear and lifestyle pieces for women building a life of confidence, balance, and discipline.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Élan | Contemporary Womenswear in Tunisia",
-    description: siteConfig.description,
+    title: "evoflex | Premium Activewear and Lifestyle",
+    description:
+      "Premium activewear and lifestyle pieces for women building a life of confidence, balance, and discipline.",
     url: "/",
   },
 };
 
-const heroFallbackImage = "/images/homepage/evoflex-hero-reference.png";
+const heroFallbackImage = "/hero.png";
 
 const lifestyleFallbackImage =
-  "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=1600&q=82";
+  "https://images.unsplash.com/photo-1506629905607-c52b1ea7d3f6?auto=format&fit=crop&w=1600&q=82";
 
 const communityFallbackImages = [
   "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=1200&q=82",
@@ -117,11 +116,13 @@ function sectionTextIgnoringLegacy(
   section: HomepageContentSection | undefined,
   field: "eyebrow" | "heading" | "body",
   fallback: string,
-  legacy: Record<"eyebrow" | "heading" | "body", string>,
+  legacy: Record<"eyebrow" | "heading" | "body", string | string[]>,
 ) {
   const current = section?.[field];
+  const legacyValue = legacy[field];
+  const legacyValues = Array.isArray(legacyValue) ? legacyValue : [legacyValue];
 
-  if (!current || current === legacy[field]) {
+  if (!current || legacyValues.includes(current)) {
     return fallback;
   }
 
@@ -175,23 +176,17 @@ export default async function HomePage() {
     (cmsSections ?? []).map((section) => [section.section_key, section]),
   );
 
-  const heroSection = sectionMap.get("hero");
   const featuredSection = sectionMap.get("new-arrivals");
   const lifestyleSection = sectionMap.get("editorial-story");
   const communitySection =
     sectionMap.get("curated-edits") ?? sectionMap.get("categories");
   const newsletterSection = sectionMap.get("newsletter");
 
-  const heroItem = heroSection?.items[0];
   const lifestyleItem = lifestyleSection?.items[0];
   const heroImages: EditorialHeroImage[] = [
     {
-      label:
-        heroItem?.media?.altText ||
-        heroItem?.placeholder_label ||
-        "Premium activewear campaign",
-      src: heroItem?.media?.url || heroFallbackImage,
-      itemId: heroItem?.id,
+      label: "Premium activewear campaign",
+      src: heroFallbackImage,
     },
   ];
 
@@ -202,7 +197,6 @@ export default async function HomePage() {
     <AdminStorefrontControlsProvider>
       <main className="bg-[#fbf8f2] text-[#1e1e1e]">
         <div className="relative">
-          <AdminSectionEditLink sectionKey="hero" />
           <EditorialHero
             eyebrow="Premium activewear"
             heading="Move with intention."
@@ -234,7 +228,7 @@ export default async function HomePage() {
                 href="/about"
                 className="mt-6 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition-colors hover:text-black/65"
               >
-                Learn more about ÉLAN <span aria-hidden>→</span>
+                Learn more about evoflex <span aria-hidden>→</span>
               </Link>
             </div>
           </Reveal>
@@ -288,33 +282,22 @@ export default async function HomePage() {
           className="page-shell pb-14 sm:pb-18 lg:pb-20"
         >
           <div className="relative">
-            <AdminSectionEditLink sectionKey="editorial-story" />
             <Reveal className="grid overflow-hidden border border-black/10 bg-[#ede5d8] lg:grid-cols-[1.08fr_0.92fr]">
-              <AdminEditableImage
-                itemId={lifestyleItem?.id}
+              <ImagePlaceholder
                 label={
                   lifestyleItem?.media?.altText ||
                   lifestyleItem?.placeholder_label ||
                   "Lifestyle editorial image"
                 }
-                className="min-h-full"
-              >
-                <ImagePlaceholder
-                  label={
-                    lifestyleItem?.media?.altText ||
-                    lifestyleItem?.placeholder_label ||
-                    "Lifestyle editorial image"
-                  }
-                  src={lifestyleItem?.media?.url || lifestyleFallbackImage}
-                  alt={
-                    lifestyleItem?.media?.altText ||
-                    lifestyleItem?.placeholder_label ||
-                    "Lifestyle editorial image"
-                  }
-                  ratio="landscape"
-                  className="h-full min-h-[300px] border-b border-black/10 lg:min-h-[460px] lg:border-b-0 lg:border-r"
-                />
-              </AdminEditableImage>
+                src={lifestyleItem?.media?.url || lifestyleFallbackImage}
+                alt={
+                  lifestyleItem?.media?.altText ||
+                  lifestyleItem?.placeholder_label ||
+                  "Lifestyle editorial image"
+                }
+                ratio="landscape"
+                className="h-full min-h-[300px] border-b border-black/10 lg:min-h-[460px] lg:border-b-0 lg:border-r"
+              />
               <div className="flex flex-col justify-center px-6 py-10 sm:px-8 lg:px-12">
                 <p className="eyebrow text-black/55">
                   {sectionTextIgnoringLegacy(
@@ -344,7 +327,7 @@ export default async function HomePage() {
                   {sectionTextIgnoringLegacy(
                     lifestyleSection,
                     "body",
-                    "We believe in balance — strong bodies, clear minds, and lives that feel aligned. ÉLAN is here to inspire the routines, rituals, and moments that make you feel your best.",
+                    "We believe in balance — strong bodies, clear minds, and lives that feel aligned. evoflex is here to inspire the routines, rituals, and moments that make you feel your best.",
                     {
                       eyebrow: "The journal · Study 01",
                       heading: "The architecture of ease.",
@@ -386,7 +369,6 @@ export default async function HomePage() {
 
         <section className="page-shell py-14 sm:py-18 lg:py-20">
           <div className="relative">
-            <AdminSectionEditLink sectionKey={communitySection?.section_key || "curated-edits"} />
             <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-3xl">
                 <p className="eyebrow text-black/55">Community</p>
@@ -395,28 +377,26 @@ export default async function HomePage() {
                 </h2>
               </div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-black/65">
-                @elan.tn
+                @evoflex
               </p>
             </Reveal>
 
             <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
               {communityImages.map((image) => (
-                <AdminEditableImage
+                <Link
                   key={image.id}
-                  itemId={image.itemId}
-                  label={image.label}
+                  href={image.href}
+                  aria-label={`Explore ${image.label}`}
                 >
-                  <Link href={image.href} aria-label={`Explore ${image.label}`}>
-                    <ImagePlaceholder
-                      label={image.label}
-                      src={image.src}
-                      alt={image.label}
-                      ratio="square"
-                      hoverZoom
-                      className="aspect-[0.92] border border-black/10"
-                    />
-                  </Link>
-                </AdminEditableImage>
+                  <ImagePlaceholder
+                    label={image.label}
+                    src={image.src}
+                    alt={image.label}
+                    ratio="square"
+                    hoverZoom
+                    className="aspect-[0.92] border border-black/10"
+                  />
+                </Link>
               ))}
             </div>
           </div>
@@ -424,14 +404,13 @@ export default async function HomePage() {
 
         <div className="page-shell pb-14 sm:pb-18 lg:pb-20">
           <div className="relative border border-black/10 bg-[#ede5d8]">
-            <AdminSectionEditLink sectionKey="newsletter" />
             <NewsletterBlock
               eyebrow={sectionTextIgnoringLegacy(
                 newsletterSection,
                 "eyebrow",
                 "Newsletter",
                 {
-                  eyebrow: "Private notes from ÉLAN",
+                  eyebrow: ["Private notes from evoflex", "Private notes from ÉLAN"],
                   heading: "A considered inbox.",
                   body: "New arrivals, editorial stories, and private offers, sent with restraint.",
                 },
@@ -441,7 +420,7 @@ export default async function HomePage() {
                 "heading",
                 "Join the ritual.",
                 {
-                  eyebrow: "Private notes from ÉLAN",
+                  eyebrow: ["Private notes from evoflex", "Private notes from ÉLAN"],
                   heading: "A considered inbox.",
                   body: "New arrivals, editorial stories, and private offers, sent with restraint.",
                 },
@@ -451,7 +430,7 @@ export default async function HomePage() {
                 "body",
                 "Get early access to new drops, exclusive offers, and inspiration for a life in motion.",
                 {
-                  eyebrow: "Private notes from ÉLAN",
+                  eyebrow: ["Private notes from evoflex", "Private notes from ÉLAN"],
                   heading: "A considered inbox.",
                   body: "New arrivals, editorial stories, and private offers, sent with restraint.",
                 },

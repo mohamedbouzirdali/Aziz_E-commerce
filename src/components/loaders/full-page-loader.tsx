@@ -31,7 +31,7 @@ export function FullPageLoader({
           animate={{ opacity: 1, y: 0 }}
           className="font-serif text-3xl tracking-[0.24em]"
         >
-          ÉLAN
+          evoflex
         </motion.p>
         <div className="relative mx-auto mt-6 h-px w-44 overflow-hidden bg-black/15">
           <motion.span

@@ -19,8 +19,8 @@ export function Header() {
             <Link className="px-4 text-xs uppercase tracking-[0.15em]" href="/boxes">Boxes</Link>
           </nav>
         </div>
-        <Link href="/" aria-label="Élan home" className="absolute left-1/2 -translate-x-1/2 font-serif text-lg tracking-[0.18em] min-[390px]:text-xl min-[390px]:tracking-[0.22em] sm:text-2xl">
-          ÉLAN
+        <Link href="/" aria-label="evoflex home" className="absolute left-1/2 -translate-x-1/2 font-serif text-lg tracking-[0.06em] min-[390px]:text-xl sm:text-2xl">
+          evoflex
         </Link>
         <nav className="flex items-center" aria-label="Utility navigation">
           <Link href="/search" aria-label="Search" className="flex size-10 items-center justify-center text-base min-[390px]:w-auto min-[390px]:px-2 min-[390px]:text-[10px] min-[390px]:uppercase min-[390px]:tracking-[0.12em] sm:px-3">

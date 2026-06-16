@@ -60,7 +60,7 @@ export function MobileNavDrawer() {
               transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeOut" }}
             >
               <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-5">
-                <span className="font-serif text-xl tracking-[0.2em]">ÉLAN</span>
+                <span className="font-serif text-xl tracking-[0.06em]">evoflex</span>
                 <button
                   type="button"
                   className="flex size-10 items-center justify-center text-2xl transition-opacity hover:opacity-50"

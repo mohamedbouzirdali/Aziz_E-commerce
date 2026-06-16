@@ -61,7 +61,7 @@ export function NewsletterBlock({
             disabled={status === "success"}
             className="min-w-[170px] border-[#1e1e1e] bg-[#1e1e1e] text-[#f8f5ef] before:bg-[#343434] hover:border-[#343434]"
           >
-            {status === "success" ? "You’re on the list" : "Join ÉLAN"}
+            {status === "success" ? "You’re on the list" : "Join evoflex"}
           </Button>
         </form>
       </div>

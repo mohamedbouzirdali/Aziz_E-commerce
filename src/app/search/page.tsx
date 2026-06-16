@@ -5,7 +5,7 @@ import { FullPageLoader } from "@/components/loaders";
 
 export const metadata: Metadata = {
   title: "Search",
-  description: "Search Élan womenswear by product, category, collection, or color.",
+  description: "Search evoflex activewear and lifestyle pieces by product, category, collection, or color.",
   alternates: { canonical: "/search" },
 };
 

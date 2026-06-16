@@ -3,7 +3,7 @@ import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact Élan client care for product, sizing, delivery, and order guidance.",
+  description: "Contact evoflex client care for product, sizing, delivery, and order guidance.",
   alternates: { canonical: "/contact" },
 };
 

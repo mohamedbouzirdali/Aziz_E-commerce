@@ -3,7 +3,7 @@ import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
   title: "Privacy",
-  description: "Read how Élan plans to handle customer privacy, cookies, and data rights.",
+  description: "Read how evoflex plans to handle customer privacy, cookies, and data rights.",
   alternates: { canonical: "/privacy" },
 };
 

@@ -33,6 +33,8 @@ const extensions: Record<string, string> = {
   "image/webp": "webp",
 };
 const maxFileSize = 10 * 1024 * 1024;
+const storefrontEditingEnabled =
+  process.env.NEXT_PUBLIC_ENABLE_STOREFRONT_EDITING === "true";
 
 async function getImageDimensions(file: File) {
   try {
@@ -64,6 +66,8 @@ export function AdminStorefrontControlsProvider({
   const [sectionIds, setSectionIds] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    if (!storefrontEditingEnabled) return;
+
     let active = true;
 
     async function loadAdminControls() {
@@ -114,6 +118,10 @@ export function AdminStorefrontControlsProvider({
     [isAdmin, sectionIds],
   );
 
+  if (!storefrontEditingEnabled) {
+    return children;
+  }
+
   return (
     <AdminStorefrontContext.Provider value={contextValue}>
       {children}
@@ -139,7 +147,7 @@ export function AdminSectionEditLink({
   const { isAdmin, sectionIds } = useContext(AdminStorefrontContext);
   const sectionId = sectionIds[sectionKey];
 
-  if (!isAdmin || !sectionId) return null;
+  if (!storefrontEditingEnabled || !isAdmin || !sectionId) return null;
 
   return (
     <Link
@@ -186,7 +194,7 @@ export function AdminEditableImage({
     [previewUrl],
   );
 
-  if (!isAdmin || !itemId) return children;
+  if (!storefrontEditingEnabled || !isAdmin || !itemId) return children;
   const editableItemId = itemId;
 
   function selectPreview(file: File | undefined) {

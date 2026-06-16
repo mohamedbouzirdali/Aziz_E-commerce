@@ -3,7 +3,7 @@ import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
   title: "Returns",
-  description: "Read the Élan returns guidance and sample 14-day return policy.",
+  description: "Read the evoflex returns guidance and sample 14-day return policy.",
   alternates: { canonical: "/returns" },
 };
 

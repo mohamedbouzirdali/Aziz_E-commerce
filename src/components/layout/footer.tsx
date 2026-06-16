@@ -6,37 +6,48 @@ const groups = [
     links: [
       ["New arrivals", "/shop?sort=newest"],
       ["Best sellers", "/shop?availability=best-seller"],
-      ["Dresses", "/shop?category=dresses"],
-      ["Tailoring", "/shop?category=tailoring"],
+      ["Leggings", "/shop?category=bottoms"],
+      ["Sports bras", "/shop?category=tops"],
       ["Tops", "/shop?category=tops"],
+      ["Sets", "/shop?category=sets"],
+      ["Jackets & outerwear", "/shop?category=tailoring"],
       ["Accessories", "/shop?category=accessories"],
     ],
   },
   {
     title: "Collections",
     links: [
-      ["New Form", "/shop?collection=new-form"],
-      ["Everyday Edit", "/shop?collection=everyday-edit"],
-      ["After Dark", "/shop?collection=after-dark"],
-      ["Boxes", "/boxes"],
+      ["Core Collection", "/shop?collection=everyday-edit"],
+      ["Sculpt Collection", "/shop?collection=new-form"],
+      ["Flow Collection", "/shop?collection=after-dark"],
+      ["Rest Collection", "/boxes"],
     ],
   },
   {
     title: "Lifestyle",
     links: [
-      ["About", "/about"],
-      ["FAQ", "/faq"],
-      ["Shipping", "/shipping"],
-      ["Returns", "/returns"],
+      ["Journal", "/about"],
+      ["Wellness", "/about"],
+      ["Training Guides", "/faq"],
+      ["Recipes", "/contact"],
+    ],
+  },
+  {
+    title: "About",
+    links: [
+      ["Our story", "/about"],
+      ["Sustainability", "/about"],
+      ["Careers", "/contact"],
     ],
   },
   {
     title: "Help",
     links: [
       ["Contact us", "/contact"],
-      ["Privacy", "/privacy"],
-      ["Account", "/account"],
-      ["Wishlist", "/wishlist"],
+      ["FAQ", "/faq"],
+      ["Shipping", "/shipping"],
+      ["Returns", "/returns"],
+      ["Size guide", "/faq"],
     ],
   },
 ];
@@ -47,10 +58,10 @@ export function Footer() {
       <div className="mx-auto grid max-w-[1600px] gap-12 lg:grid-cols-[1.3fr_2.7fr] lg:gap-16">
         <div className="max-w-sm">
           <Link href="/" className="font-serif text-[2.35rem] leading-none tracking-[0.02em]">
-            ÉLAN
+            evoflex
           </Link>
           <p className="mt-5 text-sm leading-7 text-black/66">
-            Premium womenswear for women building a lifestyle of confidence,
+            Premium activewear for women building a lifestyle of confidence,
             balance, and discipline.
           </p>
           <div className="mt-8 flex items-center gap-4 text-sm text-black/68">
@@ -81,7 +92,7 @@ export function Footer() {
       </div>
 
       <div className="mx-auto mt-12 flex max-w-[1600px] flex-col gap-3 border-t border-black/10 pt-5 text-[11px] text-black/46 sm:flex-row sm:items-center sm:justify-between">
-        <span>© 2026 ÉLAN. All rights reserved.</span>
+        <span>© 2024 evoflex. All rights reserved.</span>
         <div className="flex gap-5">
           <Link href="/privacy" className="transition-colors hover:text-black">
             Privacy Policy

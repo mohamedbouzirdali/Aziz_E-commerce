@@ -3,7 +3,7 @@ import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Discover Élan’s approach to contemporary womenswear, thoughtful proportion, and lasting versatility.",
+  description: "Discover evoflex’s approach to premium activewear, intentional living, and lasting versatility.",
   alternates: { canonical: "/about" },
 };
 
