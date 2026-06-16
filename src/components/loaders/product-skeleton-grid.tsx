@@ -11,7 +11,7 @@ export function ProductSkeletonGrid({
   return (
     <div
       role="status"
-      aria-label="Loading products"
+      aria-label="Chargement des produits"
       aria-busy="true"
       className={`grid grid-cols-1 gap-y-12 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-4 lg:gap-x-6 ${className}`}
     >
@@ -32,7 +32,7 @@ export function ProductSkeletonGrid({
           </div>
         </div>
       ))}
-      <span className="sr-only">Curating pieces</span>
+      <span className="sr-only">Sélection en cours</span>
     </div>
   );
 }

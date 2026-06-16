@@ -16,7 +16,7 @@ export function ColorSelector({
   const selected = value ?? internalSelected;
 
   return (
-    <div className="flex flex-wrap gap-3" role="group" aria-label="Select color">
+    <div className="flex flex-wrap gap-3" role="group" aria-label="Choisir une couleur">
       {colors.map((color) => {
         return (
           <button

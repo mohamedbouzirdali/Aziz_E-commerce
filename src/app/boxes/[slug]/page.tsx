@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: BoxPageProps): Promise<Metada
   if (!box) return { title: "Box" };
   return {
     title: { absolute: `${box.name} | ${siteConfig.name}` },
-    description: `${box.description} Save ${formatTnd(box.savingsTnd)} with this curated capsule.`,
+    description: `${box.description} Économisez ${formatTnd(box.savingsTnd)} avec cette capsule sélectionnée.`,
     alternates: { canonical: `/boxes/${box.slug}` },
     openGraph: {
       title: `${box.name} | ${siteConfig.name}`,
@@ -41,8 +41,8 @@ export default async function BoxPage({ params }: BoxPageProps) {
     <>
       <div className="page-shell py-5">
         <Breadcrumbs items={[
-          { label: "Home", href: "/" },
-          { label: "Boxes", href: "/boxes" },
+          { label: "Accueil", href: "/" },
+          { label: "Coffrets", href: "/boxes" },
           { label: box.name },
         ]} />
       </div>
@@ -54,7 +54,7 @@ export default async function BoxPage({ params }: BoxPageProps) {
           alt={box.placeholderImageLabel}
         />
         <div className="lg:py-8">
-          <p className="eyebrow">{box.occasion} edit · {included.length} pieces</p>
+          <p className="eyebrow">Édit {box.occasion.toLowerCase()} · {included.length} pièces</p>
           <h1 className="mt-4 font-serif text-4xl leading-none min-[390px]:text-5xl sm:text-6xl">{box.name}</h1>
           <p className="mt-6 text-sm leading-6 text-charcoal">{box.description}</p>
           <div className="mt-8 flex items-end gap-4 border-y border-border py-5">
@@ -63,11 +63,11 @@ export default async function BoxPage({ params }: BoxPageProps) {
               {formatTnd(box.individualTotalPriceTnd)}
             </p>
             <p className="ml-auto text-xs font-semibold uppercase tracking-[0.12em]">
-              Save {formatTnd(box.savingsTnd)}
+              Économisez {formatTnd(box.savingsTnd)}
             </p>
           </div>
           <div className="mt-7">
-            <p className="eyebrow">Inside the box</p>
+            <p className="eyebrow">Dans la box</p>
             <ol className="mt-4 divide-y divide-border border-y border-border">
               {included.map((product, index) => (
                 <li key={product.id} className="flex justify-between gap-5 py-4 text-sm">
@@ -77,15 +77,15 @@ export default async function BoxPage({ params }: BoxPageProps) {
               ))}
             </ol>
           </div>
-          <Button className="mt-8 w-full">Choose sizes</Button>
+          <Button className="mt-8 w-full">Choisir les tailles</Button>
           <p className="mt-3 text-center text-xs text-charcoal/60">
-            Size selection and box cart logic arrive in the next shopping-flow phase.
+            La sélection des tailles et la logique panier des boxes arriveront dans la prochaine phase du parcours d’achat.
           </p>
         </div>
       </div>
       <section className="border-t border-border bg-off-white py-16">
         <div className="page-shell">
-          <h2 className="font-serif text-4xl">Included pieces</h2>
+          <h2 className="font-serif text-4xl">Pièces incluses</h2>
           <div className="mt-8 grid grid-cols-1 gap-y-10 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-3 lg:gap-x-6">
             {included.map((product) => <ProductCard key={product.id} product={product} />)}
           </div>

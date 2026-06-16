@@ -7,6 +7,7 @@ import { QuickViewModal } from "@/components/commerce/quick-view-modal";
 import { useCommerce } from "@/components/providers/commerce-provider";
 import { Badge } from "@/components/ui/badge";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
+import { categories } from "@/data";
 import { formatTnd } from "@/lib/format";
 import type { Product } from "@/lib/types";
 
@@ -19,7 +20,9 @@ export function ProductCard({ product }: { product: Product }) {
   const saved = isWishlisted(product.id);
   const previewColor =
     product.colors.find((color) => color.id === previewColorId) ?? product.colors[0];
-  const categoryLabel = product.category.replaceAll("-", " ");
+  const categoryLabel =
+    categories.find((category) => category.slug === product.category)?.name ??
+    product.category.replaceAll("-", " ");
 
   return (
     <>
@@ -32,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
         className="group min-w-0"
       >
         <div className="relative overflow-hidden border border-black/10 bg-white">
-          <Link href={`/product/${product.slug}`} aria-label={`View ${product.name}`}>
+          <Link href={`/product/${product.slug}`} aria-label={`Voir ${product.name}`}>
             <ImagePlaceholder
               label={previewColor.imagePlaceholderLabel}
               ratio="portrait"
@@ -47,7 +50,7 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
           <button
             type="button"
-            aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name}`}
+            aria-label={saved ? `Retirer ${product.name} de la liste d’envies` : `Enregistrer ${product.name} dans la liste d’envies`}
             aria-pressed={saved}
             onClick={() => toggleWishlist(product.id)}
             className="absolute right-3 top-3 flex size-10 items-center justify-center rounded-full border border-black/10 bg-white/92 text-xl backdrop-blur transition-colors duration-300 hover:bg-black hover:text-white"
@@ -69,7 +72,7 @@ export function ProductCard({ product }: { product: Product }) {
               }}
               className="min-h-11 bg-[#fbf8f2] px-3 text-[10px] font-semibold uppercase tracking-[0.14em] hover:bg-white"
             >
-              Quick view
+              Aperçu rapide
             </button>
             <button
               type="button"
@@ -79,7 +82,7 @@ export function ProductCard({ product }: { product: Product }) {
               }}
               className="min-h-11 bg-black px-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-white"
             >
-              Add to bag
+              Ajouter
             </button>
           </div>
         </div>
@@ -102,7 +105,7 @@ export function ProductCard({ product }: { product: Product }) {
             <button
               key={color.id}
               type="button"
-              aria-label={`Preview ${product.name} in ${color.name}`}
+              aria-label={`Voir ${product.name} en ${color.name}`}
               aria-pressed={previewColorId === color.id}
               onMouseEnter={() => setPreviewColorId(color.id)}
               onFocus={() => setPreviewColorId(color.id)}
@@ -113,7 +116,7 @@ export function ProductCard({ product }: { product: Product }) {
             </button>
           ))}
           <span className="text-[9px] uppercase tracking-[0.1em] text-charcoal/45">
-            {product.colors.length} {product.colors.length === 1 ? "colour" : "colours"}
+            {product.colors.length} {product.colors.length === 1 ? "couleur" : "couleurs"}
           </span>
           <button
             type="button"
@@ -123,7 +126,7 @@ export function ProductCard({ product }: { product: Product }) {
             }}
             className="ml-auto min-h-9 px-1 text-[10px] font-semibold uppercase tracking-[0.12em] underline sm:hidden"
           >
-            Quick view
+            Aperçu rapide
           </button>
         </div>
       </motion.article>

@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "evoflex",
   url: "https://aziz-e-commerce.vercel.app",
   description:
-    "Premium activewear and lifestyle pieces for women building a life of confidence, balance, and discipline.",
+    "Des pièces premium d’activewear et de lifestyle pour les femmes qui construisent une vie de confiance, d’équilibre et de discipline.",
   ogImage: "/hero.png",
 };
 

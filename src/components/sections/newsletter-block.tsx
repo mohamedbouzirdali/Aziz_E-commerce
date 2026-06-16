@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export function NewsletterBlock({
   eyebrow = "Newsletter",
-  heading = "Join the ritual.",
+  heading = "Rejoignez le rituel.",
   body,
 }: {
   eyebrow?: string;
@@ -40,28 +40,28 @@ export function NewsletterBlock({
           onSubmit={submit}
           aria-busy={status === "loading"}
         >
-          <label htmlFor="newsletter-email" className="sr-only">Email address</label>
+          <label htmlFor="newsletter-email" className="sr-only">Adresse e-mail</label>
           <div>
             <input
               id="newsletter-email"
               type="email"
               required
               disabled={status !== "idle"}
-              placeholder="Enter your email"
+              placeholder="Entrez votre e-mail"
               className="min-h-12 w-full border border-black/10 bg-white/85 px-4 text-sm text-black outline-none placeholder:text-black/38 focus:border-black disabled:opacity-65"
             />
             <p className="mt-3 text-[11px] leading-5 text-black/42">
-              By subscribing, you agree to our Privacy Policy and Terms.
+              En vous inscrivant, vous acceptez notre politique de confidentialité et nos conditions.
             </p>
           </div>
           <Button
             type="submit"
             loading={status === "loading"}
-            loadingLabel="Joining…"
+            loadingLabel="Inscription…"
             disabled={status === "success"}
             className="min-w-[170px] border-[#1e1e1e] bg-[#1e1e1e] text-[#f8f5ef] before:bg-[#343434] hover:border-[#343434]"
           >
-            {status === "success" ? "You’re on the list" : "Join evoflex"}
+            {status === "success" ? "Vous êtes inscrite" : "Rejoindre evoflex"}
           </Button>
         </form>
       </div>

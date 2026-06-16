@@ -17,7 +17,7 @@ export function SizeSelector({
   const selected = value ?? internalSelected;
 
   return (
-    <div className="grid grid-cols-5 gap-2" role="group" aria-label="Select size">
+    <div className="grid grid-cols-5 gap-2" role="group" aria-label="Choisir une taille">
       {sizes.map((size) => {
         const unavailable = unavailableSizes.includes(size);
         return (

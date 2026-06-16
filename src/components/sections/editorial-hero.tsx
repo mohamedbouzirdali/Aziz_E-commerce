@@ -23,18 +23,18 @@ export type EditorialHeroImage = {
 
 const defaultImages: EditorialHeroImage[] = [
   {
-    label: "Premium activewear campaign",
+    label: "Campagne vestiaire sport premium",
     src: "/hero.png",
   },
 ];
 
 export function EditorialHero({
-  eyebrow = "Premium activewear",
-  heading = "Move with intention.",
-  body = "Premium activewear for women building a lifestyle of confidence, balance, and discipline.",
+  eyebrow = "Vestiaire sport premium",
+  heading = "Bougez avec intention.",
+  body = "Des pièces premium pour les femmes qui cultivent une vie de confiance, d’équilibre et de discipline.",
   images = defaultImages,
-  primaryCta = { href: "/shop?sort=newest", label: "Shop Collection" },
-  secondaryCta = { href: "#lifestyle", label: "Discover the Lifestyle" },
+  primaryCta = { href: "/shop?sort=newest", label: "Découvrir la collection" },
+  secondaryCta = { href: "#lifestyle", label: "Explorer l’univers" },
 }: {
   eyebrow?: string;
   heading?: string;

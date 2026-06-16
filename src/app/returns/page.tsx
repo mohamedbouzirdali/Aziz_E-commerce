@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
-  title: "Returns",
-  description: "Read the evoflex returns guidance and sample 14-day return policy.",
+  title: "Retours",
+  description: "Consultez les informations de retour evoflex et la politique indicative de retour sous 14 jours.",
   alternates: { canonical: "/returns" },
 };
 
 export default function ReturnsPage() {
   return (
     <PlaceholderPage
-      eyebrow="Client care"
-      title="Returns"
-      description="The mock policy allows returns within 14 days in original condition. Operational rules and the return flow will be finalized later."
+      eyebrow="Service client"
+      title="Retours"
+      description="La politique de démonstration autorise les retours sous 14 jours dans l’état d’origine. Les règles opérationnelles et le parcours de retour seront finalisés plus tard."
     />
   );
 }

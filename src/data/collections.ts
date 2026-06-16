@@ -4,19 +4,19 @@ export const collections: Collection[] = [
   {
     id: "col-new-form",
     slug: "new-form",
-    name: "New Form",
-    description: "A study in soft structure and modern proportion.",
+    name: "Nouvelle silhouette",
+    description: "Une étude de la structure souple et des proportions modernes.",
   },
   {
     id: "col-after-dark",
     slug: "after-dark",
-    name: "After Dark",
-    description: "Quietly expressive pieces for evening.",
+    name: "Après la tombée du jour",
+    description: "Des pièces subtilement expressives pour le soir.",
   },
   {
     id: "col-everyday-edit",
     slug: "everyday-edit",
-    name: "Everyday Edit",
-    description: "Elevated foundations for repeat wear.",
+    name: "Édit quotidien",
+    description: "Des essentiels raffinés à porter encore et encore.",
   },
 ];

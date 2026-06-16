@@ -19,14 +19,14 @@ import {
 } from "@/lib/homepage/content";
 
 export const metadata: Metadata = {
-  title: "evoflex | Premium Activewear and Lifestyle",
+  title: "evoflex | Sport et lifestyle premium",
   description:
-    "Premium activewear and lifestyle pieces for women building a life of confidence, balance, and discipline.",
+    "Des pièces premium de sport et de lifestyle pour les femmes qui construisent une vie de confiance, d’équilibre et de discipline.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "evoflex | Premium Activewear and Lifestyle",
+    title: "evoflex | Sport et lifestyle premium",
     description:
-      "Premium activewear and lifestyle pieces for women building a life of confidence, balance, and discipline.",
+      "Des pièces premium de sport et de lifestyle pour les femmes qui construisent une vie de confiance, d’équilibre et de discipline.",
     url: "/",
   },
 };
@@ -34,12 +34,12 @@ export const metadata: Metadata = {
 const heroFallbackImage = "/hero.png";
 
 const lifestyleFallbackImage =
-  "https://images.unsplash.com/photo-1506629905607-c52b1ea7d3f6?auto=format&fit=crop&w=1600&q=82";
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=82";
 
 const communityFallbackImages = [
   "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=1200&q=82",
   "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=82",
-  "https://images.unsplash.com/photo-1506629905607-c52b1ea7d3f6?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=82",
   "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
   "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=82",
   "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=82",
@@ -47,8 +47,8 @@ const communityFallbackImages = [
 
 const qualityFeatures = [
   {
-    title: "Soft-touch fabric",
-    body: "Buttery-soft feel with breathable performance.",
+    title: "Tissu doux",
+    body: "Une sensation soyeuse avec une respirabilité pensée pour le mouvement.",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden className="size-7">
         <path
@@ -63,8 +63,8 @@ const qualityFeatures = [
     ),
   },
   {
-    title: "Sculpting fit",
-    body: "Designed to support, smooth, and move with you.",
+    title: "Coupe sculptante",
+    body: "Conçue pour soutenir, lisser et accompagner chacun de vos gestes.",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden className="size-7">
         <path
@@ -79,8 +79,8 @@ const qualityFeatures = [
     ),
   },
   {
-    title: "Everyday comfort",
-    body: "Lightweight, flexible, and made to live in.",
+    title: "Confort quotidien",
+    body: "Léger, souple et imaginé pour être porté tous les jours.",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden className="size-7">
         <path
@@ -95,8 +95,8 @@ const qualityFeatures = [
     ),
   },
   {
-    title: "Designed to move with you",
-    body: "Thoughtful details for every workout and every day.",
+    title: "Pensé pour bouger avec vous",
+    body: "Des détails maîtrisés pour chaque séance et chaque journée.",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden className="size-7">
         <path
@@ -155,16 +155,24 @@ function communityGalleryItems(
 ) {
   return Array.from({ length: count }, (_, index) => {
     const item = items?.[index];
+    const rawLabel =
+      item?.media?.altText ||
+      item?.placeholder_label ||
+      item?.title_override ||
+      `Image communauté ${index + 1}`;
+    const labelMap: Record<string, string> = {
+      "Relaxed weekend styling": "Silhouette week-end décontractée",
+      "Modern office tailoring": "Tailleur de bureau moderne",
+      "Evening silhouettes": "Silhouettes du soir",
+      "Soft tailoring details": "Détails de tailleur souple",
+      "Travel capsule wardrobe": "Vestiaire capsule de voyage",
+    };
 
     return {
       id: item?.id ?? `community-${index}`,
       itemId: item?.id,
       href: item?.cta_href || "/shop",
-      label:
-        item?.media?.altText ||
-        item?.placeholder_label ||
-        item?.title_override ||
-        `Community image ${index + 1}`,
+      label: labelMap[rawLabel] ?? rawLabel,
       src: item?.media?.url || communityFallbackImages[index],
     };
   });
@@ -185,7 +193,7 @@ export default async function HomePage() {
   const lifestyleItem = lifestyleSection?.items[0];
   const heroImages: EditorialHeroImage[] = [
     {
-      label: "Premium activewear campaign",
+      label: "Campagne vestiaire sport premium",
       src: heroFallbackImage,
     },
   ];
@@ -198,14 +206,14 @@ export default async function HomePage() {
       <main className="bg-[#fbf8f2] text-[#1e1e1e]">
         <div className="relative">
           <EditorialHero
-            eyebrow="Premium activewear"
-            heading="Move with intention."
-            body="Premium activewear for women building a lifestyle of confidence, balance, and discipline."
+            eyebrow="Vestiaire sport premium"
+            heading="Bougez avec intention."
+            body="Des pièces premium pour les femmes qui cultivent une vie de confiance, d’équilibre et de discipline."
             images={heroImages}
-            primaryCta={{ href: "/shop?sort=newest", label: "Shop Collection" }}
+            primaryCta={{ href: "/shop?sort=newest", label: "Découvrir la collection" }}
             secondaryCta={{
               href: "#lifestyle",
-              label: "Discover the Lifestyle",
+              label: "Explorer l’univers",
             }}
           />
         </div>
@@ -213,22 +221,22 @@ export default async function HomePage() {
         <section className="page-shell border-b border-black/10 py-12 sm:py-16">
           <Reveal className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-start">
             <div className="max-w-xl">
-              <p className="eyebrow text-black/55">Our philosophy</p>
+              <p className="eyebrow text-black/55">Notre philosophie</p>
               <h2 className="mt-4 max-w-md font-serif text-4xl leading-[0.96] sm:text-5xl">
-                Movement is more than exercise.
+                Le mouvement est plus qu’un exercice.
               </h2>
             </div>
             <div className="max-w-2xl lg:justify-self-end">
               <p className="text-sm leading-7 text-black/70 sm:text-base">
-                It&apos;s how we show up for ourselves — mind, body, and life. We
-                design pieces that support your goals, elevate your routine, and
-                move with you through every season of becoming.
+                C’est une manière d’être présente à soi-même, dans le corps comme
+                dans la vie. Nous créons des pièces qui soutiennent vos objectifs,
+                élèvent votre routine et vous accompagnent à chaque étape.
               </p>
               <Link
                 href="/about"
                 className="mt-6 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition-colors hover:text-black/65"
               >
-                Learn more about evoflex <span aria-hidden>→</span>
+                En savoir plus sur evoflex <span aria-hidden>→</span>
               </Link>
             </div>
           </Reveal>
@@ -241,11 +249,11 @@ export default async function HomePage() {
                 {sectionTextIgnoringLegacy(
                   featuredSection,
                   "eyebrow",
-                  "Featured collection",
+                  "Collection phare",
                   {
-                    eyebrow: "Just arrived",
-                    heading: "New forms",
-                    body: "Only a focused row of products lives on the homepage. The rest of the page keeps the brand image-led.",
+                    eyebrow: ["Tout juste arrivé", "Just arrived", "Featured collection"],
+                    heading: ["Nouvelles silhouettes", "New forms", "Elevated essentials for every move."],
+                    body: "Seule une ligne resserrée de produits apparaît sur l’accueil. Le reste de la page reste guidé par l’image.",
                   },
                 )}
               </p>
@@ -253,11 +261,11 @@ export default async function HomePage() {
                 {sectionTextIgnoringLegacy(
                   featuredSection,
                   "heading",
-                  "Elevated essentials for every move.",
+                  "Des essentiels raffinés pour chaque mouvement.",
                   {
-                    eyebrow: "Just arrived",
-                    heading: "New forms",
-                    body: "Only a focused row of products lives on the homepage. The rest of the page keeps the brand image-led.",
+                    eyebrow: ["Tout juste arrivé", "Just arrived", "Featured collection"],
+                    heading: ["Nouvelles silhouettes", "New forms", "Elevated essentials for every move."],
+                    body: "Seule une ligne resserrée de produits apparaît sur l’accueil. Le reste de la page reste guidé par l’image.",
                   },
                 )}
               </h2>
@@ -266,7 +274,7 @@ export default async function HomePage() {
               href="/shop"
               className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition-colors hover:text-black/65"
             >
-              Shop all <span aria-hidden>→</span>
+              Tout voir <span aria-hidden>→</span>
             </Link>
           </Reveal>
 
@@ -287,13 +295,13 @@ export default async function HomePage() {
                 label={
                   lifestyleItem?.media?.altText ||
                   lifestyleItem?.placeholder_label ||
-                  "Lifestyle editorial image"
+                  "Image éditoriale lifestyle"
                 }
                 src={lifestyleItem?.media?.url || lifestyleFallbackImage}
                 alt={
                   lifestyleItem?.media?.altText ||
                   lifestyleItem?.placeholder_label ||
-                  "Lifestyle editorial image"
+                  "Image éditoriale lifestyle"
                 }
                 ratio="landscape"
                 className="h-full min-h-[300px] border-b border-black/10 lg:min-h-[460px] lg:border-b-0 lg:border-r"
@@ -303,11 +311,15 @@ export default async function HomePage() {
                   {sectionTextIgnoringLegacy(
                     lifestyleSection,
                     "eyebrow",
-                    "Lifestyle",
+                    "Univers",
                     {
-                      eyebrow: "The journal · Study 01",
-                      heading: "The architecture of ease.",
-                      body: "Fluid tailoring and clean foundations, designed to hold their shape while leaving space for yours.",
+                      eyebrow: ["Le journal · Étude 01", "The journal · Study 01", "Lifestyle"],
+                      heading: ["L’architecture de l’aisance.", "The architecture of ease.", "More than activewear."],
+                      body: [
+                        "Un tailoring fluide et des bases nettes, conçus pour garder leur tenue tout en laissant de l’espace à la vôtre.",
+                        "Fluid tailoring and clean foundations, designed to hold their shape while leaving space for yours.",
+                        "We believe in balance — strong bodies, clear minds, and lives that feel aligned. evoflex is here to inspire the routines, rituals, and moments that make you feel your best.",
+                      ],
                     },
                   )}
                 </p>
@@ -315,11 +327,15 @@ export default async function HomePage() {
                   {sectionTextIgnoringLegacy(
                     lifestyleSection,
                     "heading",
-                    "More than activewear.",
+                    "Bien plus que le sport.",
                     {
-                      eyebrow: "The journal · Study 01",
-                      heading: "The architecture of ease.",
-                      body: "Fluid tailoring and clean foundations, designed to hold their shape while leaving space for yours.",
+                      eyebrow: ["Le journal · Étude 01", "The journal · Study 01", "Lifestyle"],
+                      heading: ["L’architecture de l’aisance.", "The architecture of ease.", "More than activewear."],
+                      body: [
+                        "Un tailoring fluide et des bases nettes, conçus pour garder leur tenue tout en laissant de l’espace à la vôtre.",
+                        "Fluid tailoring and clean foundations, designed to hold their shape while leaving space for yours.",
+                        "We believe in balance — strong bodies, clear minds, and lives that feel aligned. evoflex is here to inspire the routines, rituals, and moments that make you feel your best.",
+                      ],
                     },
                   )}
                 </h2>
@@ -327,11 +343,15 @@ export default async function HomePage() {
                   {sectionTextIgnoringLegacy(
                     lifestyleSection,
                     "body",
-                    "We believe in balance — strong bodies, clear minds, and lives that feel aligned. evoflex is here to inspire the routines, rituals, and moments that make you feel your best.",
+                    "Nous croyons à l’équilibre — des corps forts, des esprits clairs et des vies alignées. evoflex est là pour inspirer les routines, les rituels et les moments où l’on se sent le mieux.",
                     {
-                      eyebrow: "The journal · Study 01",
-                      heading: "The architecture of ease.",
-                      body: "Fluid tailoring and clean foundations, designed to hold their shape while leaving space for yours.",
+                      eyebrow: ["Le journal · Étude 01", "The journal · Study 01", "Lifestyle"],
+                      heading: ["L’architecture de l’aisance.", "The architecture of ease.", "More than activewear."],
+                      body: [
+                        "Un tailoring fluide et des bases nettes, conçus pour garder leur tenue tout en laissant de l’espace à la vôtre.",
+                        "Fluid tailoring and clean foundations, designed to hold their shape while leaving space for yours.",
+                        "We believe in balance — strong bodies, clear minds, and lives that feel aligned. evoflex is here to inspire the routines, rituals, and moments that make you feel your best.",
+                      ],
                     },
                   )}
                 </p>
@@ -339,7 +359,7 @@ export default async function HomePage() {
                   href="/about"
                   className="mt-8 inline-flex w-fit items-center gap-3 bg-[#8d9684] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#75806b]"
                 >
-                  Discover the lifestyle <span aria-hidden>→</span>
+                  Explorer l’univers <span aria-hidden>→</span>
                 </Link>
               </div>
             </Reveal>
@@ -371,9 +391,9 @@ export default async function HomePage() {
           <div className="relative">
             <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-3xl">
-                <p className="eyebrow text-black/55">Community</p>
+                <p className="eyebrow text-black/55">Communauté</p>
                 <h2 className="mt-3 font-serif text-4xl leading-[0.96] sm:text-5xl">
-                  Worn by women building their best selves.
+                  Porté par des femmes qui cultivent le meilleur d’elles-mêmes.
                 </h2>
               </div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-black/65">
@@ -386,7 +406,7 @@ export default async function HomePage() {
                 <Link
                   key={image.id}
                   href={image.href}
-                  aria-label={`Explore ${image.label}`}
+                  aria-label={`Explorer ${image.label}`}
                 >
                   <ImagePlaceholder
                     label={image.label}
@@ -410,29 +430,41 @@ export default async function HomePage() {
                 "eyebrow",
                 "Newsletter",
                 {
-                  eyebrow: ["Private notes from evoflex", "Private notes from ÉLAN"],
-                  heading: "A considered inbox.",
-                  body: "New arrivals, editorial stories, and private offers, sent with restraint.",
+                  eyebrow: ["Notes privées d’evoflex", "Notes privées d’ÉLAN", "Private notes from evoflex", "Private notes from ÉLAN", "Newsletter"],
+                  heading: ["Une boîte mail réfléchie.", "A considered inbox.", "Join the ritual."],
+                  body: [
+                    "Nouveautés, récits éditoriaux et offres privées, envoyés avec mesure.",
+                    "New arrivals, editorial stories, and private offers, sent with restraint.",
+                    "Get early access to new drops, exclusive offers, and inspiration for a life in motion.",
+                  ],
                 },
               )}
               heading={sectionTextIgnoringLegacy(
                 newsletterSection,
                 "heading",
-                "Join the ritual.",
+                "Rejoignez le rituel.",
                 {
-                  eyebrow: ["Private notes from evoflex", "Private notes from ÉLAN"],
-                  heading: "A considered inbox.",
-                  body: "New arrivals, editorial stories, and private offers, sent with restraint.",
+                  eyebrow: ["Notes privées d’evoflex", "Notes privées d’ÉLAN", "Private notes from evoflex", "Private notes from ÉLAN", "Newsletter"],
+                  heading: ["Une boîte mail réfléchie.", "A considered inbox.", "Join the ritual."],
+                  body: [
+                    "Nouveautés, récits éditoriaux et offres privées, envoyés avec mesure.",
+                    "New arrivals, editorial stories, and private offers, sent with restraint.",
+                    "Get early access to new drops, exclusive offers, and inspiration for a life in motion.",
+                  ],
                 },
               )}
               body={sectionTextIgnoringLegacy(
                 newsletterSection,
                 "body",
-                "Get early access to new drops, exclusive offers, and inspiration for a life in motion.",
+                "Accédez en avant-première aux nouveaux lancements, aux offres exclusives et à l’inspiration d’une vie en mouvement.",
                 {
-                  eyebrow: ["Private notes from evoflex", "Private notes from ÉLAN"],
-                  heading: "A considered inbox.",
-                  body: "New arrivals, editorial stories, and private offers, sent with restraint.",
+                  eyebrow: ["Notes privées d’evoflex", "Notes privées d’ÉLAN", "Private notes from evoflex", "Private notes from ÉLAN", "Newsletter"],
+                  heading: ["Une boîte mail réfléchie.", "A considered inbox.", "Join the ritual."],
+                  body: [
+                    "Nouveautés, récits éditoriaux et offres privées, envoyés avec mesure.",
+                    "New arrivals, editorial stories, and private offers, sent with restraint.",
+                    "Get early access to new drops, exclusive offers, and inspiration for a life in motion.",
+                  ],
                 },
               )}
             />

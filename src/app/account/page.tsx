@@ -5,16 +5,16 @@ import { PageIntro } from "@/components/sections/page-intro";
 import { safeRedirectPath } from "@/lib/auth/redirect";
 import { getAuthContext } from "@/lib/auth/session";
 
-export const metadata: Metadata = { title: "Account" };
+export const metadata: Metadata = { title: "Compte" };
 
 const noticeMessages: Record<string, string> = {
-  "sign-in-required": "Sign in to continue to the admin workspace.",
-  "staff-required": "This account does not have staff access.",
+  "sign-in-required": "Connectez-vous pour accéder à l’espace d’administration.",
+  "staff-required": "Ce compte ne dispose pas d’un accès équipe.",
   "admin-not-configured":
-    "Admin roles will be available after the hosted database migration is applied.",
+    "Les rôles d’administration seront disponibles une fois la migration de la base hébergée appliquée.",
   "confirmation-failed":
-    "That confirmation link is invalid or expired. Request a new one.",
-  "password-updated": "Your password was updated successfully.",
+    "Ce lien de confirmation est invalide ou expiré. Demandez-en un nouveau.",
+  "password-updated": "Votre mot de passe a bien été mis à jour.",
 };
 
 export default async function AccountPage({
@@ -35,14 +35,14 @@ export default async function AccountPage({
   return (
     <>
       <PageIntro
-      eyebrow="Client account"
-        title={auth ? "Welcome back" : "Your account"}
+      eyebrow="Compte client"
+        title={auth ? "Heureuse de vous revoir" : "Votre compte"}
         description={
           auth
-            ? "Manage your ÉLAN access and move between saved pieces and staff tools."
-            : "Sign in or create an account for a more considered shopping experience."
+            ? "Gérez votre accès evoflex et passez de vos pièces enregistrées aux outils équipe."
+            : "Connectez-vous ou créez un compte pour une expérience d’achat plus fluide."
         }
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Account" }]}
+        breadcrumbs={[{ label: "Accueil", href: "/" }, { label: "Compte" }]}
       />
       <div className="page-shell py-12 lg:py-20">
         {auth ? (

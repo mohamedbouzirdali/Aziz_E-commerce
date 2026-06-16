@@ -2,52 +2,52 @@ import Link from "next/link";
 
 const groups = [
   {
-    title: "Shop",
+    title: "Boutique",
     links: [
-      ["New arrivals", "/shop?sort=newest"],
-      ["Best sellers", "/shop?availability=best-seller"],
+      ["Nouveautés", "/shop?sort=newest"],
+      ["Meilleures ventes", "/shop?availability=best-seller"],
       ["Leggings", "/shop?category=bottoms"],
-      ["Sports bras", "/shop?category=tops"],
-      ["Tops", "/shop?category=tops"],
-      ["Sets", "/shop?category=sets"],
-      ["Jackets & outerwear", "/shop?category=tailoring"],
-      ["Accessories", "/shop?category=accessories"],
+      ["Brassières", "/shop?category=tops"],
+      ["Hauts", "/shop?category=tops"],
+      ["Ensembles", "/shop?category=sets"],
+      ["Vestes & extérieur", "/shop?category=tailoring"],
+      ["Accessoires", "/shop?category=accessories"],
     ],
   },
   {
     title: "Collections",
     links: [
-      ["Core Collection", "/shop?collection=everyday-edit"],
-      ["Sculpt Collection", "/shop?collection=new-form"],
-      ["Flow Collection", "/shop?collection=after-dark"],
-      ["Rest Collection", "/boxes"],
+      ["Collection essentielle", "/shop?collection=everyday-edit"],
+      ["Collection Sculpt", "/shop?collection=new-form"],
+      ["Collection Flow", "/shop?collection=after-dark"],
+      ["Collection Repos", "/boxes"],
     ],
   },
   {
-    title: "Lifestyle",
+    title: "Univers",
     links: [
       ["Journal", "/about"],
-      ["Wellness", "/about"],
-      ["Training Guides", "/faq"],
-      ["Recipes", "/contact"],
+      ["Bien-être", "/about"],
+      ["Guides d’entraînement", "/faq"],
+      ["Recettes", "/contact"],
     ],
   },
   {
-    title: "About",
+    title: "À propos",
     links: [
-      ["Our story", "/about"],
-      ["Sustainability", "/about"],
-      ["Careers", "/contact"],
+      ["Notre histoire", "/about"],
+      ["Durabilité", "/about"],
+      ["Carrières", "/contact"],
     ],
   },
   {
-    title: "Help",
+    title: "Aide",
     links: [
-      ["Contact us", "/contact"],
+      ["Nous contacter", "/contact"],
       ["FAQ", "/faq"],
-      ["Shipping", "/shipping"],
-      ["Returns", "/returns"],
-      ["Size guide", "/faq"],
+      ["Livraison", "/shipping"],
+      ["Retours", "/returns"],
+      ["Guide des tailles", "/faq"],
     ],
   },
 ];
@@ -61,8 +61,8 @@ export function Footer() {
             evoflex
           </Link>
           <p className="mt-5 text-sm leading-7 text-black/66">
-            Premium activewear for women building a lifestyle of confidence,
-            balance, and discipline.
+            Des vêtements premium pour les femmes qui cultivent une vie de
+            confiance, d’équilibre et de discipline.
           </p>
           <div className="mt-8 flex items-center gap-4 text-sm text-black/68">
             <span>Instagram</span>
@@ -79,7 +79,7 @@ export function Footer() {
               </p>
               <ul className="mt-4 space-y-3 text-sm text-black/72">
                 {group.links.map(([label, href]) => (
-                  <li key={href}>
+                  <li key={`${group.title}-${label}`}>
                     <Link className="transition-colors hover:text-black" href={href}>
                       {label}
                     </Link>
@@ -92,13 +92,13 @@ export function Footer() {
       </div>
 
       <div className="mx-auto mt-12 flex max-w-[1600px] flex-col gap-3 border-t border-black/10 pt-5 text-[11px] text-black/46 sm:flex-row sm:items-center sm:justify-between">
-        <span>© 2024 evoflex. All rights reserved.</span>
+        <span>© 2024 evoflex. Tous droits réservés.</span>
         <div className="flex gap-5">
           <Link href="/privacy" className="transition-colors hover:text-black">
-            Privacy Policy
+            Politique de confidentialité
           </Link>
           <Link href="/privacy" className="transition-colors hover:text-black">
-            Terms of Service
+            Conditions d’utilisation
           </Link>
         </div>
       </div>

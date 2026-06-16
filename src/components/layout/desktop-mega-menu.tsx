@@ -51,7 +51,7 @@ export function DesktopMegaMenu() {
         onFocus={() => setOpen(true)}
         className="h-full px-4 text-xs uppercase tracking-[0.15em] transition-colors hover:bg-off-white"
       >
-        Shop
+        Boutique
       </button>
       <div
         id="desktop-shop-menu"
@@ -64,19 +64,19 @@ export function DesktopMegaMenu() {
       >
         <div className="mx-auto grid max-w-7xl grid-cols-[0.75fr_1fr_0.8fr_1fr] gap-12 px-12 py-10">
           <div>
-            <p className="eyebrow">Featured</p>
+            <p className="eyebrow">À la une</p>
             <ul className="mt-5 space-y-3">
-              <li><Link className="nav-link font-medium" href="/shop?sort=newest" onClick={close}>New arrivals</Link></li>
-              <li><Link className="nav-link font-medium" href="/shop?availability=best-seller" onClick={close}>Best sellers</Link></li>
-              <li><Link className="nav-link" href="/shop?collection=everyday-edit" onClick={close}>Everyday edit</Link></li>
-              <li><Link className="nav-link" href="/boxes" onClick={close}>Matching capsules</Link></li>
+              <li><Link className="nav-link font-medium" href="/shop?sort=newest" onClick={close}>Nouveautés</Link></li>
+              <li><Link className="nav-link font-medium" href="/shop?availability=best-seller" onClick={close}>Meilleures ventes</Link></li>
+              <li><Link className="nav-link" href="/shop?collection=everyday-edit" onClick={close}>Édit quotidien</Link></li>
+              <li><Link className="nav-link" href="/boxes" onClick={close}>Capsules assorties</Link></li>
             </ul>
           </div>
           <div>
-            <p className="eyebrow">Shop by category</p>
+            <p className="eyebrow">Par catégorie</p>
             <ul className="mt-5 grid grid-cols-2 gap-x-8 gap-y-3">
               <li>
-                <Link className="nav-link" href="/shop" onClick={close}>View all</Link>
+                <Link className="nav-link" href="/shop" onClick={close}>Voir tout</Link>
               </li>
               {categories.map((category) => (
                 <li key={category.id}>
@@ -100,13 +100,13 @@ export function DesktopMegaMenu() {
             </ul>
           </div>
           <div className="border border-border bg-off-white p-6">
-            <p className="eyebrow">Build the wardrobe</p>
-            <h3 className="mt-3 font-serif text-3xl">The Capsule Edit</h3>
+            <p className="eyebrow">Composer la silhouette</p>
+            <h3 className="mt-3 font-serif text-3xl">L’édit capsule</h3>
             <p className="mt-3 text-sm leading-6 text-charcoal">
-              Complete looks with individual size selection and considered savings.
+              Des silhouettes complètes, avec choix des tailles et avantage réfléchi.
             </p>
             <Link className="mt-6 inline-block text-xs font-semibold uppercase tracking-[0.16em] underline" href="/boxes" onClick={close}>
-              Explore boxes
+              Explorer les coffrets
             </Link>
           </div>
         </div>

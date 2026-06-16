@@ -4,14 +4,14 @@ import { SearchExperience } from "@/components/search/search-experience";
 import { FullPageLoader } from "@/components/loaders";
 
 export const metadata: Metadata = {
-  title: "Search",
-  description: "Search evoflex activewear and lifestyle pieces by product, category, collection, or color.",
+  title: "Recherche",
+  description: "Recherchez les pièces sport et lifestyle evoflex par produit, catégorie, collection ou couleur.",
   alternates: { canonical: "/search" },
 };
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<FullPageLoader label="Finding your pieces" fullScreen={false} />}>
+    <Suspense fallback={<FullPageLoader label="Recherche de vos pièces" fullScreen={false} />}>
       <SearchExperience />
     </Suspense>
   );

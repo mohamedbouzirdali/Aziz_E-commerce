@@ -3,27 +3,27 @@ import { PlaceholderPage } from "@/components/sections/placeholder-page";
 import { Accordion } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions",
-  description: "Answers about evoflex sizing, delivery in Tunisia, returns, and the shopping experience.",
+  title: "Questions fréquentes",
+  description: "Des réponses sur les tailles evoflex, la livraison en Tunisie, les retours et l’expérience d’achat.",
   alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {
   return (
     <PlaceholderPage
-      eyebrow="Client care"
-      title="Frequently asked questions"
-      description="A concise home for the practical details customers need before and after purchasing."
+      eyebrow="Service client"
+      title="Questions fréquentes"
+      description="Un espace clair pour les informations pratiques dont les clientes ont besoin avant et après l’achat."
     >
       <div className="mx-auto max-w-3xl border-t border-border">
-        <Accordion title="Where do you deliver?" defaultOpen>
-          The MVP is prepared for delivery across Tunisia. Final regions, fees, and timing will be confirmed before launch.
+        <Accordion title="Où livrez-vous ?" defaultOpen>
+          La MVP est préparée pour une livraison dans toute la Tunisie. Les zones finales, les frais et les délais seront confirmés avant le lancement.
         </Accordion>
-        <Accordion title="How do I choose my size?">
-          Product pages expose a size guide entry point and unavailable options. Final measurements will follow the product catalog.
+        <Accordion title="Comment choisir ma taille ?">
+          Les pages produit proposent un accès au guide des tailles et signalent les options indisponibles. Les mesures finales suivront le catalogue produit.
         </Accordion>
-        <Accordion title="Can I return an item?">
-          The mock catalog uses a 14-day return window. Final policy language requires operational approval.
+        <Accordion title="Puis-je retourner un article ?">
+          Le catalogue de démonstration prévoit un délai de retour de 14 jours. Le texte final de la politique dépendra de la validation opérationnelle.
         </Accordion>
       </div>
     </PlaceholderPage>

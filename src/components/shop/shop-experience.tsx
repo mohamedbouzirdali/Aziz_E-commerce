@@ -15,17 +15,17 @@ const arrayKeys = ["category", "size", "color", "availability", "collection"] as
 type ArrayKey = (typeof arrayKeys)[number];
 
 const availabilityOptions = [
-  ["in-stock", "In stock"],
-  ["new", "New arrivals"],
-  ["best-seller", "Best sellers"],
-  ["limited", "Limited"],
+  ["in-stock", "En stock"],
+  ["new", "Nouveautés"],
+  ["best-seller", "Meilleures ventes"],
+  ["limited", "Édition limitée"],
 ] as const;
 
 const sortOptions = [
-  ["recommended", "Recommended"],
-  ["newest", "Newest"],
-  ["price-low", "Price Low–High"],
-  ["price-high", "Price High–Low"],
+  ["recommended", "Recommandé"],
+  ["newest", "Plus récent"],
+  ["price-low", "Prix croissant"],
+  ["price-high", "Prix décroissant"],
 ] as const;
 
 const productsPerPage = 20;
@@ -101,7 +101,7 @@ export function ShopExperience() {
           if (status === "in-stock") return product.availability !== "out-of-stock";
           if (status === "new") return product.isNew;
           if (status === "best-seller") return product.isBestSeller;
-          if (status === "limited") return product.badges.some((badge) => badge.toLowerCase() === "limited");
+          if (status === "limited") return product.badges.some((badge) => ["limited", "édition limitée"].includes(badge.toLowerCase()));
           return false;
         });
         if (!matches) return false;
@@ -166,10 +166,10 @@ export function ShopExperience() {
   return (
     <>
       <PageIntro
-        eyebrow="The collection"
-        title="Shop all"
-        description="A concise wardrobe of contemporary dresses, tailoring, separates, and considered accessories."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Shop" }]}
+        eyebrow="La collection"
+        title="Tout voir"
+        description="Une garde-robe concise de robes contemporaines, de pièces tailleur, de séparables et d’accessoires choisis avec soin."
+        breadcrumbs={[{ label: "Accueil", href: "/" }, { label: "Boutique" }]}
       />
       <div ref={listingRef} className="sticky top-16 z-20 scroll-mt-16 border-b border-border bg-white lg:top-[72px] lg:scroll-mt-[72px]">
         <div className="page-shell flex min-h-14 items-center justify-between gap-2 py-2">
@@ -184,11 +184,11 @@ export function ShopExperience() {
               <span className="h-px w-3/4 bg-current" />
               <span className="h-px w-1/2 bg-current" />
             </span>
-            Filters <span className="text-current/60">({activeFilters.length})</span>
+            Filtres <span className="text-current/60">({activeFilters.length})</span>
           </button>
-          <p className="hidden text-xs text-charcoal/60 sm:block">{filteredProducts.length} pieces</p>
+          <p className="hidden text-xs text-charcoal/60 sm:block">{filteredProducts.length} pièces</p>
           <label className="flex min-w-0 items-center gap-2 text-[10px] uppercase tracking-[0.1em] min-[390px]:text-xs min-[390px]:tracking-[0.12em]">
-            <span className="hidden sm:inline">Sort</span>
+            <span className="hidden sm:inline">Trier</span>
             <select
               value={searchParams.get("sort") ?? "recommended"}
               onChange={(event) => updateParams((params) => params.set("sort", event.target.value))}
@@ -203,7 +203,7 @@ export function ShopExperience() {
       <div className="page-shell py-8 lg:py-12" aria-busy={isPending}>
         {isPending && (
           <div className="mb-5 flex justify-end">
-            <InlineLoader label="Updating edit" />
+            <InlineLoader label="Mise à jour de la sélection" />
           </div>
         )}
         {activeFilters.length > 0 && (
@@ -215,10 +215,10 @@ export function ShopExperience() {
                 onClick={() => removeFilter(filter.key, filter.value)}
                 className="border border-border bg-off-white px-3 py-2 text-[10px] uppercase tracking-[0.12em] text-black transition-colors hover:border-black hover:bg-black hover:text-white"
               >
-                {filter.key === "priceMin" ? `From ${filter.value} TND` : filter.key === "priceMax" ? `To ${filter.value} TND` : filter.value.replaceAll("-", " ")} ×
+                {filter.key === "priceMin" ? `À partir de ${filter.value} TND` : filter.key === "priceMax" ? `Jusqu’à ${filter.value} TND` : filter.value.replaceAll("-", " ")} ×
               </button>
             ))}
-            <button type="button" onClick={clearAll} className="ml-2 text-xs underline">Clear all</button>
+            <button type="button" onClick={clearAll} className="ml-2 text-xs underline">Tout effacer</button>
           </div>
         )}
 
@@ -227,17 +227,17 @@ export function ShopExperience() {
             {paginatedProducts.map((product) => <ProductCard key={product.id} product={product} />)}
           </div>
         ) : (
-          <EmptyState
-            title="No pieces match your filters."
-            description="Try removing one or more filters to see more pieces."
-            actionLabel="Clear filters"
+            <EmptyState
+            title="Aucune pièce ne correspond à vos filtres."
+            description="Essayez de retirer un ou plusieurs filtres pour voir davantage de pièces."
+            actionLabel="Effacer les filtres"
             actionHref="/shop"
           />
         )}
         {filteredProducts.length > productsPerPage && (
           <nav
             className="mt-14 flex flex-wrap items-center justify-center gap-2 border-t border-border pt-8"
-            aria-label="Product pagination"
+            aria-label="Pagination des produits"
           >
             <button
               type="button"
@@ -245,13 +245,13 @@ export function ShopExperience() {
               disabled={currentPage === 1 || isPending}
               className="min-h-11 border border-border px-4 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors hover:border-black hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
             >
-              Previous
+              Précédent
             </button>
             {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
               <button
                 key={page}
                 type="button"
-                aria-label={`Go to product page ${page}`}
+                aria-label={`Aller à la page produit ${page}`}
                 aria-current={page === currentPage ? "page" : undefined}
                 onClick={() => goToPage(page)}
                 disabled={isPending}
@@ -270,7 +270,7 @@ export function ShopExperience() {
               disabled={currentPage === totalPages || isPending}
               className="min-h-11 border border-border px-4 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors hover:border-black hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
             >
-              Next
+              Suivant
             </button>
           </nav>
         )}
@@ -281,7 +281,7 @@ export function ShopExperience() {
           <>
             <motion.button
               type="button"
-              aria-label="Close filters"
+              aria-label="Fermer les filtres"
               className="fixed inset-0 z-[60] bg-black/40"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -292,7 +292,7 @@ export function ShopExperience() {
               ref={filterDialog.dialogRef}
               role="dialog"
               aria-modal="true"
-              aria-label="Product filters"
+              aria-label="Filtres produits"
               className="fixed inset-y-0 left-0 z-[61] flex w-full flex-col bg-white sm:max-w-md"
               initial={reduceMotion ? false : { x: "-100%" }}
               animate={{ x: 0 }}
@@ -300,31 +300,31 @@ export function ShopExperience() {
               transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 min-[390px]:px-5">
-                <h2 className="font-serif text-2xl">Filter the collection</h2>
-                <button type="button" onClick={closeDrawer} aria-label="Close filters" className="size-10 text-2xl">×</button>
+                <h2 className="font-serif text-2xl">Filtrer la collection</h2>
+                <button type="button" onClick={closeDrawer} aria-label="Fermer les filtres" className="size-10 text-2xl">×</button>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 min-[390px]:p-5">
-                <FilterGroup title="Category" options={categories.map((item) => [item.slug, item.name])} selected={values(searchParams, "category")} onToggle={(value) => toggleValue("category", value)} />
-                <FilterGroup title="Size" options={sizes.map((item) => [item.id, item.label])} selected={values(searchParams, "size")} onToggle={(value) => toggleValue("size", value)} />
-                <FilterGroup title="Color" options={colors.map((item) => [item.id, item.name])} selected={values(searchParams, "color")} onToggle={(value) => toggleValue("color", value)} colors />
+                <FilterGroup title="Catégorie" options={categories.map((item) => [item.slug, item.name])} selected={values(searchParams, "category")} onToggle={(value) => toggleValue("category", value)} />
+                <FilterGroup title="Taille" options={sizes.map((item) => [item.id, item.label])} selected={values(searchParams, "size")} onToggle={(value) => toggleValue("size", value)} />
+                <FilterGroup title="Couleur" options={colors.map((item) => [item.id, item.name])} selected={values(searchParams, "color")} onToggle={(value) => toggleValue("color", value)} colors />
                 <div className="border-b border-border py-5">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.14em]">Price range</h3>
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.14em]">Fourchette de prix</h3>
                   <div className="mt-4 grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
                     <label className="text-xs text-charcoal">Minimum TND<input type="number" defaultValue={searchParams.get("priceMin") ?? ""} onBlur={(event) => updateParams((params) => event.target.value ? params.set("priceMin", event.target.value) : params.delete("priceMin"))} className="mt-2 w-full border border-border px-3 py-3 text-black" /></label>
                     <label className="text-xs text-charcoal">Maximum TND<input type="number" defaultValue={searchParams.get("priceMax") ?? ""} onBlur={(event) => updateParams((params) => event.target.value ? params.set("priceMax", event.target.value) : params.delete("priceMax"))} className="mt-2 w-full border border-border px-3 py-3 text-black" /></label>
                   </div>
                 </div>
-                <FilterGroup title="Availability" options={availabilityOptions.map((item) => [...item])} selected={values(searchParams, "availability")} onToggle={(value) => toggleValue("availability", value)} />
+                <FilterGroup title="Disponibilité" options={availabilityOptions.map((item) => [...item])} selected={values(searchParams, "availability")} onToggle={(value) => toggleValue("availability", value)} />
                 <FilterGroup title="Collection" options={collections.map((item) => [item.slug, item.name])} selected={values(searchParams, "collection")} onToggle={(value) => toggleValue("collection", value)} />
               </div>
               <div className="grid shrink-0 grid-cols-1 gap-3 border-t border-border bg-white p-4 pb-[max(1rem,env(safe-area-inset-bottom))] min-[390px]:grid-cols-[auto_1fr] min-[390px]:p-5">
-                <button type="button" onClick={clearAll} className="px-3 text-xs uppercase tracking-[0.12em] underline">Clear all</button>
+                <button type="button" onClick={clearAll} className="px-3 text-xs uppercase tracking-[0.12em] underline">Tout effacer</button>
                 <Button
                   loading={isPending}
-                  loadingLabel="Updating…"
+                  loadingLabel="Mise à jour…"
                   onClick={() => setDrawerOpen(false)}
                 >
-                  Show {filteredProducts.length} Products
+                  Voir {filteredProducts.length} produits
                 </Button>
               </div>
             </motion.aside>

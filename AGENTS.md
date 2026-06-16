@@ -171,6 +171,8 @@ Storefront:
   more continuous editorial flow
 - Shared buttons now expose built-in pending/loading states for form submits so
   uploads, saves, and sign-out actions visibly lock while work is in progress
+- Public storefront, account, cart, search, and policy UI copy is now localized
+  into French while keeping the brand name `evoflex` unchanged
 - Storefront edit overlays now stay hidden in normal public rendering unless
   `NEXT_PUBLIC_ENABLE_STOREFRONT_EDITING=true` is explicitly set
 
@@ -311,6 +313,20 @@ Complete the owner password setup email, then exercise the implemented
 administration workflows through a real hosted Auth session. After that, replace
 mock catalog reads incrementally, keeping the controlled fallback until each
 storefront route is verified against hosted data.
+
+### 2026-06-16 — French storefront localization
+
+- Translated the public evoflex storefront into French across homepage, shop,
+  product/cart/wishlist/search flows, account/auth surfaces, placeholder policy
+  pages, shared navigation, loaders, and metadata without changing routes or
+  functionality
+- Normalized CMS-backed homepage fallbacks so older English section content is
+  replaced by French fallback copy on the public site, and fixed duplicate
+  footer keys plus one broken remote image URL found during QA
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, desktop and
+  mobile browser verification against a local production server build
+- Commit: not created
+- Production: not deployed in this pass
 
 ## Execution Log
 

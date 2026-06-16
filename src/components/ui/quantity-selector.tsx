@@ -15,7 +15,7 @@ export function QuantitySelector({
     <div className="inline-flex h-11 items-center border border-border">
       <button
         type="button"
-        aria-label="Decrease quantity"
+        aria-label="Réduire la quantité"
         className="h-full w-11 text-lg"
         onClick={() =>
           setQuantity((value) => {
@@ -32,7 +32,7 @@ export function QuantitySelector({
       </output>
       <button
         type="button"
-        aria-label="Increase quantity"
+        aria-label="Augmenter la quantité"
         className="h-full w-11 text-lg"
         onClick={() =>
           setQuantity((value) => {

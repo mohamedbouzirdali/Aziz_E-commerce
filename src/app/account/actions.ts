@@ -49,11 +49,11 @@ export async function signInAction(
   const fieldErrors: AuthFormState["fieldErrors"] = {};
 
   if (!validateEmail(email)) {
-    fieldErrors.email = "Enter a valid email address.";
+    fieldErrors.email = "Saisissez une adresse e-mail valide.";
   }
 
   if (!password) {
-    fieldErrors.password = "Enter your password.";
+    fieldErrors.password = "Saisissez votre mot de passe.";
   }
 
   if (Object.keys(fieldErrors).length) {
@@ -66,7 +66,7 @@ export async function signInAction(
   if (error) {
     return {
       status: "error",
-      message: "We could not sign you in with those details.",
+      message: "Impossible de vous connecter avec ces informations.",
     };
   }
 
@@ -85,20 +85,20 @@ export async function signUpAction(
   const fieldErrors: AuthFormState["fieldErrors"] = {};
 
   if (firstName.length < 2) {
-    fieldErrors.firstName = "Enter at least 2 characters.";
+    fieldErrors.firstName = "Saisissez au moins 2 caractères.";
   }
 
   if (lastName.length < 2) {
-    fieldErrors.lastName = "Enter at least 2 characters.";
+    fieldErrors.lastName = "Saisissez au moins 2 caractères.";
   }
 
   if (!validateEmail(email)) {
-    fieldErrors.email = "Enter a valid email address.";
+    fieldErrors.email = "Saisissez une adresse e-mail valide.";
   }
 
   if (!validatePassword(password)) {
     fieldErrors.password =
-      "Use 8+ characters with uppercase, lowercase, and a number.";
+      "Utilisez 8 caractères ou plus avec une majuscule, une minuscule et un chiffre.";
   }
 
   if (Object.keys(fieldErrors).length) {
@@ -122,7 +122,7 @@ export async function signUpAction(
   if (error) {
     return {
       status: "error",
-      message: "We could not create the account. Review your details and try again.",
+      message: "Impossible de créer le compte. Vérifiez vos informations puis réessayez.",
     };
   }
 
@@ -133,7 +133,7 @@ export async function signUpAction(
 
   return {
     status: "success",
-    message: "Check your email to confirm your ÉLAN account.",
+    message: "Vérifiez votre e-mail pour confirmer votre compte evoflex.",
   };
 }
 
@@ -146,7 +146,7 @@ export async function requestPasswordResetAction(
   if (!validateEmail(email)) {
     return {
       status: "error",
-      fieldErrors: { email: "Enter a valid email address." },
+      fieldErrors: { email: "Saisissez une adresse e-mail valide." },
     };
   }
 
@@ -159,13 +159,13 @@ export async function requestPasswordResetAction(
   if (error) {
     return {
       status: "error",
-      message: "We could not send a reset link. Please try again.",
+      message: "Impossible d’envoyer le lien de réinitialisation. Réessayez.",
     };
   }
 
   return {
     status: "success",
-    message: "If an account exists for this email, a reset link is on its way.",
+    message: "Si un compte existe pour cet e-mail, un lien de réinitialisation est en route.",
   };
 }
 
@@ -179,7 +179,7 @@ export async function updatePasswordAction(
     return {
       status: "error",
       fieldErrors: {
-        password: "Use 8+ characters with uppercase, lowercase, and a number.",
+        password: "Utilisez 8 caractères ou plus avec une majuscule, une minuscule et un chiffre.",
       },
     };
   }
@@ -190,7 +190,7 @@ export async function updatePasswordAction(
   if (error) {
     return {
       status: "error",
-      message: "Your reset session expired. Request a new password link.",
+      message: "Votre session de réinitialisation a expiré. Demandez un nouveau lien.",
     };
   }
 

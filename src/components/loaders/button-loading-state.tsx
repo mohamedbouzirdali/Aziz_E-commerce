@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-export function ButtonLoadingState({ label = "Updating…" }: { label?: string }) {
+export function ButtonLoadingState({ label = "Mise à jour…" }: { label?: string }) {
   const reduceMotion = useReducedMotion();
 
   return (

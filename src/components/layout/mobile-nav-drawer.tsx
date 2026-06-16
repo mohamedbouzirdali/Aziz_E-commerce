@@ -40,7 +40,7 @@ export function MobileNavDrawer() {
           <>
             <motion.button
               type="button"
-              aria-label="Close navigation"
+              aria-label="Fermer la navigation"
               className="fixed inset-0 z-40 bg-black/35 lg:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -50,7 +50,7 @@ export function MobileNavDrawer() {
             <motion.aside
               ref={dialog.dialogRef}
               id="mobile-navigation"
-              aria-label="Mobile navigation"
+              aria-label="Navigation mobile"
               role="dialog"
               aria-modal="true"
               className="fixed inset-y-0 left-0 z-50 flex h-dvh w-[82vw] max-w-[320px] flex-col bg-white shadow-[12px_0_40px_rgba(0,0,0,0.12)] lg:hidden"
@@ -65,18 +65,18 @@ export function MobileNavDrawer() {
                   type="button"
                   className="flex size-10 items-center justify-center text-2xl transition-opacity hover:opacity-50"
                   onClick={close}
-                  aria-label="Close menu"
+                  aria-label="Fermer le menu"
                 >
                   ×
                 </button>
               </div>
               <nav
-                aria-label="Main mobile navigation"
+                aria-label="Navigation mobile principale"
                 className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5"
               >
                 <div className="space-y-1">
                   <Link className="mobile-sidebar-link" href="/shop?sort=newest" onClick={close}>
-                    New in
+                    Nouveautés
                   </Link>
                   <button
                     type="button"
@@ -85,7 +85,7 @@ export function MobileNavDrawer() {
                     aria-expanded={shopOpen}
                     aria-controls="mobile-shop-links"
                   >
-                    <span>Shop</span>
+                    <span>Boutique</span>
                     <span className="text-base font-normal" aria-hidden>{shopOpen ? "−" : "+"}</span>
                   </button>
                   <AnimatePresence initial={false}>
@@ -100,7 +100,7 @@ export function MobileNavDrawer() {
                       >
                         <div className="ml-3 border-l border-border py-1 pl-4">
                           <Link className="mobile-sidebar-subLink font-semibold" href="/shop" onClick={close}>
-                            All products
+                            Tous les produits
                           </Link>
                           {categories.map((category) => (
                             <Link
@@ -130,24 +130,24 @@ export function MobileNavDrawer() {
                     )}
                   </AnimatePresence>
                   <Link className="mobile-sidebar-link" href="/boxes" onClick={close}>
-                    Boxes
+                    Coffrets
                   </Link>
                   <Link className="mobile-sidebar-link" href="/shop?availability=best-seller" onClick={close}>
-                    Best sellers
+                    Meilleures ventes
                   </Link>
                   <Link className="mobile-sidebar-link" href="/about" onClick={close}>
-                    About
+                    À propos
                   </Link>
                 </div>
                 <div className="mt-8 border-t border-border pt-4">
                   <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-charcoal/45">
-                    Account
+                    Compte
                   </p>
-                  <Link className="mobile-sidebar-utility" href="/account" onClick={close}>My account</Link>
+                  <Link className="mobile-sidebar-utility" href="/account" onClick={close}>Mon compte</Link>
                   <Link className="mobile-sidebar-utility" href="/wishlist" onClick={close}>
-                    Wishlist <span className="text-charcoal/50">({wishlistCount})</span>
+                    Envies <span className="text-charcoal/50">({wishlistCount})</span>
                   </Link>
-                  <Link className="mobile-sidebar-utility" href="/search" onClick={close}>Search</Link>
+                  <Link className="mobile-sidebar-utility" href="/search" onClick={close}>Recherche</Link>
                   <button
                     type="button"
                     className="mobile-sidebar-utility"
@@ -156,14 +156,14 @@ export function MobileNavDrawer() {
                       setCartOpen(true);
                     }}
                   >
-                    <span>Bag</span>
+                    <span>Panier</span>
                     <span className="text-charcoal/50">({cartCount})</span>
                   </button>
                 </div>
               </nav>
               <div className="shrink-0 border-t border-border px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
                 <p className="text-[9px] uppercase tracking-[0.14em] text-charcoal/50">
-                  Delivery across Tunisia
+                  Livraison dans toute la Tunisie
                 </p>
               </div>
             </motion.aside>

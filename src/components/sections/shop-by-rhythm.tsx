@@ -21,49 +21,49 @@ export type RhythmItem = {
 const rhythms: RhythmItem[] = [
   {
     number: "01",
-    moment: "Everyday",
-    title: "The Everyday Edit",
-    description: "Fluid foundations for mornings in motion and plans that unfold slowly.",
-    label: "Everyday movement edit",
+    moment: "Quotidien",
+    title: "L’édit quotidien",
+    description: "Des bases fluides pour les matins en mouvement et les plans qui se déploient lentement.",
+    label: "Édit mouvement quotidien",
     href: "/shop?collection=everyday-edit",
-    cta: "Shop the edit",
-    note: "Fluid layers · Repeat wear",
+    cta: "Découvrir l’édit",
+    note: "Couches fluides · À porter souvent",
     imageUrl:
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=82",
   },
   {
     number: "02",
-    moment: "In focus",
-    title: "Soft Tailoring",
-    description: "Relaxed tailoring that remains composed without ever feeling rigid.",
-    label: "Modern workwear edit",
+    moment: "En focus",
+    title: "Tailleur souple",
+    description: "Un tailleur relâché qui reste maîtrisé sans jamais sembler rigide.",
+    label: "Édit workwear moderne",
     href: "/shop?category=tailoring",
-    cta: "Shop tailoring",
-    note: "Clean lines · Soft structure",
+    cta: "Découvrir le tailleur",
+    note: "Lignes nettes · Structure douce",
     imageUrl:
       "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
   },
   {
     number: "03",
-    moment: "After hours",
-    title: "After Dark",
-    description: "Clean silhouettes, fluid lines, and subtle expression for evenings ahead.",
-    label: "Evening movement edit",
+    moment: "Après les heures",
+    title: "Après la tombée du jour",
+    description: "Des silhouettes nettes, des lignes fluides et une expression subtile pour les soirées à venir.",
+    label: "Édit mouvement du soir",
     href: "/shop?collection=after-dark",
-    cta: "Shop evening",
-    note: "Fluid forms · Quiet impact",
+    cta: "Découvrir le soir",
+    note: "Formes fluides · Impact discret",
     imageUrl:
       "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1200&q=82",
   },
   {
     number: "04",
-    moment: "Curated together",
-    title: "The Capsule Edit",
-    description: "Considered capsules assembled to make getting dressed feel effortless.",
-    label: "Curated capsule box",
+    moment: "Assemblé avec soin",
+    title: "L’édit capsule",
+    description: "Des capsules pensées pour que s’habiller devienne instinctif.",
+    label: "Coffret capsule sélectionné",
     href: "/boxes",
-    cta: "Discover boxes",
-    note: "Complete looks · Considered value",
+    cta: "Découvrir les coffrets",
+    note: "Silhouettes complètes · Valeur réfléchie",
     imageUrl:
       "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=82",
   },
@@ -71,8 +71,8 @@ const rhythms: RhythmItem[] = [
 
 export function ShopByRhythm({
   eyebrow = "The ÉLAN edits · Shop by rhythm",
-  heading = "A wardrobe for every movement.",
-  body = "Four considered directions for the pace, purpose, and atmosphere of your day.",
+  heading = "Un vestiaire pour chaque mouvement.",
+  body = "Quatre directions pensées pour le rythme, l’intention et l’atmosphère de votre journée.",
   items = rhythms,
 }: {
   eyebrow?: string;
@@ -81,8 +81,8 @@ export function ShopByRhythm({
   items?: RhythmItem[];
 }) {
   const reduceMotion = useReducedMotion();
-  const headingParts = heading.toLowerCase().includes("every movement")
-    ? [heading.slice(0, heading.toLowerCase().indexOf("every movement")), "every movement."]
+  const headingParts = heading.toLowerCase().includes("chaque mouvement")
+    ? [heading.slice(0, heading.toLowerCase().indexOf("chaque mouvement")), "chaque mouvement."]
     : [heading, ""];
 
   return (
@@ -111,7 +111,7 @@ export function ShopByRhythm({
               href="/shop"
               className="link-underline mt-5 inline-block text-[10px] font-semibold uppercase tracking-[0.16em]"
             >
-              View the full collection
+              Voir toute la collection
             </Link>
           </div>
         </div>
@@ -146,7 +146,7 @@ export function ShopByRhythm({
                     {rhythm.number ?? String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="bg-white/90 px-3 py-2 text-[8px] font-semibold uppercase tracking-[0.16em]">
-                    {rhythm.moment ?? "ÉLAN edit"}
+                    {rhythm.moment ?? "Édit evoflex"}
                   </span>
                 </div>
               </div>
@@ -155,7 +155,7 @@ export function ShopByRhythm({
                 className="flex min-h-[235px] flex-1 flex-col border-x border-b border-black/15 px-5 pb-5 pt-6 transition-colors duration-300 group-hover:border-black"
               >
                 <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-charcoal/45">
-                  {rhythm.note ?? "Considered dressing"}
+                  {rhythm.note ?? "Vestiaire réfléchi"}
                 </p>
                 <h3 className="mt-3 min-h-[3.5rem] font-serif text-3xl leading-[0.95]">
                   {rhythm.title}
@@ -164,7 +164,7 @@ export function ShopByRhythm({
                   {rhythm.description}
                 </p>
                 <div className="mt-auto flex items-center justify-between border-t border-border pt-4 text-[9px] font-semibold uppercase tracking-[0.15em]">
-                  <span>{rhythm.cta ?? "Explore edit"}</span>
+                  <span>{rhythm.cta ?? "Explorer l’édit"}</span>
                   <span className="text-base transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden>
                     →
                   </span>

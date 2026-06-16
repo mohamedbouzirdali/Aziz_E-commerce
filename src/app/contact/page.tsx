@@ -3,16 +3,16 @@ import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact evoflex client care for product, sizing, delivery, and order guidance.",
+  description: "Contactez le service client evoflex pour toute question produit, taille, livraison ou commande.",
   alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
   return (
     <PlaceholderPage
-      eyebrow="Client care"
-      title="Contact us"
-      description="A future contact route for order help, product questions, sizing guidance, and general enquiries."
+      eyebrow="Service client"
+      title="Nous contacter"
+      description="Une future page de contact pour l’aide commande, les questions produit, les conseils de taille et les demandes générales."
     />
   );
 }

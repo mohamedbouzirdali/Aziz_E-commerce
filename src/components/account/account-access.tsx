@@ -13,22 +13,21 @@ export function AccountAccess({
   return (
     <div className="grid border border-border bg-white lg:grid-cols-[0.78fr_1.22fr]">
       <div className="flex min-h-64 flex-col justify-between bg-black p-7 text-white sm:p-10 lg:min-h-[560px]">
-        <p className="eyebrow text-white/55">ÉLAN client account</p>
+        <p className="eyebrow text-white/55">Compte client evoflex</p>
         <div>
           <h2 className="max-w-sm font-serif text-5xl leading-[0.92] sm:text-6xl">
-            Your wardrobe,
+            Votre vestiaire,
             <br />
-            <span className="italic">kept close.</span>
+            <span className="italic">toujours à portée.</span>
           </h2>
           <p className="mt-6 max-w-sm text-sm leading-7 text-white/65">
-            Save considered pieces, track access, and return to a calmer shopping
-            flow without friction.
+            Enregistrez vos pièces préférées, suivez votre accès et retrouvez un parcours d’achat plus fluide.
           </p>
           <div className="mt-8 grid gap-px bg-white/10">
             {[
-              "Saved wishlist across sessions",
-              "Staff workspace access when assigned",
-              "Password recovery and secure sign-in",
+              "Liste d’envies conservée entre les sessions",
+              "Accès équipe lorsqu’il est attribué",
+              "Récupération de mot de passe et connexion sécurisée",
             ].map((item) => (
               <div key={item} className="bg-black/30 px-4 py-3 text-[10px] uppercase tracking-[0.14em] text-white/78">
                 {item}
@@ -40,7 +39,7 @@ export function AccountAccess({
           href="/shop"
           className="link-underline mt-10 self-start text-[10px] font-semibold uppercase tracking-[0.16em]"
         >
-          Continue shopping
+          Poursuivre vos achats
         </Link>
       </div>
 
@@ -54,7 +53,7 @@ export function AccountAccess({
                 : "border-transparent text-charcoal/55"
             }`}
           >
-            Sign in
+            Se connecter
           </Link>
           <Link
             href={`/account?mode=sign-up&next=${encodeURIComponent(next)}`}
@@ -64,21 +63,21 @@ export function AccountAccess({
                 : "border-transparent text-charcoal/55"
             }`}
           >
-            Create account
+            Créer un compte
           </Link>
         </div>
 
         <div className="mx-auto max-w-md">
           <p className="eyebrow">
-            {mode === "sign-in" ? "Welcome back" : "Join ÉLAN"}
+            {mode === "sign-in" ? "Heureuse de vous revoir" : "Rejoindre evoflex"}
           </p>
           <h3 className="mt-3 font-serif text-4xl">
-            {mode === "sign-in" ? "Sign in" : "Create your account"}
+            {mode === "sign-in" ? "Se connecter" : "Créer votre compte"}
           </h3>
           <p className="mt-4 text-sm leading-6 text-charcoal">
             {mode === "sign-in"
-              ? "Use the email connected to your account."
-              : "Your password needs uppercase, lowercase, a number, and at least 8 characters."}
+              ? "Utilisez l’adresse e-mail associée à votre compte."
+              : "Votre mot de passe doit comporter une majuscule, une minuscule, un chiffre et au moins 8 caractères."}
           </p>
 
           {notice && (

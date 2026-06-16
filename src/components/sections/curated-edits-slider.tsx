@@ -18,41 +18,41 @@ export type CuratedEditItem = {
 
 const edits: CuratedEditItem[] = [
   {
-    title: "Weekend Edit",
-    text: "Soft layers and easy proportions for unhurried days.",
-    label: "Relaxed weekend styling",
+    title: "Édit week-end",
+    text: "Des couches souples et des proportions faciles pour les jours sans hâte.",
+    label: "Silhouette week-end décontractée",
     href: "/boxes/weekend-light-box",
     imageUrl:
       "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=82",
   },
   {
-    title: "Office Edit",
-    text: "Tailoring that holds its line without feeling rigid.",
-    label: "Modern office tailoring",
+    title: "Édit bureau",
+    text: "Un tailleur qui garde sa ligne sans jamais sembler rigide.",
+    label: "Tailleur de bureau moderne",
     href: "/boxes/modern-workday-box",
     imageUrl:
       "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
   },
   {
-    title: "Evening Edit",
-    text: "Quietly expressive silhouettes for after dark.",
-    label: "Evening silhouettes",
+    title: "Édit soir",
+    text: "Des silhouettes discrètement expressives pour après la tombée du jour.",
+    label: "Silhouettes du soir",
     href: "/boxes/evening-edit-box",
     imageUrl:
       "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1200&q=82",
   },
   {
-    title: "Soft Tailoring",
-    text: "Structure reconsidered through fluid cloth and ease.",
-    label: "Soft tailoring details",
+    title: "Tailleur souple",
+    text: "Une structure repensée à travers des étoffes fluides et de l’aisance.",
+    label: "Détails de tailleur souple",
     href: "/shop?category=tailoring",
     imageUrl:
-      "https://images.unsplash.com/photo-1506629905607-c52b1ea7d3f6?auto=format&fit=crop&w=1200&q=82",
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=82",
   },
   {
-    title: "Travel Capsule",
-    text: "A compact wardrobe designed to move beautifully.",
-    label: "Travel capsule wardrobe",
+    title: "Capsule voyage",
+    text: "Un vestiaire compact conçu pour se déplacer avec élégance.",
+    label: "Vestiaire capsule de voyage",
     href: "/shop?collection=everyday-edit",
     imageUrl:
       "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=82",
@@ -60,9 +60,9 @@ const edits: CuratedEditItem[] = [
 ];
 
 export function CuratedEditsSlider({
-  eyebrow = "For every moment",
-  heading = "Dress with intention.",
-  body = "Glide left or right to explore considered edits for work, travel, evenings, and unhurried weekends.",
+  eyebrow = "Pour chaque moment",
+  heading = "S’habiller avec intention.",
+  body = "Glissez à gauche ou à droite pour découvrir des sélections pensées pour le travail, le voyage, le soir et les week-ends sans hâte.",
   items = edits,
 }: {
   eyebrow?: string;
@@ -153,14 +153,14 @@ export function CuratedEditsSlider({
                 <div className="flex items-start justify-between gap-5">
                   <div>
                     <p className="text-[9px] uppercase tracking-[0.18em] text-white/45">
-                      Edit {String(index + 1).padStart(2, "0")}
+                      Édit {String(index + 1).padStart(2, "0")}
                     </p>
                     <h3 className="mt-2 font-serif text-3xl">{edit.title}</h3>
                   </div>
                 </div>
                 <p className="mt-3 max-w-xs text-sm leading-6 text-white/65">{edit.text}</p>
                 <span className="link-underline mt-auto inline-block self-start pt-5 text-[10px] font-semibold uppercase tracking-[0.16em]">
-                  {edit.cta ?? "Explore edit"}
+                  {edit.cta ?? "Explorer l’édit"}
                 </span>
               </Link>
             </div>
@@ -170,14 +170,14 @@ export function CuratedEditsSlider({
 
       <div className="page-shell mt-3 flex items-center justify-between">
         <p className="text-[9px] uppercase tracking-[0.18em] text-white/40">
-          Swipe or use two fingers to explore
+          Glissez ou utilisez deux doigts pour explorer
         </p>
-        <div className="ml-auto flex gap-1.5" aria-label={`Edit ${activeIndex + 1} of ${items.length}`}>
+        <div className="ml-auto flex gap-1.5" aria-label={`Édit ${activeIndex + 1} sur ${items.length}`}>
           {items.map((edit, index) => (
             <button
               key={edit.title}
               type="button"
-              aria-label={`Show ${edit.title}`}
+              aria-label={`Afficher ${edit.title}`}
               onClick={() => scrollTo(index)}
               className={`h-px transition-all duration-300 ${
                 index === activeIndex ? "w-8 bg-white" : "w-4 bg-white/30"

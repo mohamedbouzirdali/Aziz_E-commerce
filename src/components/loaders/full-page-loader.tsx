@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 export function FullPageLoader({
-  label = "Preparing the edit",
+  label = "Préparation de la sélection",
   fullScreen = true,
   className = "",
 }: {

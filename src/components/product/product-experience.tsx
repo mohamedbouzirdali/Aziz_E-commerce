@@ -15,7 +15,7 @@ import { formatTnd } from "@/lib/format";
 import type { Product } from "@/lib/types";
 import { useDialog } from "@/lib/use-dialog";
 
-const views = ["front view", "detail view", "back view", "movement view"];
+const views = ["vue de face", "vue détail", "vue dos", "vue mouvement"];
 
 export function ProductExperience({ product, related }: { product: Product; related: Product[] }) {
   const [colorId, setColorId] = useState(product.defaultColor);
@@ -31,7 +31,7 @@ export function ProductExperience({ product, related }: { product: Product; rela
 
   const add = async () => {
     if (!size) {
-      setError("Select a size before adding to bag.");
+      setError("Sélectionnez une taille avant d’ajouter au panier.");
       return;
     }
     setError("");
@@ -45,8 +45,8 @@ export function ProductExperience({ product, related }: { product: Product; rela
     <>
       <div className="page-shell py-5">
         <Breadcrumbs items={[
-          { label: "Home", href: "/" },
-          { label: "Shop", href: "/shop" },
+          { label: "Accueil", href: "/" },
+          { label: "Boutique", href: "/shop" },
           { label: product.name },
         ]} />
       </div>
@@ -57,7 +57,7 @@ export function ProductExperience({ product, related }: { product: Product; rela
               key={view}
               type="button"
               onClick={() => setLightboxIndex(index)}
-              aria-label={`Open ${product.name} ${view}`}
+              aria-label={`Ouvrir ${product.name} ${view}`}
               className="group overflow-hidden text-left"
             >
               <ImagePlaceholder
@@ -80,7 +80,7 @@ export function ProductExperience({ product, related }: { product: Product; rela
             <motion.button
               type="button"
               className="text-2xl"
-              aria-label={isWishlisted(product.id) ? "Remove from wishlist" : "Save to wishlist"}
+              aria-label={isWishlisted(product.id) ? "Retirer de la liste d’envies" : "Enregistrer dans la liste d’envies"}
               aria-pressed={isWishlisted(product.id)}
               onClick={() => toggleWishlist(product.id)}
               whileTap={{ scale: 0.85 }}
@@ -91,13 +91,13 @@ export function ProductExperience({ product, related }: { product: Product; rela
           <p className="mt-2 text-sm">{formatTnd(product.priceTnd)}</p>
           <p className="mt-5 text-sm leading-6 text-charcoal">{product.description}</p>
           <div className="mt-8">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em]">Color · {color.name}</p>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em]">Couleur · {color.name}</p>
             <ColorSelector colors={product.colors} value={colorId} onChange={setColorId} />
           </div>
           <div className="mt-8">
             <div className="mb-3 flex justify-between gap-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em]">Size</p>
-              <button className="text-xs underline underline-offset-4">Size guide</button>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em]">Taille</p>
+              <button className="text-xs underline underline-offset-4">Guide des tailles</button>
             </div>
             <SizeSelector
               sizes={product.sizes}
@@ -112,24 +112,24 @@ export function ProductExperience({ product, related }: { product: Product; rela
           </div>
           <div className="mt-8 flex flex-col gap-3 min-[390px]:flex-row">
             <QuantitySelector onChange={setQuantity} />
-            <Button className="flex-1" loading={isAdding} loadingLabel="Adding…" onClick={add}>Add to bag</Button>
+            <Button className="flex-1" loading={isAdding} loadingLabel="Ajout…" onClick={add}>Ajouter au panier</Button>
           </div>
           <p className="mt-4 border border-border bg-off-white p-4 text-xs leading-5">
             {product.delivery} {product.returns}
           </p>
           <div className="mt-7 border-t border-border">
-            <Accordion title="Details" defaultOpen>{product.details}</Accordion>
+            <Accordion title="Détails" defaultOpen>{product.details}</Accordion>
             <Accordion title="Composition">{product.composition}</Accordion>
-            <Accordion title="Fit">{product.fit}</Accordion>
-            <Accordion title="Care">{product.care}</Accordion>
-            <Accordion title="Delivery & returns">{product.delivery} {product.returns}</Accordion>
+            <Accordion title="Coupe">{product.fit}</Accordion>
+            <Accordion title="Entretien">{product.care}</Accordion>
+            <Accordion title="Livraison et retours">{product.delivery} {product.returns}</Accordion>
           </div>
         </div>
       </div>
       <section className="border-t border-border bg-off-white py-16">
         <div className="page-shell">
-          <p className="eyebrow">Styled together</p>
-          <h2 className="mt-3 font-serif text-4xl">Complete the Look</h2>
+          <p className="eyebrow">À associer</p>
+          <h2 className="mt-3 font-serif text-4xl">Compléter la silhouette</h2>
           <div className="mt-8 grid grid-cols-1 gap-y-10 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-3 lg:gap-x-6">
             {completeLook.map((item) => <ProductCard key={item.id} product={item} />)}
           </div>
@@ -137,8 +137,8 @@ export function ProductExperience({ product, related }: { product: Product; rela
       </section>
       <section className="border-t border-border py-16">
         <div className="page-shell">
-          <p className="eyebrow">More to consider</p>
-          <h2 className="mt-3 font-serif text-4xl">You may also like</h2>
+          <p className="eyebrow">À découvrir aussi</p>
+          <h2 className="mt-3 font-serif text-4xl">Vous aimerez aussi</h2>
           <div className="mt-8 grid grid-cols-1 gap-y-10 min-[380px]:grid-cols-2 min-[380px]:gap-x-4 lg:grid-cols-4 lg:gap-x-6">
             {recommendations.map((item) => <ProductCard key={item.id} product={item} />)}
           </div>
@@ -151,7 +151,7 @@ export function ProductExperience({ product, related }: { product: Product; rela
           <p className="truncate text-xs font-medium">{product.name}</p>
           <p className="mt-1 text-xs text-charcoal">{formatTnd(product.priceTnd)}</p>
         </div>
-        <Button className="ml-auto w-full min-[360px]:w-auto min-[360px]:min-w-[150px]" loading={isAdding} loadingLabel="Adding…" onClick={add}>Add to bag</Button>
+        <Button className="ml-auto w-full min-[360px]:w-auto min-[360px]:min-w-[150px]" loading={isAdding} loadingLabel="Ajout…" onClick={add}>Ajouter au panier</Button>
         </div>
       </div>
       <GalleryLightbox
@@ -200,18 +200,18 @@ function GalleryLightbox({
     <AnimatePresence>
       {open && (
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/85 p-2 min-[390px]:p-4 sm:p-8">
-          <motion.button className="absolute inset-0" aria-label="Close gallery" onClick={onClose} />
+          <motion.button className="absolute inset-0" aria-label="Fermer la galerie" onClick={onClose} />
           <motion.div
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-label={`${product.name} image gallery`}
+            aria-label={`Galerie d’images ${product.name}`}
             className="relative z-10 w-full max-w-3xl"
             initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
           >
-            <button type="button" onClick={onClose} aria-label="Close gallery" className="absolute right-0 top-0 z-10 size-12 bg-white text-2xl">×</button>
+            <button type="button" onClick={onClose} aria-label="Fermer la galerie" className="absolute right-0 top-0 z-10 size-12 bg-white text-2xl">×</button>
             <ImagePlaceholder
               label={`${product.name} — ${colorName} ${views[index ?? 0]}`}
               ratio="portrait"
@@ -219,8 +219,8 @@ function GalleryLightbox({
               src={colorImageUrl}
               alt={`${product.name} — ${colorName} ${views[index ?? 0]}`}
             />
-            <button type="button" aria-label="Previous image" onClick={() => onIndexChange(((index ?? 0) - 1 + views.length) % views.length)} className="absolute left-0 top-1/2 size-10 -translate-y-1/2 bg-white text-lg min-[390px]:size-12 min-[390px]:text-xl">←</button>
-            <button type="button" aria-label="Next image" onClick={() => onIndexChange(((index ?? 0) + 1) % views.length)} className="absolute right-0 top-1/2 size-10 -translate-y-1/2 bg-white text-lg min-[390px]:size-12 min-[390px]:text-xl">→</button>
+            <button type="button" aria-label="Image précédente" onClick={() => onIndexChange(((index ?? 0) - 1 + views.length) % views.length)} className="absolute left-0 top-1/2 size-10 -translate-y-1/2 bg-white text-lg min-[390px]:size-12 min-[390px]:text-xl">←</button>
+            <button type="button" aria-label="Image suivante" onClick={() => onIndexChange(((index ?? 0) + 1) % views.length)} className="absolute right-0 top-1/2 size-10 -translate-y-1/2 bg-white text-lg min-[390px]:size-12 min-[390px]:text-xl">→</button>
             <p className="mt-3 text-center text-xs uppercase tracking-[0.14em] text-white">{(index ?? 0) + 1} / {views.length}</p>
           </motion.div>
         </div>

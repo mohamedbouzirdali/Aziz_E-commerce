@@ -4,8 +4,8 @@ import { PageIntro } from "@/components/sections/page-intro";
 import { boxes } from "@/data";
 
 export const metadata: Metadata = {
-  title: "The Box Edit",
-  description: "Explore complete women’s wardrobe capsules with considered savings and clear styling purpose.",
+  title: "L’édit box",
+  description: "Explorez des capsules vestiaires complètes pour femme avec avantage réfléchi et intention de style claire.",
   alternates: { canonical: "/boxes" },
 };
 
@@ -13,10 +13,10 @@ export default function BoxesPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Curated capsules"
-        title="The Box Edit"
-        description="Complete wardrobes for a moment, selected to work together. Each box includes a considered saving."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Boxes" }]}
+        eyebrow="Capsules sélectionnées"
+        title="L’édit box"
+        description="Des silhouettes complètes pour un moment donné, pensées pour fonctionner ensemble. Chaque box inclut un avantage réfléchi."
+        breadcrumbs={[{ label: "Accueil", href: "/" }, { label: "Coffrets" }]}
       />
       <div className="page-shell grid gap-10 py-10 min-[390px]:gap-14 min-[390px]:py-12 lg:grid-cols-2 lg:py-20">
         {boxes.map((box) => <BoxCard key={box.id} box={box} />)}

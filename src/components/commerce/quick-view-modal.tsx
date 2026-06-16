@@ -9,6 +9,7 @@ import { ColorSelector } from "@/components/ui/color-selector";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { QuantitySelector } from "@/components/ui/quantity-selector";
 import { SizeSelector } from "@/components/ui/size-selector";
+import { categories } from "@/data";
 import { formatTnd } from "@/lib/format";
 import type { Product } from "@/lib/types";
 import { useDialog } from "@/lib/use-dialog";
@@ -35,10 +36,13 @@ export function QuickViewModal({
   const dialog = useDialog(open, close);
   dialog.triggerRef.current = triggerRef.current;
   const color = product.colors.find((item) => item.id === colorId) ?? product.colors[0];
+  const categoryLabel =
+    categories.find((category) => category.slug === product.category)?.name ??
+    product.category.replaceAll("-", " ");
 
   const add = async () => {
     if (!size) {
-      setError("Select a size before adding to bag.");
+      setError("Sélectionnez une taille avant d’ajouter au panier.");
       return;
     }
     setError("");
@@ -54,7 +58,7 @@ export function QuickViewModal({
       {open && (
         <div className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6">
           <motion.button
-            aria-label="Close quick view"
+            aria-label="Fermer l’aperçu rapide"
             className="absolute inset-0 bg-black/50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -84,23 +88,23 @@ export function QuickViewModal({
               <button
                 type="button"
                 onClick={onClose}
-                aria-label="Close quick view"
+                aria-label="Fermer l’aperçu rapide"
                 className="absolute right-4 top-4 flex size-10 items-center justify-center border border-border bg-white text-xl"
               >
                 ×
               </button>
-              <p className="eyebrow">{product.category}</p>
+              <p className="eyebrow">{categoryLabel}</p>
               <h2 id={`quick-view-${product.id}`} className="mt-3 pr-10 font-serif text-3xl min-[390px]:text-4xl">
                 {product.name}
               </h2>
               <p className="mt-2 text-sm">{formatTnd(product.priceTnd)}</p>
               <p className="mt-5 text-sm leading-6 text-charcoal">{product.description}</p>
               <div className="mt-7">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em]">Color</p>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em]">Couleur</p>
                 <ColorSelector colors={product.colors} value={colorId} onChange={setColorId} />
               </div>
               <div className="mt-7">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em]">Size</p>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em]">Taille</p>
                 <SizeSelector
                   sizes={product.sizes}
                   unavailableSizes={product.unavailableSizes}
@@ -114,20 +118,20 @@ export function QuickViewModal({
               </div>
               <div className="mt-7 flex flex-col gap-3 min-[390px]:flex-row">
                 <QuantitySelector onChange={setQuantity} />
-                <Button className="flex-1" loading={isAdding} loadingLabel="Adding…" onClick={add}>Add to bag</Button>
+                <Button className="flex-1" loading={isAdding} loadingLabel="Ajout…" onClick={add}>Ajouter au panier</Button>
               </div>
               <button
                 type="button"
                 onClick={() => toggleWishlist(product.id)}
                 className="mt-4 w-full border border-border py-3 text-xs uppercase tracking-[0.14em]"
               >
-                {isWishlisted(product.id) ? "Saved to wishlist" : "Add to wishlist"}
+                {isWishlisted(product.id) ? "Enregistré dans la liste d’envies" : "Ajouter à la liste d’envies"}
               </button>
               <p className="mt-5 border-t border-border pt-4 text-xs leading-5 text-charcoal">
                 {product.delivery} {product.returns}
               </p>
               <Link href={`/product/${product.slug}`} onClick={onClose} className="link-underline mt-5 inline-block text-xs font-semibold uppercase tracking-[0.14em]">
-                View full product details
+                Voir la fiche produit
               </Link>
             </div>
           </motion.div>

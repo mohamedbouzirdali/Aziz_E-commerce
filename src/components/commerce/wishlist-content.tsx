@@ -13,10 +13,10 @@ export function WishlistContent() {
   return (
     <>
       <PageIntro
-        eyebrow="Your saved edit"
-        title="Wishlist"
-        description="Pieces kept together for another look."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Wishlist" }]}
+        eyebrow="Votre sélection enregistrée"
+        title="Liste d’envies"
+        description="Des pièces gardées de côté pour un autre moment."
+        breadcrumbs={[{ label: "Accueil", href: "/" }, { label: "Liste d’envies" }]}
       />
       <div className="page-shell py-12 lg:py-16">
         {saved.length ? (
@@ -25,9 +25,9 @@ export function WishlistContent() {
           </div>
         ) : (
           <EmptyState
-            title="Your edit is waiting"
-            description="Use the heart on any product to keep it here."
-            actionLabel="Discover pieces"
+            title="Votre sélection vous attend"
+            description="Utilisez le cœur sur un produit pour l’enregistrer ici."
+            actionLabel="Découvrir les pièces"
           />
         )}
       </div>

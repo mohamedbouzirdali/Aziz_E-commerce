@@ -26,10 +26,10 @@ const fieldsByMode: Record<
   }>
 > = {
   "sign-in": [
-    { name: "email", label: "Email", type: "email", autoComplete: "email" },
+    { name: "email", label: "E-mail", type: "email", autoComplete: "email" },
     {
       name: "password",
-      label: "Password",
+      label: "Mot de passe",
       type: "password",
       autoComplete: "current-password",
     },
@@ -37,31 +37,31 @@ const fieldsByMode: Record<
   "sign-up": [
     {
       name: "firstName",
-      label: "First name",
+      label: "Prénom",
       type: "text",
       autoComplete: "given-name",
     },
     {
       name: "lastName",
-      label: "Last name",
+      label: "Nom",
       type: "text",
       autoComplete: "family-name",
     },
-    { name: "email", label: "Email", type: "email", autoComplete: "email" },
+    { name: "email", label: "E-mail", type: "email", autoComplete: "email" },
     {
       name: "password",
-      label: "Password",
+      label: "Mot de passe",
       type: "password",
       autoComplete: "new-password",
     },
   ],
   "forgot-password": [
-    { name: "email", label: "Email", type: "email", autoComplete: "email" },
+    { name: "email", label: "E-mail", type: "email", autoComplete: "email" },
   ],
   "reset-password": [
     {
       name: "password",
-      label: "New password",
+      label: "Nouveau mot de passe",
       type: "password",
       autoComplete: "new-password",
     },
@@ -76,17 +76,17 @@ const actionByMode = {
 };
 
 const submitLabelByMode = {
-  "sign-in": "Sign in",
-  "sign-up": "Create account",
-  "forgot-password": "Send reset link",
-  "reset-password": "Update password",
+  "sign-in": "Se connecter",
+  "sign-up": "Créer un compte",
+  "forgot-password": "Envoyer le lien",
+  "reset-password": "Mettre à jour le mot de passe",
 };
 
 const loadingLabelByMode = {
-  "sign-in": "Signing in",
-  "sign-up": "Creating account",
-  "forgot-password": "Sending link",
-  "reset-password": "Updating",
+  "sign-in": "Connexion",
+  "sign-up": "Création du compte",
+  "forgot-password": "Envoi du lien",
+  "reset-password": "Mise à jour",
 };
 
 export function AuthForm({
@@ -163,10 +163,10 @@ export function AuthForm({
       {mode === "sign-in" && (
         <div className="flex flex-wrap justify-between gap-4 text-xs text-charcoal">
           <Link className="link-underline" href="/account/forgot-password">
-            Forgot password
+            Mot de passe oublié
           </Link>
           <Link className="link-underline" href="/account?mode=sign-up">
-            Create account
+            Créer un compte
           </Link>
         </div>
       )}

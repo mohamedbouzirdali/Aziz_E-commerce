@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 export function InlineLoader({
-  label = "Updating selection",
+  label = "Mise à jour de la sélection",
   size = "md",
   className = "",
 }: {

@@ -29,13 +29,13 @@ export function BoxCard({ box }: { box: ProductBox }) {
             alt={box.placeholderImageLabel}
           />
           <div className="absolute left-3 top-3 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1">
-            <Badge>Save {formatTnd(box.savingsTnd)}</Badge>
+            <Badge>Économisez {formatTnd(box.savingsTnd)}</Badge>
           </div>
         </div>
         <div className="grid min-h-[150px] gap-3 px-1 pb-2 pt-5 sm:grid-cols-[1fr_auto]">
           <div>
             <p className="text-[10px] uppercase tracking-[0.18em] text-charcoal/60">
-              {box.occasion} edit
+              Édit {box.occasion.toLowerCase()}
             </p>
             <h3 className="mt-1 font-serif text-3xl">{box.name}</h3>
             <p className="mt-2 max-w-md text-sm leading-6 text-charcoal">{box.description}</p>
@@ -48,7 +48,7 @@ export function BoxCard({ box }: { box: ProductBox }) {
           </div>
         </div>
         <div className="mx-1 mt-auto flex items-center justify-between border-t border-border pt-4 text-[10px] font-semibold uppercase tracking-[0.16em]">
-          <span>View capsule</span>
+          <span>Voir la capsule</span>
           <span className="transition-transform duration-300 group-hover:translate-x-2" aria-hidden>→</span>
         </div>
       </Link>

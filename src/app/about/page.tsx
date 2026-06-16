@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "Discover evoflex’s approach to premium activewear, intentional living, and lasting versatility.",
+  title: "À propos",
+  description: "Découvrez l’approche d’evoflex autour d’un vestiaire sport premium, d’un art de vivre intentionnel et d’une polyvalence durable.",
   alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
   return (
     <PlaceholderPage
-      eyebrow="Our point of view"
-      title="Clothes with room for a life."
-      description="This space will introduce the brand’s approach to contemporary womenswear, thoughtful proportion, and lasting versatility."
+      eyebrow="Notre regard"
+      title="Des vêtements pensés pour une vraie vie."
+      description="Cet espace présentera l’approche de la marque autour du vestiaire féminin contemporain, des proportions justes et d’une versatilité durable."
     />
   );
 }

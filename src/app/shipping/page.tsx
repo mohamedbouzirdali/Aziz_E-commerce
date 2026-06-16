@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { PlaceholderPage } from "@/components/sections/placeholder-page";
 
 export const metadata: Metadata = {
-  title: "Shipping",
-  description: "Information about evoflex delivery timing and shipping across Tunisia.",
+  title: "Livraison",
+  description: "Informations sur les délais de livraison evoflex et l’expédition dans toute la Tunisie.",
   alternates: { canonical: "/shipping" },
 };
 
 export default function ShippingPage() {
   return (
     <PlaceholderPage
-      eyebrow="Client care"
-      title="Shipping"
-      description="The interface currently communicates sample Tunisia-wide delivery in 2–5 business days and complimentary delivery over 250 TND."
+      eyebrow="Service client"
+      title="Livraison"
+      description="L’interface communique actuellement une livraison indicative en Tunisie sous 2 à 5 jours ouvrés et la livraison offerte au-delà de 250 TND."
     />
   );
 }

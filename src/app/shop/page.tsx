@@ -4,12 +4,12 @@ import { ShopExperience } from "@/components/shop/shop-experience";
 import { ProductSkeletonGrid } from "@/components/loaders";
 
 export const metadata: Metadata = {
-  title: "Shop Activewear",
-  description: "Shop premium activewear, lifestyle essentials, and elevated daily pieces in TND.",
+  title: "Boutique sport",
+  description: "Découvrez des pièces premium de sport, des essentiels lifestyle et des silhouettes raffinées en TND.",
   alternates: { canonical: "/shop" },
   openGraph: {
-    title: "Shop Activewear | evoflex",
-    description: "Explore premium activewear, lifestyle essentials, and elevated daily pieces.",
+    title: "Boutique sport | evoflex",
+    description: "Découvrez des pièces premium de sport, des essentiels lifestyle et des silhouettes raffinées.",
     url: "/shop",
   },
 };
