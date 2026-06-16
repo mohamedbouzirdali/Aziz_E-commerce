@@ -231,6 +231,8 @@ Deployment:
 - Production: `https://aziz-e-commerce.vercel.app`
 - Vercel project: `aziz-e-commerce`
 - Branch: `main`
+- Production is currently aligned with the latest local French storefront build
+  through a manual Vercel production deploy
 
 ## Database and Admin Direction
 
@@ -329,6 +331,23 @@ storefront route is verified against hosted data.
 - Production: not deployed in this pass
 
 ## Execution Log
+
+### 2026-06-17 — Homepage layout stabilization and French production sync
+
+- Tightened homepage breakpoint behavior in the header, hero, newsletter, and
+  footer so the premium landing page no longer crowds or overlaps as viewports
+  compress
+- Removed the nested homepage `<main>` wrapper in favor of an overflow-clipped
+  section container to keep the landing page layout cleaner and avoid stray
+  horizontal clipping issues
+- Verified the local French homepage build, then manually deployed production
+  with Vercel CLI so `https://aziz-e-commerce.vercel.app` now serves the French
+  version instead of the older English deployment
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local
+  production-server HTML verification on `http://127.0.0.1:3003`, and remote
+  production HTML verification on `https://aziz-e-commerce.vercel.app`
+- Commit: current commit containing this entry
+- Production: deployed in this pass and verified
 
 ### 2026-06-16 — Remote mock imagery across homepage and product surfaces
 

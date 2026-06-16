@@ -10,8 +10,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-[60] border-b border-border bg-white/95 backdrop-blur">
-      <div className="relative mx-auto flex h-16 max-w-[1600px] items-center justify-between px-3 min-[390px]:px-5 sm:px-8 lg:h-[72px] lg:px-12">
-        <div className="flex h-full items-center">
+      <div className="relative mx-auto grid h-16 max-w-[1600px] grid-cols-[auto_1fr_auto] items-center gap-2 px-3 min-[390px]:gap-3 min-[390px]:px-5 sm:px-8 lg:h-[72px] lg:grid-cols-[1fr_auto_1fr] lg:px-12">
+        <div className="flex h-full min-w-0 items-center">
           <MobileNavDrawer />
           <nav className="hidden h-full items-center lg:flex" aria-label="Navigation principale">
             <Link className="px-4 text-xs uppercase tracking-[0.15em]" href="/shop?sort=newest">Nouveautés</Link>
@@ -19,10 +19,14 @@ export function Header() {
             <Link className="px-4 text-xs uppercase tracking-[0.15em]" href="/boxes">Coffrets</Link>
           </nav>
         </div>
-        <Link href="/" aria-label="Accueil evoflex" className="absolute left-1/2 -translate-x-1/2 font-serif text-lg tracking-[0.06em] min-[390px]:text-xl sm:text-2xl">
+        <Link
+          href="/"
+          aria-label="Accueil evoflex"
+          className="justify-self-center px-2 text-center font-serif text-lg tracking-[0.06em] min-[390px]:text-xl sm:text-2xl lg:absolute lg:left-1/2 lg:-translate-x-1/2"
+        >
           evoflex
         </Link>
-        <nav className="flex items-center" aria-label="Navigation utilitaire">
+        <nav className="flex min-w-0 items-center justify-self-end" aria-label="Navigation utilitaire">
           <Link href="/search" aria-label="Recherche" className="flex size-10 items-center justify-center text-base min-[390px]:w-auto min-[390px]:px-2 min-[390px]:text-[10px] min-[390px]:uppercase min-[390px]:tracking-[0.12em] sm:px-3">
             <span className="min-[390px]:hidden" aria-hidden>⌕</span>
             <span className="hidden min-[390px]:inline">Recherche</span>

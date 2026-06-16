@@ -23,10 +23,10 @@ export function NewsletterBlock({
 
   return (
     <section className="bg-transparent px-5 py-10 min-[390px]:px-6 sm:px-8 lg:px-10 lg:py-12">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:gap-10">
         <div>
           <p className="eyebrow text-black/50">{eyebrow}</p>
-          <h2 className="mt-3 max-w-xl font-serif text-3xl leading-tight text-black min-[390px]:text-4xl sm:text-[3.2rem]">
+          <h2 className="mt-3 max-w-lg font-serif text-3xl leading-tight text-black min-[390px]:text-4xl sm:text-[3rem] lg:text-[3.2rem]">
             {heading}
           </h2>
           {body && (
@@ -36,7 +36,7 @@ export function NewsletterBlock({
           )}
         </div>
         <form
-          className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start"
+          className="grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-start"
           onSubmit={submit}
           aria-busy={status === "loading"}
         >
@@ -59,7 +59,7 @@ export function NewsletterBlock({
             loading={status === "loading"}
             loadingLabel="Inscription…"
             disabled={status === "success"}
-            className="min-w-[170px] border-[#1e1e1e] bg-[#1e1e1e] text-[#f8f5ef] before:bg-[#343434] hover:border-[#343434]"
+            className="min-w-[170px] border-[#1e1e1e] bg-[#1e1e1e] text-[#f8f5ef] before:bg-[#343434] hover:border-[#343434] md:self-start"
           >
             {status === "success" ? "Vous êtes inscrite" : "Rejoindre evoflex"}
           </Button>

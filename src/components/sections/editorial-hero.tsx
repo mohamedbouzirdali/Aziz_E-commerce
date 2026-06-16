@@ -54,7 +54,7 @@ export function EditorialHero({
   return (
     <section className="relative overflow-hidden border-b border-black/10 bg-[#f8f5ef]">
       <motion.div
-        className="relative h-[74svh] min-h-[620px] max-h-[940px] w-full sm:min-h-[700px] lg:h-[calc(100svh-4rem)]"
+        className="relative h-[74svh] min-h-[620px] max-h-[940px] w-full min-[390px]:min-h-[640px] sm:min-h-[700px] lg:h-[calc(100svh-4rem)]"
         initial={reduceMotion ? false : "hidden"}
         animate="visible"
         variants={imageMotion}
@@ -72,9 +72,9 @@ export function EditorialHero({
         )}
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,245,239,0.92)_0%,rgba(248,245,239,0.74)_26%,rgba(248,245,239,0.22)_48%,rgba(248,245,239,0.04)_68%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0)_24%,rgba(16,16,16,0.05)_100%)]" />
-        <div className="page-shell relative flex h-full items-center">
+        <div className="page-shell relative flex h-full items-center overflow-x-clip">
           <motion.div
-            className="max-w-[29rem] pt-12"
+            className="max-w-[26rem] pr-2 pt-12 min-[390px]:max-w-[28rem] sm:max-w-[29rem] sm:pr-0 lg:max-w-[32rem]"
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -84,13 +84,13 @@ export function EditorialHero({
             }}
           >
             <p className="eyebrow text-black/55">{eyebrow}</p>
-            <h1 className="mt-5 font-serif text-[3.6rem] leading-[0.88] text-[#1e1e1e] min-[390px]:text-[4.4rem] sm:text-[5.2rem] lg:text-[6.2rem]">
+            <h1 className="mt-5 max-w-[10ch] font-serif text-[3.25rem] leading-[0.88] text-[#1e1e1e] min-[390px]:text-[4rem] sm:text-[5rem] lg:text-[6.2rem]">
               {heading}
             </h1>
             <p className="mt-6 max-w-md text-sm leading-7 text-black/68 sm:text-base">
               {body}
             </p>
-            <div className="mt-8 flex flex-col gap-3 min-[390px]:flex-row min-[390px]:flex-wrap">
+            <div className="mt-8 flex max-w-xl flex-col gap-3 min-[390px]:flex-row min-[390px]:flex-wrap">
               <Button
                 href={primaryCta.href}
                 className="border-[#1e1e1e] bg-[#1e1e1e] px-6 text-[#f8f5ef] before:bg-[#343434] hover:border-[#343434]"

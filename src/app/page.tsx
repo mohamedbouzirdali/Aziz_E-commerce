@@ -203,7 +203,7 @@ export default async function HomePage() {
 
   return (
     <AdminStorefrontControlsProvider>
-      <main className="bg-[#fbf8f2] text-[#1e1e1e]">
+      <div className="overflow-x-clip bg-[#fbf8f2] text-[#1e1e1e]">
         <div className="relative">
           <EditorialHero
             eyebrow="Vestiaire sport premium"
@@ -470,7 +470,7 @@ export default async function HomePage() {
             />
           </div>
         </div>
-      </main>
+      </div>
     </AdminStorefrontControlsProvider>
   );
 }
