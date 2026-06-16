@@ -143,10 +143,11 @@ Planned protected routes:
 
 Storefront:
 
-- Responsive premium homepage with a large image-led editorial hero
+- Responsive premium homepage with a full-width editorial banner hero directly
+  below the unchanged site header
 - Shop-by-rhythm merchandising section
-- Categories, curated product rail, editorial story blocks, boxes, newsletter,
-  and service sections
+- Categories, curated 4-item homepage product rail, editorial story blocks,
+  boxes, newsletter, and service sections
 - Native horizontal touchpad/swipe behavior for editorial rails
 - Responsive shop filters, sorting, URL pagination at 20 products per page
 - Product cards with wishlist, color preview, quick view, and selection actions
@@ -156,8 +157,9 @@ Storefront:
 - Homepage section visibility, order, copy, editorial media, featured products,
   and featured boxes can be read from Supabase with a safe mock fallback
 - Admin-only public homepage controls link directly to focused section editors
-- Homepage storytelling is now more image-first, with only a focused homepage
-  product rail while the surrounding sections favor editorial media
+- Homepage storytelling is now more image-first, with a fixed hero-then-rail
+  sequence and remote fashion-image fallbacks when CMS media has not been
+  replaced yet
 - Shared buttons now expose built-in pending/loading states for form submits so
   uploads, saves, and sign-out actions visibly lock while work is in progress
 
@@ -300,6 +302,23 @@ mock catalog reads incrementally, keeping the controlled fallback until each
 storefront route is verified against hosted data.
 
 ## Execution Log
+
+### 2026-06-16 — Reference-aligned hero and 4-item homepage rail
+
+- Rebuilt the top of the homepage to follow the requested structure more
+  closely: unchanged header, full-width banner hero, then a 4-item image-first
+  product section immediately underneath
+- Added remote fashion-image fallbacks for the hero and homepage rail while
+  preserving existing admin/CMS image replacement paths
+- Forced the public homepage to use the intended section order even when older
+  CMS ordering still exists, and added compatibility handling for stale hero and
+  product-rail default copy
+- Verified local desktop and mobile behavior, including a 390px breakpoint check
+  confirming a 2-column mobile product layout and no horizontal overflow
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local
+  browser verification for `/`
+- Commit: current commit containing this entry
+- Production: pending deployment
 
 ### 2026-06-16 — Image-led homepage direction and stronger homepage media admin
 

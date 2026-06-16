@@ -7,7 +7,6 @@ import {
 } from "@/components/admin/storefront-edit-controls";
 import { BoxCard } from "@/components/cards/box-card";
 import { CategoryTile } from "@/components/cards/category-tile";
-import { ProductCard } from "@/components/cards/product-card";
 import { Reveal } from "@/components/motion/reveal";
 import {
   CuratedEditsSlider,
@@ -26,6 +25,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { boxes, categories, products } from "@/data";
+import { formatTnd } from "@/lib/format";
 import {
   getHomepageContent,
   type HomepageContentItem,
@@ -47,15 +47,22 @@ export const metadata: Metadata = {
 
 const defaultSectionOrder = [
   "hero",
+  "new-arrivals",
   "shop-by-rhythm",
   "categories",
-  "curated-edits",
-  "new-arrivals",
-  "best-sellers",
   "editorial-story",
+  "curated-edits",
+  "best-sellers",
   "boxes",
   "services",
   "newsletter",
+];
+
+const fashionFallbackImages = [
+  "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1609505848912-b7c3b8b4beda?auto=format&fit=crop&w=1200&q=82",
+  "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=82",
 ];
 
 function sectionText(
@@ -64,6 +71,38 @@ function sectionText(
   fallback: string,
 ) {
   return section?.[field] || fallback;
+}
+
+function heroSectionText(
+  section: HomepageContentSection | undefined,
+  field: "eyebrow" | "heading" | "body",
+  fallback: string,
+) {
+  const current = section?.[field];
+  const oldDefaults: Record<"eyebrow" | "heading" | "body", string> = {
+    eyebrow: "New collection · Made to move",
+    heading: "Ease, in motion.",
+    body: "Premium everyday pieces designed around movement, clean proportion, and quiet confidence.",
+  };
+
+  if (!current || current === oldDefaults[field]) return fallback;
+  return current;
+}
+
+function selectedProductsSectionText(
+  section: HomepageContentSection | undefined,
+  field: "eyebrow" | "heading" | "body",
+  fallback: string,
+) {
+  const current = section?.[field];
+  const oldDefaults: Record<"eyebrow" | "heading" | "body", string> = {
+    eyebrow: "Just arrived",
+    heading: "New forms",
+    body: "Only a focused row of products lives on the homepage. The rest of the page keeps the brand image-led.",
+  };
+
+  if (!current || current === oldDefaults[field]) return fallback;
+  return current;
 }
 
 function editorialImage(item: HomepageContentItem): EditorialHeroImage {
@@ -100,14 +139,24 @@ function withAdminControl(
   );
 }
 
+function homepageSectionOrder(cmsSections: HomepageContentSection[] | null) {
+  if (!cmsSections) return defaultSectionOrder;
+
+  const visibleKeys = new Set(cmsSections.map((section) => section.section_key));
+  const knownKeys = defaultSectionOrder.filter((key) => visibleKeys.has(key));
+  const extraKeys = cmsSections
+    .map((section) => section.section_key)
+    .filter((key) => !defaultSectionOrder.includes(key));
+
+  return [...knownKeys, ...extraKeys];
+}
+
 export default async function HomePage() {
   const cmsSections = await getHomepageContent();
   const sectionMap = new Map(
     (cmsSections ?? []).map((section) => [section.section_key, section]),
   );
-  const sectionOrder = cmsSections
-    ? cmsSections.map((section) => section.section_key)
-    : defaultSectionOrder;
+  const sectionOrder = homepageSectionOrder(cmsSections);
 
   function renderSection(sectionKey: string) {
     const section = sectionMap.get(sectionKey);
@@ -118,16 +167,16 @@ export default async function HomePage() {
         return withAdminControl(
           sectionKey,
           <EditorialHero
-            eyebrow={sectionText(
+            eyebrow={heroSectionText(
               section,
               "eyebrow",
-              "New collection · Made to move",
+              "New collection",
             )}
-            heading={sectionText(section, "heading", "Ease, in motion.")}
-            body={sectionText(
+            heading={heroSectionText(section, "heading", "Move with intention.")}
+            body={heroSectionText(
               section,
               "body",
-              "Premium everyday pieces designed around movement, clean proportion, and quiet confidence.",
+              "Premium womenswear shaped for confidence, balance, and everyday discipline.",
             )}
             images={images?.length ? images : undefined}
           />,
@@ -331,48 +380,108 @@ export default async function HomePage() {
               .filter((product): product is (typeof products)[number] =>
                 Boolean(product),
               )
-              .slice(0, 5)
-          : products.slice(0, 5);
+              .slice(0, 4)
+          : products.slice(0, 4);
 
         return (
           <section
             key={sectionKey}
             id="new-arrivals"
-            className="relative overflow-hidden border-y border-border bg-off-white py-16 lg:py-24"
+            className="relative overflow-hidden border-b border-border bg-off-white py-14 lg:py-20"
           >
             <AdminSectionEditLink sectionKey={sectionKey} />
             <div className="page-shell">
-              <Reveal className="grid gap-7 border-b border-border pb-10 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end lg:pb-12">
+              <Reveal className="mx-auto max-w-3xl text-center">
                 <div>
                   <p className="eyebrow">
-                    {sectionText(section, "eyebrow", "Just arrived")}
+                    {selectedProductsSectionText(
+                      section,
+                      "eyebrow",
+                      "Shop the collection",
+                    )}
                   </p>
-                  <h2 className="mt-3 font-serif text-4xl leading-[0.92] min-[390px]:text-5xl sm:text-6xl">
-                    {sectionText(section, "heading", "Selected pieces")}
+                  <h2 className="mt-3 font-serif text-4xl leading-[0.95] min-[390px]:text-5xl sm:text-6xl">
+                    {selectedProductsSectionText(
+                      section,
+                      "heading",
+                      "Elevated essentials for every move.",
+                    )}
                   </h2>
-                  <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-                    {sectionText(
+                  <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-charcoal">
+                    {selectedProductsSectionText(
                       section,
                       "body",
-                      "Only a focused row of products lives on the homepage. The rest of the page keeps the brand image-led.",
+                      "Four selected pieces, chosen by the admin, presented with image-first focus.",
                     )}
                   </p>
                 </div>
-                <Button href="/shop?sort=newest" variant="text">
-                  Shop new in
-                </Button>
               </Reveal>
+            </div>
 
-              <div className="mt-10 -mr-5 flex snap-x snap-proximity gap-4 overflow-x-auto pb-4 pr-5 [scrollbar-width:none] sm:gap-5 lg:gap-6 [&::-webkit-scrollbar]:hidden">
-                {selectedProducts.map((product) => (
-                  <div
+            <div className="mt-9 grid grid-cols-2 gap-2 px-2 sm:flex sm:snap-x sm:snap-proximity sm:gap-3 sm:overflow-x-auto sm:scroll-smooth sm:px-[max(1rem,calc((100vw-80rem)/2+2rem))] sm:pb-4 sm:[scrollbar-width:none] sm:[touch-action:pan-x_pan-y] lg:gap-4 [&::-webkit-scrollbar]:hidden">
+              {selectedProducts.map((product, index) => {
+                const color =
+                  product.colors.find(
+                    (item) => item.id === product.defaultColor,
+                  ) ?? product.colors[0];
+                const imageSrc =
+                  fashionFallbackImages[index % fashionFallbackImages.length];
+
+                return (
+                  <article
                     key={product.id}
-                    className="w-[82vw] max-w-[350px] shrink-0 snap-start sm:w-[44vw] lg:w-[23rem]"
+                    className="group min-w-0 snap-start bg-white sm:w-[42vw] sm:min-w-[42vw] lg:w-[30vw] lg:min-w-[30vw] xl:w-[26vw] xl:min-w-[26vw]"
                   >
-                    <ProductCard product={product} />
-                  </div>
-                ))}
-              </div>
+                    <Link
+                      href={`/product/${product.slug}`}
+                      className="block"
+                      aria-label={`View ${product.name}`}
+                    >
+                      <ImagePlaceholder
+                        label={
+                          color?.imagePlaceholderLabel ??
+                          product.placeholderImageLabel
+                        }
+                        src={imageSrc}
+                        alt={
+                          color?.imagePlaceholderLabel ??
+                          product.placeholderImageLabel
+                        }
+                        ratio="portrait"
+                        className="aspect-[4/5]"
+                        hoverZoom
+                      />
+                    </Link>
+                    <div className="grid min-h-[104px] gap-3 border-b border-border px-2.5 py-3 sm:grid-cols-[1fr_auto] sm:px-3 sm:py-4">
+                      <div className="min-w-0">
+                        <h3 className="truncate text-xs font-semibold sm:text-sm">
+                          <Link
+                            href={`/product/${product.slug}`}
+                            className="link-underline"
+                          >
+                            {product.name}
+                          </Link>
+                        </h3>
+                        <p className="mt-1 text-[10px] capitalize tracking-[0.04em] text-charcoal/55">
+                          {color?.name ?? "Editorial"} edit
+                        </p>
+                      </div>
+                      <p className="text-xs font-medium sm:text-right">
+                        {formatTnd(product.priceTnd)}
+                      </p>
+                      <div className="col-span-full flex items-center gap-2">
+                        {product.colors.slice(0, 3).map((swatch) => (
+                          <span
+                            key={swatch.id}
+                            className="size-3.5 border border-black/15"
+                            style={{ backgroundColor: swatch.hex }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </section>
         );
