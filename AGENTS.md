@@ -332,6 +332,17 @@ storefront route is verified against hosted data.
 
 ## Execution Log
 
+### 2026-06-17 — Header rollback and lifestyle split stabilization
+
+- Restored the previous desktop header structure after the centering change
+  degraded the top bar layout
+- Hardened the homepage lifestyle split section with stricter grid sizing and
+  `min-w-0` handling so the editorial image and text block no longer overlap as
+  the layout compresses
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`
+- Commit: current commit containing this entry
+- Production: pending redeploy in this pass
+
 ### 2026-06-17 — Homepage layout stabilization and French production sync
 
 - Tightened homepage breakpoint behavior in the header, hero, newsletter, and

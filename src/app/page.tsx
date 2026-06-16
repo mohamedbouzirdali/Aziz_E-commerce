@@ -289,8 +289,8 @@ export default async function HomePage() {
           id="lifestyle"
           className="page-shell pb-14 sm:pb-18 lg:pb-20"
         >
-          <div className="relative">
-            <Reveal className="grid overflow-hidden border border-black/10 bg-[#ede5d8] lg:grid-cols-[1.08fr_0.92fr]">
+          <div className="relative isolate">
+            <Reveal className="grid overflow-hidden border border-black/10 bg-[#ede5d8] lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-stretch">
               <ImagePlaceholder
                 label={
                   lifestyleItem?.media?.altText ||
@@ -304,9 +304,9 @@ export default async function HomePage() {
                   "Image éditoriale lifestyle"
                 }
                 ratio="landscape"
-                className="h-full min-h-[300px] border-b border-black/10 lg:min-h-[460px] lg:border-b-0 lg:border-r"
+                className="h-full min-h-[300px] min-w-0 border-b border-black/10 lg:min-h-[460px] lg:border-b-0 lg:border-r"
               />
-              <div className="flex flex-col justify-center px-6 py-10 sm:px-8 lg:px-12">
+              <div className="flex min-w-0 flex-col justify-center px-6 py-10 sm:px-8 lg:px-12">
                 <p className="eyebrow text-black/55">
                   {sectionTextIgnoringLegacy(
                     lifestyleSection,
@@ -323,7 +323,7 @@ export default async function HomePage() {
                     },
                   )}
                 </p>
-                <h2 className="mt-4 max-w-md font-serif text-4xl leading-[0.96] sm:text-5xl">
+                <h2 className="mt-4 max-w-md text-balance font-serif text-4xl leading-[0.96] sm:text-5xl">
                   {sectionTextIgnoringLegacy(
                     lifestyleSection,
                     "heading",
@@ -357,7 +357,7 @@ export default async function HomePage() {
                 </p>
                 <Link
                   href="/about"
-                  className="mt-8 inline-flex w-fit items-center gap-3 bg-[#8d9684] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#75806b]"
+                  className="mt-8 inline-flex w-fit items-center gap-3 self-start bg-[#8d9684] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#75806b]"
                 >
                   Explorer l’univers <span aria-hidden>→</span>
                 </Link>
