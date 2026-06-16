@@ -290,7 +290,7 @@ export default async function HomePage() {
           className="page-shell pb-14 sm:pb-18 lg:pb-20"
         >
           <div className="relative isolate">
-            <Reveal className="grid overflow-hidden border border-black/10 bg-[#ede5d8] lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-stretch">
+            <Reveal className="grid overflow-hidden border border-black/10 bg-[#ede5d8] lg:grid-cols-2 lg:items-stretch">
               <ImagePlaceholder
                 label={
                   lifestyleItem?.media?.altText ||

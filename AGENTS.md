@@ -339,6 +339,8 @@ storefront route is verified against hosted data.
 - Hardened the homepage lifestyle split section with stricter grid sizing and
   `min-w-0` handling so the editorial image and text block no longer overlap as
   the layout compresses
+- Simplified the desktop lifestyle section to a plain two-column grid after the
+  custom template still allowed the text block to drop beneath the image
 - Validation: `npm run lint`, `npm run typecheck`, `npm run build`
 - Commit: current commit containing this entry
 - Production: pending redeploy in this pass
