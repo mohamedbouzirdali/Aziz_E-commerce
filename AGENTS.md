@@ -332,6 +332,16 @@ storefront route is verified against hosted data.
 
 ## Execution Log
 
+### 2026-06-22 — Mobile header logo overlap fix
+
+- Tightened the smallest mobile header width by reducing the base `evoflex`
+  wordmark size and collapsing the cart control to count-only below the `390px`
+  breakpoint so the centered logo no longer collides with the right-side utility
+  area
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`
+- Commit: not created
+- Production: not deployed in this pass
+
 ### 2026-06-17 — Header rollback and lifestyle split stabilization
 
 - Restored the previous desktop header structure after the centering change

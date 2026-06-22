@@ -19,7 +19,7 @@ export function Header() {
             <Link className="px-4 text-xs uppercase tracking-[0.15em]" href="/boxes">Coffrets</Link>
           </nav>
         </div>
-        <Link href="/" aria-label="Accueil evoflex" className="absolute left-1/2 -translate-x-1/2 font-serif text-lg tracking-[0.06em] min-[390px]:text-xl sm:text-2xl">
+        <Link href="/" aria-label="Accueil evoflex" className="absolute left-1/2 -translate-x-1/2 font-serif text-base tracking-[0.06em] min-[390px]:text-xl sm:text-2xl">
           evoflex
         </Link>
         <nav className="flex items-center" aria-label="Navigation utilitaire">
@@ -34,9 +34,11 @@ export function Header() {
           <button
             type="button"
             onClick={() => setCartOpen(true)}
-            className="min-h-10 px-1.5 py-3 text-[9px] uppercase tracking-[0.1em] min-[390px]:px-2 min-[390px]:text-[10px] min-[390px]:tracking-[0.12em] sm:px-3"
+            aria-label={`Panier (${cartCount})`}
+            className="flex min-h-10 items-center px-1 py-3 text-[9px] uppercase tracking-[0.1em] min-[390px]:px-2 min-[390px]:text-[10px] min-[390px]:tracking-[0.12em] sm:px-3"
           >
-            Panier ({cartCount})
+            <span className="min-[390px]:hidden">({cartCount})</span>
+            <span className="hidden min-[390px]:inline">Panier ({cartCount})</span>
           </button>
         </nav>
       </div>
