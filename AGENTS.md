@@ -332,6 +332,18 @@ storefront route is verified against hosted data.
 
 ## Execution Log
 
+### 2026-06-23 — Deterministic mobile header layout
+
+- Replaced the fragile absolute-centered mobile header with a dedicated
+  three-column mobile layout so the `evoflex` wordmark stays centered without
+  colliding with search or cart controls on narrow screens
+- Kept the desktop header structure unchanged while simplifying the mobile
+  utility area to icon-plus-cart text sizing that fits reliably across small
+  viewports
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`
+- Commit: not created
+- Production: not deployed in this pass
+
 ### 2026-06-22 — Mobile header logo overlap fix
 
 - Tightened the smallest mobile header width by reducing the base `evoflex`
