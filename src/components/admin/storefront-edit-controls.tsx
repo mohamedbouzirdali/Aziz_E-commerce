@@ -57,13 +57,20 @@ const AdminStorefrontContext = createContext<AdminStorefrontContextValue>({
 
 export function AdminStorefrontControlsProvider({
   children,
+  initialIsAdmin = false,
+  initialSectionIds = {},
 }: {
   children: ReactNode;
+  initialIsAdmin?: boolean;
+  initialSectionIds?: Record<string, string>;
 }) {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [sectionIds, setSectionIds] = useState<Record<string, string>>({});
+  const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
+  const [sectionIds, setSectionIds] =
+    useState<Record<string, string>>(initialSectionIds);
 
   useEffect(() => {
+    if (initialIsAdmin && Object.keys(initialSectionIds).length > 0) return;
+
     let active = true;
 
     async function loadAdminControls() {
@@ -107,7 +114,7 @@ export function AdminStorefrontControlsProvider({
     return () => {
       active = false;
     };
-  }, []);
+  }, [initialIsAdmin, initialSectionIds]);
 
   const contextValue = useMemo(
     () => ({ isAdmin, sectionIds }),

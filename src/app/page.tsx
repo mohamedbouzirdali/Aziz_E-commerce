@@ -13,6 +13,7 @@ import {
 import { NewsletterBlock } from "@/components/sections/newsletter-block";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { products } from "@/data";
+import { getAuthContext } from "@/lib/auth/session";
 import {
   getHomepageContent,
   type HomepageContentItem,
@@ -180,9 +181,15 @@ function communityGalleryItems(
 }
 
 export default async function HomePage() {
-  const cmsSections = await getHomepageContent();
+  const [cmsSections, auth] = await Promise.all([
+    getHomepageContent(),
+    getAuthContext(),
+  ]);
   const sectionMap = new Map(
     (cmsSections ?? []).map((section) => [section.section_key, section]),
+  );
+  const sectionIds = Object.fromEntries(
+    (cmsSections ?? []).map((section) => [section.section_key, section.id]),
   );
 
   const featuredSection = sectionMap.get("new-arrivals");
@@ -203,7 +210,10 @@ export default async function HomePage() {
   const communityImages = communityGalleryItems(communitySection?.items, 6);
 
   return (
-    <AdminStorefrontControlsProvider>
+    <AdminStorefrontControlsProvider
+      initialIsAdmin={auth?.roles.includes("admin") ?? false}
+      initialSectionIds={sectionIds}
+    >
       <div className="overflow-x-clip bg-[#fbf8f2] text-[#1e1e1e]">
         <div className="relative">
           <AdminSectionEditLink sectionKey="hero" label="Edit hero" />

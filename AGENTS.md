@@ -161,7 +161,8 @@ Storefront:
   and featured boxes can be read from Supabase with a safe mock fallback
 - Admin-only public homepage controls link directly to focused section editors
 - Admin-only public homepage controls now appear on the live homepage for hero,
-  featured products, lifestyle, community, and newsletter sections
+  featured products, lifestyle, community, and newsletter sections, with
+  server-confirmed admin state passed into the client controls provider
 - Homepage storytelling is now more image-first, with a fixed hero-then-rail
   sequence and remote fashion-image fallbacks when CMS media has not been
   replaced yet
@@ -334,6 +335,18 @@ storefront route is verified against hosted data.
 - Production: not deployed in this pass
 
 ## Execution Log
+
+### 2026-07-09 — Server-backed homepage admin controls
+
+- Verified the homepage section edit links were mounted but still depended on a
+  browser-side role lookup, which could fail silently and hide controls from
+  authenticated admins
+- Passed server-confirmed admin roles and homepage section IDs into the
+  storefront controls provider so section edit buttons render reliably for admin
+  sessions
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`
+- Commit: current commit containing this entry
+- Production: pending deployment in this pass
 
 ### 2026-07-09 — Direct homepage section edit buttons
 
