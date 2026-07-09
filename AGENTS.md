@@ -353,8 +353,9 @@ storefront route is verified against hosted data.
 - Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local
   production-server `/account` desktop/mobile overflow check on
   `http://localhost:3004`
-- Commit: current commit containing this entry
-- Production: pending deployment in this pass
+- Commit: `6b12718`
+- Production: deployed to `https://aziz-e-commerce.vercel.app` and verified
+  with HTTP 200 plus French account-copy HTML check
 
 ### 2026-07-09 — Inline homepage image and product editing
 
