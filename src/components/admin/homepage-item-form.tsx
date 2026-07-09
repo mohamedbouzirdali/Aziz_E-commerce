@@ -2,6 +2,7 @@ import {
   deleteHomepageItemAction,
   saveHomepageItemAction,
 } from "@/app/admin/homepage/actions";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { Tables } from "@/lib/supabase/database.types";
 
@@ -50,14 +51,24 @@ export function HomepageItemForm({
 
       <div className="lg:col-span-2">
         <div className="border border-border bg-off-white px-4 py-4 text-xs leading-6 text-charcoal">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-black">
-            {placementLabel || "Homepage placement"}
-          </p>
-          <p className="mt-2">
-            Use <strong>Media</strong> for image-led homepage sections. Use
-            <strong> Products</strong> or <strong>Boxes</strong> only where the
-            placement should link directly to merchandise.
-          </p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-black">
+                {placementLabel || "Homepage placement"}
+              </p>
+              <p className="mt-2">
+                Choose <strong>Media</strong> when this slot is mainly a photo.
+                Choose <strong>Products</strong> or <strong>Boxes</strong> only
+                when the slot should pull merchandise information.
+              </p>
+            </div>
+            <Link
+              href="/admin/media"
+              className="shrink-0 text-[9px] font-semibold uppercase tracking-[0.14em] text-black underline underline-offset-4"
+            >
+              Upload photo
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -94,6 +105,9 @@ export function HomepageItemForm({
             ))}
           </optgroup>
         </select>
+        <p className="mt-2 text-[11px] leading-5 text-charcoal/70">
+          New photos appear here after upload in the media library.
+        </p>
       </div>
 
       <div>

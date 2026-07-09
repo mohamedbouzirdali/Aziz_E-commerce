@@ -173,8 +173,9 @@ Storefront:
   uploads, saves, and sign-out actions visibly lock while work is in progress
 - Public storefront, account, cart, search, and policy UI copy is now localized
   into French while keeping the brand name `evoflex` unchanged
-- Storefront edit overlays now stay hidden in normal public rendering unless
-  `NEXT_PUBLIC_ENABLE_STOREFRONT_EDITING=true` is explicitly set
+- Storefront edit overlays are available by default to signed-in admins after a
+  client-side role check, while remaining hidden for customers and signed-out
+  visitors
 
 Commerce state:
 
@@ -331,6 +332,19 @@ storefront route is verified against hosted data.
 - Production: not deployed in this pass
 
 ## Execution Log
+
+### 2026-07-09 — Homepage admin image editing clarity
+
+- Restored direct homepage image editing for authenticated admins by removing
+  the extra storefront-editing environment flag while preserving role-gated
+  visibility
+- Added clearer `/admin/homepage` action cards for opening the storefront
+  editor, uploading photos, and managing section structure
+- Clarified homepage placement forms with an explicit media-library upload link
+  and guidance for choosing media versus products or boxes
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`
+- Commit: current commit containing this entry
+- Production: pending deployment in this pass
 
 ### 2026-06-23 — Deterministic mobile header layout
 

@@ -55,6 +55,45 @@ export default async function AdminHomepagePage({
         </p>
       )}
 
+      <section className="mt-8 grid gap-px border border-border bg-border lg:grid-cols-3">
+        <div className="bg-white p-5 sm:p-6">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
+            Fast image edits
+          </p>
+          <h2 className="mt-3 font-serif text-3xl">Edit on the homepage</h2>
+          <p className="mt-3 text-xs leading-6 text-charcoal">
+            Open the public homepage while signed in as admin. Image placements
+            show an edit button directly on top of the picture.
+          </p>
+          <Button href="/" className="mt-5 w-full justify-center">
+            Open storefront editor
+          </Button>
+        </div>
+        <div className="bg-white p-5 sm:p-6">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
+            Upload images
+          </p>
+          <h2 className="mt-3 font-serif text-3xl">Media library</h2>
+          <p className="mt-3 text-xs leading-6 text-charcoal">
+            Upload a new photo once, add alt text, then reuse it in homepage
+            sections, products, or boxes.
+          </p>
+          <Button href="/admin/media" variant="secondary" className="mt-5 w-full justify-center">
+            Upload or manage photos
+          </Button>
+        </div>
+        <div className="bg-off-white p-5 sm:p-6">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
+            Section structure
+          </p>
+          <h2 className="mt-3 font-serif text-3xl">Pick what appears</h2>
+          <p className="mt-3 text-xs leading-6 text-charcoal">
+            Use the section cards below to change copy, reorder blocks, and
+            choose which product, box, or media asset each placement uses.
+          </p>
+        </div>
+      </section>
+
       {error ? (
         <p className="mt-8 border border-red-900/20 bg-red-50 p-5 text-sm text-red-900">
           Homepage content is unavailable until the hosted migration is applied.
