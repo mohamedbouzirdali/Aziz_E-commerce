@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  AdminSectionEditLink,
   AdminStorefrontControlsProvider,
 } from "@/components/admin/storefront-edit-controls";
 import { ProductCard } from "@/components/cards/product-card";
@@ -205,6 +206,7 @@ export default async function HomePage() {
     <AdminStorefrontControlsProvider>
       <div className="overflow-x-clip bg-[#fbf8f2] text-[#1e1e1e]">
         <div className="relative">
+          <AdminSectionEditLink sectionKey="hero" label="Edit hero" />
           <EditorialHero
             eyebrow="Vestiaire sport premium"
             heading="Bougez avec intention."
@@ -242,7 +244,8 @@ export default async function HomePage() {
           </Reveal>
         </section>
 
-        <section className="page-shell py-14 sm:py-18 lg:py-20">
+        <section className="page-shell relative py-14 sm:py-18 lg:py-20">
+          <AdminSectionEditLink sectionKey="new-arrivals" label="Edit products" />
           <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-3xl">
               <p className="eyebrow text-black/55">
@@ -287,8 +290,9 @@ export default async function HomePage() {
 
         <section
           id="lifestyle"
-          className="page-shell pb-14 sm:pb-18 lg:pb-20"
+          className="page-shell relative pb-14 sm:pb-18 lg:pb-20"
         >
+          <AdminSectionEditLink sectionKey="editorial-story" label="Edit lifestyle" />
           <div className="relative isolate">
             <Reveal className="grid overflow-hidden border border-black/10 bg-[#ede5d8] md:grid-cols-2 md:items-stretch">
               <ImagePlaceholder
@@ -387,7 +391,11 @@ export default async function HomePage() {
           </Reveal>
         </section>
 
-        <section className="page-shell py-14 sm:py-18 lg:py-20">
+        <section className="page-shell relative py-14 sm:py-18 lg:py-20">
+          <AdminSectionEditLink
+            sectionKey={communitySection?.section_key || "curated-edits"}
+            label="Edit community"
+          />
           <div className="relative">
             <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-3xl">
@@ -422,7 +430,8 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <div className="page-shell pb-14 sm:pb-18 lg:pb-20">
+        <div className="page-shell relative pb-14 sm:pb-18 lg:pb-20">
+          <AdminSectionEditLink sectionKey="newsletter" label="Edit newsletter" />
           <div className="relative border border-black/10 bg-[#ede5d8]">
             <NewsletterBlock
               eyebrow={sectionTextIgnoringLegacy(
