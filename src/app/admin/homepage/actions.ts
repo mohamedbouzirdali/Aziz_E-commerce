@@ -23,6 +23,13 @@ type ReplaceHomepageImageInput = {
   fileSizeBytes: number;
 };
 
+type UpdateHomepageSectionInlineInput = {
+  id: string;
+  eyebrow: string;
+  heading: string;
+  body: string;
+};
+
 function value(formData: FormData, key: string) {
   const entry = formData.get(key);
   return typeof entry === "string" ? entry.trim() : "";
@@ -138,6 +145,39 @@ export async function replaceHomepageItemImageAction(
   }
 
   revalidateHomepage(item.section_id);
+  return { ok: true };
+}
+
+export async function updateHomepageSectionInlineAction(
+  input: UpdateHomepageSectionInlineInput,
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  const auth = await requireStaff();
+
+  if (
+    !/^[0-9a-f-]{36}$/i.test(input.id) ||
+    input.eyebrow.length > 120 ||
+    input.heading.length > 180 ||
+    input.body.length > 700
+  ) {
+    return { ok: false, message: "The section copy is invalid." };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("homepage_sections")
+    .update({
+      eyebrow: input.eyebrow.trim() || null,
+      heading: input.heading.trim() || null,
+      body: input.body.trim() || null,
+      updated_by: auth.userId,
+    })
+    .eq("id", input.id);
+
+  if (error) {
+    return { ok: false, message: "The section could not be saved." };
+  }
+
+  revalidateHomepage(input.id);
   return { ok: true };
 }
 

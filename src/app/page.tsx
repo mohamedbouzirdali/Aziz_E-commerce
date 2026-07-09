@@ -191,7 +191,20 @@ export default async function HomePage() {
   const sectionIds = Object.fromEntries(
     (cmsSections ?? []).map((section) => [section.section_key, section.id]),
   );
+  const editableSections = Object.fromEntries(
+    (cmsSections ?? []).map((section) => [
+      section.section_key,
+      {
+        id: section.id,
+        sectionKey: section.section_key,
+        eyebrow: section.eyebrow ?? "",
+        heading: section.heading ?? "",
+        body: section.body ?? "",
+      },
+    ]),
+  );
 
+  const heroSection = sectionMap.get("hero");
   const featuredSection = sectionMap.get("new-arrivals");
   const lifestyleSection = sectionMap.get("editorial-story");
   const communitySection =
@@ -213,14 +226,48 @@ export default async function HomePage() {
     <AdminStorefrontControlsProvider
       initialIsAdmin={auth?.roles.includes("admin") ?? false}
       initialSectionIds={sectionIds}
+      initialSections={editableSections}
     >
       <div className="overflow-x-clip bg-[#fbf8f2] text-[#1e1e1e]">
         <div className="relative">
           <AdminSectionEditLink sectionKey="hero" label="Edit hero" />
           <EditorialHero
-            eyebrow="Vestiaire sport premium"
-            heading="Bougez avec intention."
-            body="Des pièces premium pour les femmes qui cultivent une vie de confiance, d’équilibre et de discipline."
+            eyebrow={sectionTextIgnoringLegacy(
+              heroSection,
+              "eyebrow",
+              "Vestiaire sport premium",
+              {
+                eyebrow: ["Nouvelle saison", "New season", "Premium activewear"],
+                heading: ["Move with intention."],
+                body: [
+                  "Premium activewear for women building a lifestyle of confidence, balance, and discipline.",
+                ],
+              },
+            )}
+            heading={sectionTextIgnoringLegacy(
+              heroSection,
+              "heading",
+              "Bougez avec intention.",
+              {
+                eyebrow: ["Nouvelle saison", "New season", "Premium activewear"],
+                heading: ["Move with intention."],
+                body: [
+                  "Premium activewear for women building a lifestyle of confidence, balance, and discipline.",
+                ],
+              },
+            )}
+            body={sectionTextIgnoringLegacy(
+              heroSection,
+              "body",
+              "Des pièces premium pour les femmes qui cultivent une vie de confiance, d’équilibre et de discipline.",
+              {
+                eyebrow: ["Nouvelle saison", "New season", "Premium activewear"],
+                heading: ["Move with intention."],
+                body: [
+                  "Premium activewear for women building a lifestyle of confidence, balance, and discipline.",
+                ],
+              },
+            )}
             images={heroImages}
             primaryCta={{ href: "/shop?sort=newest", label: "Découvrir la collection" }}
             secondaryCta={{
@@ -409,10 +456,48 @@ export default async function HomePage() {
           <div className="relative">
             <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-3xl">
-                <p className="eyebrow text-black/55">Communauté</p>
+                <p className="eyebrow text-black/55">
+                  {sectionTextIgnoringLegacy(
+                    communitySection,
+                    "eyebrow",
+                    "Communauté",
+                    {
+                      eyebrow: ["For every moment", "Shop by rhythm"],
+                      heading: ["Dress with intention."],
+                      body: [
+                        "Glide left or right to explore considered edits for work, travel, evenings, and unhurried weekends.",
+                      ],
+                    },
+                  )}
+                </p>
                 <h2 className="mt-3 font-serif text-4xl leading-[0.96] sm:text-5xl">
-                  Porté par des femmes qui cultivent le meilleur d’elles-mêmes.
+                  {sectionTextIgnoringLegacy(
+                    communitySection,
+                    "heading",
+                    "Porté par des femmes qui cultivent le meilleur d’elles-mêmes.",
+                    {
+                      eyebrow: ["For every moment", "Shop by rhythm"],
+                      heading: ["Dress with intention."],
+                      body: [
+                        "Glide left or right to explore considered edits for work, travel, evenings, and unhurried weekends.",
+                      ],
+                    },
+                  )}
                 </h2>
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-black/62">
+                  {sectionTextIgnoringLegacy(
+                    communitySection,
+                    "body",
+                    "Une galerie vivante de silhouettes, de rituels et de moments portés avec intention.",
+                    {
+                      eyebrow: ["For every moment", "Shop by rhythm"],
+                      heading: ["Dress with intention."],
+                      body: [
+                        "Glide left or right to explore considered edits for work, travel, evenings, and unhurried weekends.",
+                      ],
+                    },
+                  )}
+                </p>
               </div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-black/65">
                 @evoflex

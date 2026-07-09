@@ -13,7 +13,10 @@ import {
   type ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
-import { replaceHomepageItemImageAction } from "@/app/admin/homepage/actions";
+import {
+  replaceHomepageItemImageAction,
+  updateHomepageSectionInlineAction,
+} from "@/app/admin/homepage/actions";
 import { InlineLoader } from "@/components/loaders";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
@@ -48,25 +51,39 @@ async function getImageDimensions(file: File) {
 type AdminStorefrontContextValue = {
   isAdmin: boolean;
   sectionIds: Record<string, string>;
+  sections: Record<string, InlineHomepageSection>;
+};
+
+type InlineHomepageSection = {
+  id: string;
+  sectionKey: string;
+  eyebrow: string;
+  heading: string;
+  body: string;
 };
 
 const AdminStorefrontContext = createContext<AdminStorefrontContextValue>({
   isAdmin: false,
   sectionIds: {},
+  sections: {},
 });
 
 export function AdminStorefrontControlsProvider({
   children,
   initialIsAdmin = false,
   initialSectionIds = {},
+  initialSections = {},
 }: {
   children: ReactNode;
   initialIsAdmin?: boolean;
   initialSectionIds?: Record<string, string>;
+  initialSections?: Record<string, InlineHomepageSection>;
 }) {
   const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
   const [sectionIds, setSectionIds] =
     useState<Record<string, string>>(initialSectionIds);
+  const [sections, setSections] =
+    useState<Record<string, InlineHomepageSection>>(initialSections);
 
   useEffect(() => {
     if (initialIsAdmin && Object.keys(initialSectionIds).length > 0) return;
@@ -94,7 +111,7 @@ export function AdminStorefrontControlsProvider({
 
       const { data: sections } = await supabase
         .from("homepage_sections")
-        .select("id, section_key");
+        .select("id, section_key, eyebrow, heading, body");
 
       if (!active) return;
 
@@ -104,6 +121,20 @@ export function AdminStorefrontControlsProvider({
           (sections ?? []).map((section) => [
             section.section_key,
             section.id,
+          ]),
+        ),
+      );
+      setSections(
+        Object.fromEntries(
+          (sections ?? []).map((section) => [
+            section.section_key,
+            {
+              id: section.id,
+              sectionKey: section.section_key,
+              eyebrow: section.eyebrow ?? "",
+              heading: section.heading ?? "",
+              body: section.body ?? "",
+            },
           ]),
         ),
       );
@@ -117,8 +148,8 @@ export function AdminStorefrontControlsProvider({
   }, [initialIsAdmin, initialSectionIds]);
 
   const contextValue = useMemo(
-    () => ({ isAdmin, sectionIds }),
-    [isAdmin, sectionIds],
+    () => ({ isAdmin, sectionIds, sections }),
+    [isAdmin, sectionIds, sections],
   );
 
   return (
@@ -143,18 +174,191 @@ export function AdminSectionEditLink({
   sectionKey: string;
   label?: string;
 }) {
-  const { isAdmin, sectionIds } = useContext(AdminStorefrontContext);
-  const sectionId = sectionIds[sectionKey];
+  const { isAdmin, sections } = useContext(AdminStorefrontContext);
+  const section = sections[sectionKey];
+  const router = useRouter();
+  const reduceMotion = useReducedMotion();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [open, setOpen] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const close = useCallback(() => {
+    if (pending) return;
+    formRef.current?.reset();
+    setMessage(null);
+    setOpen(false);
+  }, [pending]);
+  const dialog = useDialog(open, close);
 
-  if (!isAdmin || !sectionId) return null;
+  if (!isAdmin || !section) return null;
+
+  async function save(formData: FormData) {
+    if (!section) return;
+    setPending(true);
+    setMessage(null);
+
+    const result = await updateHomepageSectionInlineAction({
+      id: section.id,
+      eyebrow: String(formData.get("eyebrow") ?? "").trim(),
+      heading: String(formData.get("heading") ?? "").trim(),
+      body: String(formData.get("body") ?? "").trim(),
+    });
+
+    setPending(false);
+
+    if (!result.ok) {
+      setMessage(result.message);
+      return;
+    }
+
+    setOpen(false);
+    router.refresh();
+  }
 
   return (
-    <Link
-      href={`/admin/homepage/${sectionId}`}
-      className="absolute right-4 top-4 z-40 border border-white/20 bg-black px-3 py-2 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_24px_rgba(0,0,0,0.14)] transition-colors hover:bg-charcoal focus-visible:outline-white sm:right-6 sm:top-6"
-    >
-      {label}
-    </Link>
+    <>
+      <button
+        ref={dialog.triggerRef}
+        type="button"
+        onClick={() => {
+          setMessage(null);
+          setOpen(true);
+        }}
+        className="absolute right-4 top-4 z-40 border border-white/20 bg-black px-3 py-2 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_24px_rgba(0,0,0,0.14)] transition-colors hover:bg-charcoal focus-visible:outline-white sm:right-6 sm:top-6"
+      >
+        {label}
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <div className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-6">
+            <motion.button
+              type="button"
+              aria-label="Dismiss section editor"
+              className="absolute inset-0 bg-black/55"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={close}
+            />
+            <motion.div
+              ref={dialog.dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={`homepage-section-${section.id}`}
+              className="relative z-10 max-h-[100svh] w-full max-w-2xl overflow-y-auto bg-off-white p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:max-h-[92svh] sm:p-8"
+              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 16 }}
+              transition={{ duration: reduceMotion ? 0 : 0.25 }}
+            >
+              <button
+                type="button"
+                onClick={close}
+                disabled={pending}
+                aria-label="Close section editor"
+                className="absolute right-4 top-4 flex size-10 items-center justify-center border border-border bg-white text-xl disabled:opacity-40"
+              >
+                ×
+              </button>
+              <p className="eyebrow">Homepage section</p>
+              <h2
+                id={`homepage-section-${section.id}`}
+                className="mt-3 pr-12 font-serif text-4xl"
+              >
+                Edit this section
+              </h2>
+              <p className="mt-3 max-w-lg text-xs leading-5 text-charcoal">
+                Update the visible section copy directly from the homepage.
+              </p>
+
+              <form ref={formRef} action={save} className="mt-7 grid gap-5" aria-busy={pending}>
+                <div>
+                  <label
+                    htmlFor={`${section.id}-eyebrow`}
+                    className="text-[9px] font-semibold uppercase tracking-[0.14em]"
+                  >
+                    Small label
+                  </label>
+                  <input
+                    id={`${section.id}-eyebrow`}
+                    name="eyebrow"
+                    defaultValue={section.eyebrow}
+                    disabled={pending}
+                    maxLength={120}
+                    className="mt-2 min-h-12 w-full border border-border bg-white px-4 text-sm outline-none focus:border-black"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor={`${section.id}-heading`}
+                    className="text-[9px] font-semibold uppercase tracking-[0.14em]"
+                  >
+                    Heading
+                  </label>
+                  <input
+                    id={`${section.id}-heading`}
+                    name="heading"
+                    defaultValue={section.heading}
+                    disabled={pending}
+                    maxLength={180}
+                    className="mt-2 min-h-12 w-full border border-border bg-white px-4 text-sm outline-none focus:border-black"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor={`${section.id}-body`}
+                    className="text-[9px] font-semibold uppercase tracking-[0.14em]"
+                  >
+                    Supporting copy
+                  </label>
+                  <textarea
+                    id={`${section.id}-body`}
+                    name="body"
+                    defaultValue={section.body}
+                    disabled={pending}
+                    maxLength={700}
+                    className="mt-2 min-h-32 w-full border border-border bg-white px-4 py-3 text-sm leading-6 outline-none focus:border-black"
+                  />
+                </div>
+
+                <div className="min-h-6" aria-live="polite">
+                  {pending ? (
+                    <InlineLoader label="Saving section" size="sm" />
+                  ) : message ? (
+                    <p className="text-xs leading-5 text-red-800">{message}</p>
+                  ) : (
+                    <p className="text-xs leading-5 text-charcoal">
+                      Product choices and image uploads stay in the full homepage manager.
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-3 min-[390px]:flex-row">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={close}
+                    disabled={pending}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    loading={pending}
+                    loadingLabel="Saving"
+                    className="flex-1"
+                  >
+                    Save section
+                  </Button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 

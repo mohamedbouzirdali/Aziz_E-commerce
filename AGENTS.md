@@ -162,7 +162,8 @@ Storefront:
 - Admin-only public homepage controls link directly to focused section editors
 - Admin-only public homepage controls now appear on the live homepage for hero,
   featured products, lifestyle, community, and newsletter sections, with
-  server-confirmed admin state passed into the client controls provider
+  server-confirmed admin state passed into the client controls provider and
+  simple inline section-copy editing without leaving the homepage
 - Homepage storytelling is now more image-first, with a fixed hero-then-rail
   sequence and remote fashion-image fallbacks when CMS media has not been
   replaced yet
@@ -335,6 +336,17 @@ storefront route is verified against hosted data.
 - Production: not deployed in this pass
 
 ## Execution Log
+
+### 2026-07-09 — Inline homepage section editing
+
+- Converted public homepage section edit controls from admin-route links into
+  inline modal editors for simple eyebrow, heading, and body copy updates
+- Added a focused server action for inline homepage section copy saves and
+  wired hero and community copy to CMS-backed values so saved edits are visible
+  on the storefront
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`
+- Commit: current commit containing this entry
+- Production: pending deployment in this pass
 
 ### 2026-07-09 — Server-backed homepage admin controls
 
