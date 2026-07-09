@@ -214,7 +214,7 @@ export function AdminStorefrontControlsProvider({
           href="/admin/homepage"
           className="fixed bottom-5 left-5 z-[70] border border-white/25 bg-black px-4 py-3 text-[9px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-colors hover:bg-charcoal"
         >
-          Admin · Homepage
+          Admin · Accueil
         </Link>
       )}
     </AdminStorefrontContext.Provider>
@@ -223,7 +223,7 @@ export function AdminStorefrontControlsProvider({
 
 export function AdminSectionEditLink({
   sectionKey,
-  label = "Edit section",
+  label = "Modifier cette section",
 }: {
   sectionKey: string;
   label?: string;
@@ -306,7 +306,7 @@ export function AdminSectionEditLink({
       ) {
         setPending(false);
         setMessage(
-          "Choose an AVIF, JPEG, PNG, or WebP under 10 MiB and add meaningful alt text.",
+          "Choisissez une image AVIF, JPEG, PNG ou WebP de moins de 10 Mio avec un texte alternatif clair.",
         );
         return;
       }
@@ -319,7 +319,7 @@ export function AdminSectionEditLink({
 
       if (userError || !user) {
         setPending(false);
-        setMessage("Your admin session expired. Sign in again before uploading.");
+        setMessage("Votre session admin a expiré. Reconnectez-vous avant l’import.");
         return;
       }
 
@@ -337,7 +337,7 @@ export function AdminSectionEditLink({
 
       if (uploadError) {
         setPending(false);
-        setMessage("The image could not be uploaded. Check your access and retry.");
+        setMessage("L’image n’a pas pu être importée. Vérifiez vos droits puis réessayez.");
         return;
       }
 
@@ -383,7 +383,7 @@ export function AdminSectionEditLink({
           <div className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-6">
             <motion.button
               type="button"
-              aria-label="Dismiss section editor"
+              aria-label="Fermer l’éditeur de section"
               className="absolute inset-0 bg-black/55"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -405,20 +405,20 @@ export function AdminSectionEditLink({
                 type="button"
                 onClick={close}
                 disabled={pending}
-                aria-label="Close section editor"
+                aria-label="Fermer l’éditeur de section"
                 className="absolute right-4 top-4 flex size-10 items-center justify-center border border-border bg-white text-xl disabled:opacity-40"
               >
                 ×
               </button>
-              <p className="eyebrow">Homepage section</p>
+              <p className="eyebrow">Section accueil</p>
               <h2
                 id={`homepage-section-${section.id}`}
                 className="mt-3 pr-12 font-serif text-4xl"
               >
-                Edit this section
+                Modifier cette section
               </h2>
               <p className="mt-3 max-w-lg text-xs leading-5 text-charcoal">
-                Update the visible section copy directly from the homepage.
+                Modifiez le texte, l’image ou les produits directement depuis l’accueil.
               </p>
 
               <form ref={formRef} action={save} className="mt-7 grid gap-5" aria-busy={pending}>
@@ -427,7 +427,7 @@ export function AdminSectionEditLink({
                     htmlFor={`${section.id}-eyebrow`}
                     className="text-[9px] font-semibold uppercase tracking-[0.14em]"
                   >
-                    Small label
+                    Petit libellé
                   </label>
                   <input
                     id={`${section.id}-eyebrow`}
@@ -443,7 +443,7 @@ export function AdminSectionEditLink({
                     htmlFor={`${section.id}-heading`}
                     className="text-[9px] font-semibold uppercase tracking-[0.14em]"
                   >
-                    Heading
+                    Titre
                   </label>
                   <input
                     id={`${section.id}-heading`}
@@ -459,7 +459,7 @@ export function AdminSectionEditLink({
                     htmlFor={`${section.id}-body`}
                     className="text-[9px] font-semibold uppercase tracking-[0.14em]"
                   >
-                    Supporting copy
+                    Texte
                   </label>
                   <textarea
                     id={`${section.id}-body`}
@@ -474,7 +474,7 @@ export function AdminSectionEditLink({
                 {section.imageItemId && (
                   <div className="border border-border bg-white p-4">
                     <p className="text-[9px] font-semibold uppercase tracking-[0.14em]">
-                      Section image
+                      Image de section
                     </p>
                     <div className="mt-4 grid gap-4 sm:grid-cols-[0.7fr_1.3fr]">
                       <div className="aspect-[4/5] overflow-hidden border border-border bg-off-white">
@@ -482,12 +482,12 @@ export function AdminSectionEditLink({
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={previewUrl}
-                            alt="Selected upload preview"
+                            alt="Aperçu de l’image sélectionnée"
                             className="size-full object-cover"
                           />
                         ) : (
                           <div className="flex size-full items-center justify-center p-5 text-center text-[9px] uppercase tracking-[0.14em] text-charcoal/55">
-                            Optional replacement
+                            Remplacement optionnel
                           </div>
                         )}
                       </div>
@@ -496,7 +496,7 @@ export function AdminSectionEditLink({
                           htmlFor={`${section.id}-file`}
                           className="text-[9px] font-semibold uppercase tracking-[0.14em]"
                         >
-                          Upload photo
+                          Changer l’image
                         </label>
                         <input
                           id={`${section.id}-file`}
@@ -511,7 +511,7 @@ export function AdminSectionEditLink({
                           htmlFor={`${section.id}-alt`}
                           className="mt-4 block text-[9px] font-semibold uppercase tracking-[0.14em]"
                         >
-                          Alt text
+                          Texte alternatif
                         </label>
                         <input
                           id={`${section.id}-alt`}
@@ -521,7 +521,7 @@ export function AdminSectionEditLink({
                           className="mt-2 min-h-12 w-full border border-border bg-off-white px-4 text-sm outline-none focus:border-black"
                         />
                         <p className="mt-3 text-xs leading-5 text-charcoal/70">
-                          Leave empty to keep the current image. Maximum 10 MiB.
+                          Laissez vide pour garder l’image actuelle. Maximum 10 Mio.
                         </p>
                       </div>
                     </div>
@@ -531,11 +531,11 @@ export function AdminSectionEditLink({
                 {section.type === "product_grid" && (
                   <div className="border border-border bg-white p-4">
                     <p className="text-[9px] font-semibold uppercase tracking-[0.14em]">
-                      Products shown in this section
+                      Produits affichés dans cette section
                     </p>
                     <p className="mt-2 text-xs leading-5 text-charcoal/70">
-                      Tick the products to feature. The first four selected items
-                      are shown on the homepage.
+                      Cochez les produits à mettre en avant. Les premiers
+                      produits sélectionnés apparaissent sur l’accueil.
                     </p>
                     <div className="mt-4 grid max-h-72 gap-2 overflow-y-auto pr-1 sm:grid-cols-2">
                       {productChoices.map((product) => (
@@ -567,12 +567,12 @@ export function AdminSectionEditLink({
 
                 <div className="min-h-6" aria-live="polite">
                   {pending ? (
-                    <InlineLoader label="Saving section" size="sm" />
+                    <InlineLoader label="Enregistrement" size="sm" />
                   ) : message ? (
                     <p className="text-xs leading-5 text-red-800">{message}</p>
                   ) : (
                     <p className="text-xs leading-5 text-charcoal">
-                      Save applies copy, image, and product changes for this section.
+                      L’enregistrement applique le texte, l’image et les produits de cette section.
                     </p>
                   )}
                 </div>
@@ -585,15 +585,15 @@ export function AdminSectionEditLink({
                     disabled={pending}
                     className="flex-1"
                   >
-                    Cancel
+                    Annuler
                   </Button>
                   <Button
                     type="submit"
                     loading={pending}
-                    loadingLabel="Saving"
+                    loadingLabel="Enregistrement"
                     className="flex-1"
                   >
-                    Save section
+                    Enregistrer
                   </Button>
                 </div>
               </form>
@@ -662,7 +662,7 @@ export function AdminEditableImage({
       altText.length < 3
     ) {
       setMessage(
-        "Choose an AVIF, JPEG, PNG, or WebP under 10 MiB and add meaningful alt text.",
+        "Choisissez une image AVIF, JPEG, PNG ou WebP de moins de 10 Mio avec un texte alternatif clair.",
       );
       return;
     }
@@ -676,7 +676,7 @@ export function AdminEditableImage({
 
     if (userError || !user) {
       setPending(false);
-      setMessage("Your admin session expired. Sign in again before uploading.");
+      setMessage("Votre session admin a expiré. Reconnectez-vous avant l’import.");
       return;
     }
 
@@ -694,7 +694,7 @@ export function AdminEditableImage({
 
     if (uploadError) {
       setPending(false);
-      setMessage("The image could not be uploaded. Check your access and retry.");
+      setMessage("L’image n’a pas pu être importée. Vérifiez vos droits puis réessayez.");
       return;
     }
 
@@ -736,7 +736,7 @@ export function AdminEditableImage({
         className="absolute left-3 top-3 z-30 flex min-h-10 items-center gap-2 border border-white/25 bg-black/95 px-3.5 text-[8px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_10px_28px_rgba(0,0,0,0.2)] transition-colors hover:bg-charcoal focus-visible:outline-white"
       >
         <span aria-hidden>+</span>
-        Edit image
+        Changer l’image
       </button>
 
       <AnimatePresence>
@@ -744,7 +744,7 @@ export function AdminEditableImage({
           <div className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-6">
             <motion.button
               type="button"
-              aria-label="Dismiss image editor"
+              aria-label="Fermer l’éditeur d’image"
               className="absolute inset-0 bg-black/55"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -766,28 +766,28 @@ export function AdminEditableImage({
                 type="button"
                 onClick={close}
                 disabled={pending}
-                aria-label="Close image editor"
+                aria-label="Fermer l’éditeur d’image"
                 className="absolute right-4 top-4 flex size-10 items-center justify-center border border-border bg-white text-xl disabled:opacity-40"
               >
                 ×
               </button>
-              <p className="eyebrow">Homepage image</p>
+              <p className="eyebrow">Image accueil</p>
               <h2
                 id={`homepage-image-${editableItemId}`}
                 className="mt-3 pr-12 font-serif text-4xl"
               >
-                Change this image
+                Changer cette image
               </h2>
               <p className="mt-3 max-w-lg text-xs leading-5 text-charcoal">
-                Upload a replacement for “{label}”. The placement updates
-                immediately without changing the surrounding text or order.
+                Importez une image de remplacement pour “{label}”. L’emplacement
+                se met à jour sans changer le texte ni l’ordre.
               </p>
               <div className="mt-4">
                 <Link
                   href="/admin/homepage"
                   className="text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/70 underline underline-offset-4"
                 >
-                  Open homepage manager
+                  Ouvrir le gestionnaire d’accueil
                 </Link>
               </div>
 
@@ -802,12 +802,12 @@ export function AdminEditableImage({
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={previewUrl}
-                      alt="Selected upload preview"
+                      alt="Aperçu de l’image sélectionnée"
                       className="size-full object-cover"
                     />
                   ) : (
                     <div className="flex size-full items-center justify-center p-6 text-center text-[9px] uppercase tracking-[0.16em] text-charcoal/55">
-                      Select an image to preview
+                      Sélectionnez une image pour l’aperçu
                     </div>
                   )}
                 </div>
@@ -817,7 +817,7 @@ export function AdminEditableImage({
                     htmlFor={`homepage-file-${editableItemId}`}
                     className="text-[9px] font-semibold uppercase tracking-[0.14em]"
                   >
-                    Replacement image
+                    Image de remplacement
                   </label>
                   <input
                     id={`homepage-file-${editableItemId}`}
@@ -834,7 +834,7 @@ export function AdminEditableImage({
                     htmlFor={`homepage-alt-${editableItemId}`}
                     className="mt-5 text-[9px] font-semibold uppercase tracking-[0.14em]"
                   >
-                    Accessible alt text
+                    Texte alternatif
                   </label>
                   <input
                     id={`homepage-alt-${editableItemId}`}
@@ -848,13 +848,13 @@ export function AdminEditableImage({
 
                   <div className="mt-5 min-h-6" aria-live="polite">
                     {pending ? (
-                      <InlineLoader label="Publishing image" size="sm" />
+                      <InlineLoader label="Publication de l’image" size="sm" />
                     ) : message ? (
                       <p className="text-xs leading-5 text-red-800">{message}</p>
                     ) : (
                       <p className="text-xs leading-5 text-charcoal">
-                        Maximum 10 MiB. Portrait images work best for most homepage
-                        placements.
+                        Maximum 10 Mio. Les images portrait fonctionnent mieux
+                        sur la plupart des emplacements.
                       </p>
                     )}
                   </div>
@@ -867,12 +867,12 @@ export function AdminEditableImage({
                       disabled={pending}
                       className="flex-1"
                     >
-                      Cancel
+                      Annuler
                     </Button>
                     <Button
                       type="submit"
                       loading={pending}
-                      loadingLabel="Publishing"
+                      loadingLabel="Publication"
                       className="flex-1"
                     >
                       Publish image

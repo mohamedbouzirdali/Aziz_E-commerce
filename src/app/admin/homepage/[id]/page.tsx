@@ -7,63 +7,63 @@ import { requireStaff } from "@/lib/auth/session";
 import type { Tables } from "@/lib/supabase/database.types";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Homepage Section" };
+export const metadata: Metadata = { title: "Section d’accueil" };
 
 const notices: Record<string, string> = {
-  "item-created": "Homepage item created.",
-  "item-saved": "Homepage item saved.",
-  "item-moved": "Homepage item order updated.",
-  "item-deleted": "Homepage item deleted.",
+  "item-created": "Élément ajouté.",
+  "item-saved": "Élément enregistré.",
+  "item-moved": "Ordre mis à jour.",
+  "item-deleted": "Élément supprimé.",
   "item-validation-failed":
-    "Choose a valid target and provide a label for placeholders.",
-  "item-save-failed": "The homepage item could not be saved.",
-  "item-move-failed": "The homepage item could not be moved.",
-  "item-delete-failed": "The homepage item could not be deleted.",
+    "Choisissez une cible valide et ajoutez un libellé pour les placeholders.",
+  "item-save-failed": "L’élément n’a pas pu être enregistré.",
+  "item-move-failed": "L’élément n’a pas pu être déplacé.",
+  "item-delete-failed": "L’élément n’a pas pu être supprimé.",
 };
 
 function placementLabel(sectionKey: string, index: number) {
   const labels: Record<string, string[]> = {
-    hero: ["Primary banner", "Supporting image 01", "Supporting image 02"],
+    hero: ["Bannière principale", "Image secondaire 01", "Image secondaire 02"],
     "shop-by-rhythm": [
-      "Editorial card 01",
-      "Editorial card 02",
-      "Editorial card 03",
-      "Editorial card 04",
+      "Carte éditoriale 01",
+      "Carte éditoriale 02",
+      "Carte éditoriale 03",
+      "Carte éditoriale 04",
     ],
     categories: [
-      "Featured category 01",
-      "Featured category 02",
-      "Featured category 03",
-      "Additional category 01",
-      "Additional category 02",
-      "Additional category 03",
+      "Catégorie mise en avant 01",
+      "Catégorie mise en avant 02",
+      "Catégorie mise en avant 03",
+      "Catégorie additionnelle 01",
+      "Catégorie additionnelle 02",
+      "Catégorie additionnelle 03",
     ],
     "curated-edits": [
-      "Slider card 01",
-      "Slider card 02",
-      "Slider card 03",
-      "Slider card 04",
-      "Slider card 05",
+      "Carte slider 01",
+      "Carte slider 02",
+      "Carte slider 03",
+      "Carte slider 04",
+      "Carte slider 05",
     ],
     "new-arrivals": [
-      "Selected product 01",
-      "Selected product 02",
-      "Selected product 03",
-      "Selected product 04",
-      "Selected product 05",
+      "Produit sélectionné 01",
+      "Produit sélectionné 02",
+      "Produit sélectionné 03",
+      "Produit sélectionné 04",
+      "Produit sélectionné 05",
     ],
-    "best-sellers": ["Story image 01", "Story image 02", "Story image 03"],
-    "editorial-story": ["Feature story image"],
-    boxes: ["Featured box 01", "Featured box 02"],
+    "best-sellers": ["Image histoire 01", "Image histoire 02", "Image histoire 03"],
+    "editorial-story": ["Image éditoriale"],
+    boxes: ["Coffret mis en avant 01", "Coffret mis en avant 02"],
   };
 
-  return labels[sectionKey]?.[index] || `Placement ${String(index + 1).padStart(2, "0")}`;
+  return labels[sectionKey]?.[index] || `Emplacement ${String(index + 1).padStart(2, "0")}`;
 }
 
 function targetSummary(item: Tables<"homepage_section_items">) {
-  if (item.product_id) return "Product";
-  if (item.box_id) return "Box";
-  if (item.media_asset_id) return "Media";
+  if (item.product_id) return "Produit";
+  if (item.box_id) return "Coffret";
+  if (item.media_asset_id) return "Image";
   return "Placeholder";
 }
 
@@ -116,18 +116,18 @@ export default async function HomepageSectionPage({
       <header className="flex flex-col gap-6 border-b border-border pb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="eyebrow">
-            Homepage · {section.section_type.replace("_", " ")}
+            Accueil · {section.section_type.replace("_", " ")}
           </p>
           <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
             {section.heading || section.section_key}
           </h1>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-            Select canonical products, boxes, media, or editorial placeholders.
-            Overrides apply only to this placement.
+            Choisissez un produit, un coffret, une image ou un placeholder
+            éditorial. Les modifications s’appliquent uniquement ici.
           </p>
         </div>
         <Button href="/admin/homepage" variant="secondary">
-          All sections
+          Toutes les sections
         </Button>
       </header>
 
@@ -138,14 +138,14 @@ export default async function HomepageSectionPage({
       )}
 
       <section className="mt-8 border border-border bg-white p-5 sm:p-7">
-        <p className="eyebrow">Add placement</p>
+        <p className="eyebrow">Ajouter un emplacement</p>
         <div className="mt-6">
           <HomepageItemForm
             sectionId={section.id}
             products={products ?? []}
             boxes={boxes ?? []}
             media={media ?? []}
-            placementLabel={`New ${placementLabel(section.section_key, items?.length ?? 0)}`}
+            placementLabel={`Nouveau · ${placementLabel(section.section_key, items?.length ?? 0)}`}
           />
         </div>
       </section>
@@ -161,7 +161,7 @@ export default async function HomepageSectionPage({
                 <p className="mt-1 text-sm">
                   {item.title_override ||
                     item.placeholder_label ||
-                    "Canonical record"}
+                    "Contenu lié"}
                 </p>
                 <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-charcoal/55">
                   {targetSummary(item)}
@@ -176,9 +176,9 @@ export default async function HomepageSectionPage({
                     type="submit"
                     variant="secondary"
                     disabled={index === 0}
-                    aria-label={`Move placement ${index + 1} up`}
+                    aria-label={`Monter l’emplacement ${index + 1}`}
                   >
-                    Up
+                    Monter
                   </Button>
                 </form>
                 <form action={moveHomepageItemAction}>
@@ -189,9 +189,9 @@ export default async function HomepageSectionPage({
                     type="submit"
                     variant="secondary"
                     disabled={index === (items?.length ?? 0) - 1}
-                    aria-label={`Move placement ${index + 1} down`}
+                    aria-label={`Descendre l’emplacement ${index + 1}`}
                   >
-                    Down
+                    Descendre
                   </Button>
                 </form>
               </div>
@@ -211,9 +211,9 @@ export default async function HomepageSectionPage({
 
         {!items?.length && (
           <div className="border border-border bg-white p-10 text-center">
-            <p className="font-serif text-3xl">No placements yet</p>
+            <p className="font-serif text-3xl">Aucun emplacement</p>
             <p className="mt-3 text-xs text-charcoal">
-              Add the first item above.
+              Ajoutez le premier élément ci-dessus.
             </p>
           </div>
         )}

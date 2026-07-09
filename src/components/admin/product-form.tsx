@@ -84,13 +84,13 @@ export function ProductForm({
 
       <section className="border border-border bg-white p-6 sm:p-8">
         <div className="border-b border-border pb-5">
-          <p className="eyebrow">01 · Merchandising identity</p>
-          <h2 className="mt-3 font-serif text-3xl">Product information</h2>
+          <p className="eyebrow">01 · Essentiel</p>
+          <h2 className="mt-3 font-serif text-3xl">Informations produit</h2>
         </div>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div>
             <label className={labelClass} htmlFor="product-name">
-              Product name
+              Nom du produit
             </label>
             <input
               id="product-name"
@@ -103,7 +103,7 @@ export function ProductForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="product-slug">
-              URL slug
+              Slug URL
             </label>
             <input
               id="product-slug"
@@ -117,7 +117,7 @@ export function ProductForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="product-category">
-              Category
+              Catégorie
             </label>
             <select
               id="product-category"
@@ -125,7 +125,7 @@ export function ProductForm({
               defaultValue={product?.category_id ?? ""}
               className={inputClass}
             >
-              <option value="">No category</option>
+              <option value="">Sans catégorie</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -135,7 +135,7 @@ export function ProductForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="product-status">
-              Publishing status
+              Statut de publication
             </label>
             <select
               id="product-status"
@@ -143,14 +143,14 @@ export function ProductForm({
               defaultValue={product?.status ?? "draft"}
               className={inputClass}
             >
-              <option value="draft">Draft</option>
-              <option value="active">Active</option>
-              <option value="archived">Archived</option>
+              <option value="draft">Brouillon</option>
+              <option value="active">Publié</option>
+              <option value="archived">Archivé</option>
             </select>
           </div>
           <div className="md:col-span-2">
             <label className={labelClass} htmlFor="product-short-description">
-              Short description
+              Description courte
             </label>
             <input
               id="product-short-description"
@@ -161,7 +161,7 @@ export function ProductForm({
           </div>
           <div className="md:col-span-2">
             <label className={labelClass} htmlFor="product-description">
-              Full description
+              Description complète
             </label>
             <textarea
               id="product-description"
@@ -177,13 +177,13 @@ export function ProductForm({
 
       <section className="border border-border bg-white p-6 sm:p-8">
         <div className="border-b border-border pb-5">
-          <p className="eyebrow">02 · Commercial details</p>
-          <h2 className="mt-3 font-serif text-3xl">Price and placement</h2>
+          <p className="eyebrow">02 · Vente</p>
+          <h2 className="mt-3 font-serif text-3xl">Prix et mise en avant</h2>
         </div>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div>
             <label className={labelClass} htmlFor="product-price">
-              Base price in TND
+              Prix de base en TND
             </label>
             <input
               id="product-price"
@@ -205,13 +205,13 @@ export function ProductForm({
               id="product-badges"
               name="badges"
               defaultValue={product?.badges.join(", ") ?? ""}
-              placeholder="New, Limited"
+              placeholder="Nouveau, Édition limitée"
               className={inputClass}
             />
           </div>
           <div>
             <label className={labelClass} htmlFor="product-image-ratio">
-              Image ratio
+              Ratio image
             </label>
             <select
               id="product-image-ratio"
@@ -220,8 +220,8 @@ export function ProductForm({
               className={inputClass}
             >
               <option value="portrait">Portrait</option>
-              <option value="square">Square</option>
-              <option value="landscape">Landscape</option>
+              <option value="square">Carré</option>
+              <option value="landscape">Paysage</option>
             </select>
           </div>
           <div className="flex flex-wrap items-end gap-6 pb-3">
@@ -232,7 +232,7 @@ export function ProductForm({
                 defaultChecked={product?.is_new}
                 className="size-4 accent-black"
               />
-              New arrival
+              Nouveauté
             </label>
             <label className="flex min-h-11 items-center gap-3 text-sm">
               <input
@@ -241,7 +241,7 @@ export function ProductForm({
                 defaultChecked={product?.is_best_seller}
                 className="size-4 accent-black"
               />
-              Best seller
+              Best-seller
             </label>
           </div>
           <fieldset className="md:col-span-2">
@@ -269,16 +269,16 @@ export function ProductForm({
 
       <section className="border border-border bg-white p-6 sm:p-8">
         <div className="border-b border-border pb-5">
-          <p className="eyebrow">03 · Sellable variants</p>
-          <h2 className="mt-3 font-serif text-3xl">Colors and sizes</h2>
+          <p className="eyebrow">03 · Variantes</p>
+          <h2 className="mt-3 font-serif text-3xl">Couleurs et tailles</h2>
           <p className="mt-3 max-w-2xl text-xs leading-6 text-charcoal">
-            Saving generates every selected color and size combination. Existing
-            matching SKUs and inventory are preserved.
+            La sauvegarde génère les combinaisons couleur/taille sélectionnées.
+            Les SKU et stocks existants correspondants sont conservés.
           </p>
         </div>
         <div className="mt-6 grid gap-8 lg:grid-cols-2">
           <fieldset>
-            <legend className={labelClass}>Colors</legend>
+            <legend className={labelClass}>Couleurs</legend>
             <div className="mt-3 grid gap-px border border-border bg-border sm:grid-cols-2">
               {colors.map((color) => (
                 <label
@@ -304,7 +304,7 @@ export function ProductForm({
             <FieldError state={state} name="colorCodes" />
           </fieldset>
           <fieldset>
-            <legend className={labelClass}>Sizes</legend>
+            <legend className={labelClass}>Tailles</legend>
             <div className="mt-3 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-3">
               {sizes.map((size) => (
                 <label
@@ -329,27 +329,27 @@ export function ProductForm({
 
       <section className="border border-border bg-white p-6 sm:p-8">
         <div className="border-b border-border pb-5">
-          <p className="eyebrow">04 · Product confidence</p>
-          <h2 className="mt-3 font-serif text-3xl">Details and care</h2>
+          <p className="eyebrow">04 · Détails</p>
+          <h2 className="mt-3 font-serif text-3xl">Confiance produit</h2>
         </div>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           {[
-            { name: "details", label: "Details", value: product?.details },
+            { name: "details", label: "Détails", value: product?.details },
             {
               name: "composition",
               label: "Composition",
               value: product?.composition,
             },
-            { name: "fit", label: "Fit", value: product?.fit },
-            { name: "care", label: "Care", value: product?.care },
+            { name: "fit", label: "Coupe", value: product?.fit },
+            { name: "care", label: "Entretien", value: product?.care },
             {
               name: "deliveryNote",
-              label: "Delivery",
+              label: "Livraison",
               value: product?.delivery_note,
             },
             {
               name: "returnsNote",
-              label: "Returns",
+              label: "Retours",
               value: product?.returns_note,
             },
           ].map((field) => (
@@ -373,13 +373,13 @@ export function ProductForm({
 
       <section className="border border-border bg-white p-6 sm:p-8">
         <div className="border-b border-border pb-5">
-          <p className="eyebrow">05 · Search presentation</p>
-          <h2 className="mt-3 font-serif text-3xl">SEO</h2>
+          <p className="eyebrow">05 · Publication</p>
+          <h2 className="mt-3 font-serif text-3xl">Référencement</h2>
         </div>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div>
             <label className={labelClass} htmlFor="product-seo-title">
-              SEO title
+              Titre SEO
             </label>
             <input
               id="product-seo-title"
@@ -390,7 +390,7 @@ export function ProductForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="product-seo-description">
-              SEO description
+              Description SEO
             </label>
             <textarea
               id="product-seo-description"
@@ -404,16 +404,16 @@ export function ProductForm({
 
       <div className="sticky bottom-4 z-10 flex flex-col gap-3 border border-border bg-white/95 p-4 shadow-[0_12px_35px_rgba(17,17,17,0.1)] backdrop-blur sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-5 text-charcoal">
-          Saving is transactional. A validation failure leaves the current
-          product unchanged.
+          La sauvegarde est transactionnelle. En cas d’erreur, le produit reste
+          inchangé.
         </p>
         <Button
           type="submit"
           loading={pending}
-          loadingLabel="Saving product"
+          loadingLabel="Enregistrement"
           className="w-full shrink-0 sm:w-auto"
         >
-          {product ? "Save product" : "Create product"}
+          {product ? "Enregistrer le produit" : "Créer le produit"}
         </Button>
       </div>
     </form>

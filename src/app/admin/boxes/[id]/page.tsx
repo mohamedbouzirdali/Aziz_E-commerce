@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Edit Box" };
+export const metadata: Metadata = { title: "Modifier le coffret" };
 
 export default async function EditBoxPage({
   params,
@@ -42,7 +42,7 @@ export default async function EditBoxPage({
     <div>
       <header className="flex flex-col gap-6 border-b border-border pb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="eyebrow">Boxes · Editor</p>
+          <p className="eyebrow">Coffrets · Éditeur</p>
           <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
             {box.name}
           </h1>
@@ -51,7 +51,7 @@ export default async function EditBoxPage({
           <form action={archiveBoxAction}>
             <input type="hidden" name="id" value={box.id} />
             <Button type="submit" variant="secondary">
-              Archive box
+              Archiver le coffret
             </Button>
           </form>
         )}
@@ -59,12 +59,12 @@ export default async function EditBoxPage({
 
       {query.saved === "1" && (
         <p className="mt-6 border border-black/15 bg-white px-4 py-3 text-xs">
-          Box saved successfully.
+          Coffret enregistré.
         </p>
       )}
       {query.notice === "archive-failed" && (
         <p className="mt-6 border border-red-900/20 bg-red-50 px-4 py-3 text-xs text-red-900">
-          The box could not be archived.
+          Le coffret n’a pas pu être archivé.
         </p>
       )}
 

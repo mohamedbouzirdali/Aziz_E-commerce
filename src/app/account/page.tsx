@@ -35,7 +35,7 @@ export default async function AccountPage({
   return (
     <>
       <PageIntro
-      eyebrow="Compte client"
+        eyebrow="Compte client"
         title={auth ? "Heureuse de vous revoir" : "Votre compte"}
         description={
           auth

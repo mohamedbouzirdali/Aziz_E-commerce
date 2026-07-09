@@ -6,14 +6,14 @@ import { createClient } from "@/lib/supabase/server";
 export const metadata: Metadata = { title: "Collections" };
 
 const notices: Record<string, string> = {
-  created: "Collection created.",
-  updated: "Collection updated.",
-  deleted: "Collection deleted.",
-  "validation-failed": "Review the name, slug, and position.",
-  "slug-exists": "That collection slug already exists.",
-  "save-failed": "The collection could not be saved.",
-  "delete-failed": "The collection could not be deleted.",
-  "in-use": "Remove products from this collection before deleting it.",
+  created: "Collection créée.",
+  updated: "Collection mise à jour.",
+  deleted: "Collection supprimée.",
+  "validation-failed": "Vérifiez le nom, le slug et la position.",
+  "slug-exists": "Ce slug de collection existe déjà.",
+  "save-failed": "La collection n’a pas pu être enregistrée.",
+  "delete-failed": "La collection n’a pas pu être supprimée.",
+  "in-use": "Retirez les produits de cette collection avant suppression.",
 };
 
 export default async function AdminCollectionsPage({
@@ -38,8 +38,7 @@ export default async function AdminCollectionsPage({
           Collections
         </h1>
         <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-          Build editorial groupings that can span categories without duplicating
-          product data.
+          Créez des regroupements éditoriaux sans dupliquer les données produit.
         </p>
       </header>
       {params.notice && notices[params.notice] && (
@@ -50,7 +49,7 @@ export default async function AdminCollectionsPage({
       <div className="mt-8">
         {error ? (
           <p className="border border-red-900/20 bg-red-50 p-5 text-sm text-red-900">
-            Collections are unavailable until the hosted migration is applied.
+            Les collections sont indisponibles pour le moment.
           </p>
         ) : (
           <TaxonomyManager

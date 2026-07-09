@@ -178,6 +178,10 @@ Storefront:
   uploads, saves, and sign-out actions visibly lock while work is in progress
 - Public storefront, account, cart, search, and policy UI copy is now localized
   into French while keeping the brand name `evoflex` unchanged
+- Protected admin and account surfaces now use a simpler French-first workflow:
+  streamlined admin navigation, task-oriented dashboard, clearer product,
+  image, stock, box, and homepage-management copy, plus more direct staff
+  actions from the account page
 - Storefront edit overlays are available by default to signed-in admins after a
   client-side role check, while remaining hidden for customers and signed-out
   visitors
@@ -337,6 +341,20 @@ storefront route is verified against hosted data.
 - Production: not deployed in this pass
 
 ## Execution Log
+
+### 2026-07-09 — French admin simplification and account polish
+
+- Simplified the protected admin workspace into a French-first operational
+  experience with clearer navigation, a task dashboard, product thumbnails,
+  image upload/library language, stock labels, box management, and homepage
+  edit-control copy
+- Refined account/login surfaces so staff users have direct admin actions while
+  customers see a cleaner French account experience
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`, local
+  production-server `/account` desktop/mobile overflow check on
+  `http://localhost:3004`
+- Commit: current commit containing this entry
+- Production: pending deployment in this pass
 
 ### 2026-07-09 — Inline homepage image and product editing
 

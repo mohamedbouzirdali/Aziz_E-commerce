@@ -77,7 +77,7 @@ export async function registerMediaAssetAction(
       message:
         error.code === "23505"
           ? "This image is already registered."
-          : "The image metadata could not be saved.",
+          : "Les informations de l’image n’ont pas pu être enregistrées.",
     };
   }
 

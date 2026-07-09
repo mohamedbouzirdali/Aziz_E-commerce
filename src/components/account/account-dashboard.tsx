@@ -3,8 +3,14 @@ import { Button } from "@/components/ui/button";
 import type { AuthContext } from "@/lib/auth/session";
 
 export function AccountDashboard({ auth }: { auth: AuthContext }) {
-  const accountStatus = auth.isStaff ? "Accès équipe activé" : "Compte client";
+  const accountStatus = auth.isStaff ? "Accès équipe" : "Compte client";
   const roleLabels = auth.roles.length ? auth.roles : ["customer"];
+  const translatedRoles = roleLabels.map((role) => {
+    if (role === "admin") return "Administrateur";
+    if (role === "editor") return "Éditeur";
+    if (role === "customer") return "Cliente";
+    return role;
+  });
 
   return (
     <div className="overflow-hidden border border-border bg-border">
@@ -22,7 +28,7 @@ export function AccountDashboard({ auth }: { auth: AuthContext }) {
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {roleLabels.map((role) => (
+            {translatedRoles.map((role) => (
               <span
                 key={role}
                 className="border border-border bg-off-white px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.14em]"
@@ -34,10 +40,10 @@ export function AccountDashboard({ auth }: { auth: AuthContext }) {
 
           <div className="mt-10 grid gap-px bg-border sm:grid-cols-2">
             {[
-              ["Pièces enregistrées", "Votre liste d’envies reste disponible sur cet appareil et pour cette session."],
-              ["Historique des commandes", "Les commandes apparaîtront ici lorsque le paiement sera ajouté."],
-              ["Détails de livraison", "Les adresses enregistrées sont prévues pour la prochaine phase commerce."],
-              ["Préférences du compte", "Les réglages du profil et des notifications pourront être étendus ensuite."],
+              ["Liste d’envies", "Retrouvez vos pièces préférées et poursuivez votre sélection."],
+              ["Commandes", "L’historique apparaîtra ici lorsque le paiement sera ajouté."],
+              ["Livraison", "Les adresses enregistrées seront disponibles dans la prochaine phase."],
+              ["Préférences", "Les réglages du profil et des notifications pourront être ajoutés ensuite."],
             ].map(([title, description]) => (
               <div key={title} className="bg-off-white p-5 sm:p-6">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.14em]">
@@ -53,7 +59,7 @@ export function AccountDashboard({ auth }: { auth: AuthContext }) {
           <div>
             <p className="eyebrow text-white/50">Actions du compte</p>
             <h3 className="mt-4 font-serif text-3xl leading-tight">
-              Passez de vos pièces enregistrées aux outils actifs de la boutique.
+              Accédez rapidement à votre espace client ou aux outils de gestion.
             </h3>
             <div className="mt-8 flex flex-col gap-3">
               <Button href="/wishlist" variant="secondary" className="w-full border-white bg-white text-black before:bg-off-white">
@@ -66,6 +72,19 @@ export function AccountDashboard({ auth }: { auth: AuthContext }) {
                 <Button href="/admin" variant="ghost" className="w-full justify-between text-white">
                   Ouvrir l’espace admin
                 </Button>
+              )}
+              {auth.isStaff && (
+                <>
+                  <Button href="/admin/homepage" variant="ghost" className="w-full justify-between text-white">
+                    Modifier l’accueil
+                  </Button>
+                  <Button href="/admin/products" variant="ghost" className="w-full justify-between text-white">
+                    Gérer les produits
+                  </Button>
+                  <Button href="/admin/media" variant="ghost" className="w-full justify-between text-white">
+                    Importer des images
+                  </Button>
+                </>
               )}
             </div>
           </div>

@@ -6,23 +6,23 @@ import { createClient } from "@/lib/supabase/server";
 const managementAreas = [
   {
     href: "/admin/products",
-    title: "Catalog",
-    description: "Products, variants, options, pricing, publishing, and care details.",
+    title: "Produits",
+    description: "Ajouter, publier et corriger les fiches produit.",
   },
   {
     href: "/admin/inventory",
-    title: "Inventory",
-    description: "Variant stock, reservations, thresholds, and adjustment history.",
+    title: "Stocks",
+    description: "Surveiller les ruptures et ajuster les quantités.",
   },
   {
     href: "/admin/homepage",
-    title: "Homepage",
-    description: "Editorial sections, featured products, boxes, images, and ordering.",
+    title: "Accueil du site",
+    description: "Modifier les textes, images et produits mis en avant.",
   },
   {
     href: "/admin/media",
-    title: "Media",
-    description: "Catalog assets, image metadata, alt text, and placement references.",
+    title: "Images",
+    description: "Importer, décrire et réutiliser les visuels.",
   },
 ];
 
@@ -42,23 +42,46 @@ export default async function AdminDashboardPage() {
   ]);
 
   const metrics = [
-    ["Products", productsResult.count, productsResult.error],
-    ["Variants", variantsResult.count, variantsResult.error],
-    ["Boxes", boxesResult.count, boxesResult.error],
-    ["Homepage sections", sectionsResult.count, sectionsResult.error],
+    ["Produits", productsResult.count, productsResult.error],
+    ["Variantes", variantsResult.count, variantsResult.error],
+    ["Coffrets", boxesResult.count, boxesResult.error],
+    ["Sections visibles", sectionsResult.count, sectionsResult.error],
   ] as const;
+
+  const checks = [
+    {
+      title: "Images sans texte alternatif",
+      description: "Vérifier les visuels récemment importés avant publication.",
+      href: "/admin/media",
+    },
+    {
+      title: "Stocks faibles",
+      description: "Contrôler les variantes proches de la rupture.",
+      href: "/admin/inventory",
+    },
+    {
+      title: "Accueil à jour",
+      description: "Changer rapidement les images ou produits mis en avant.",
+      href: "/",
+    },
+  ];
 
   return (
     <div>
-      <header className="border-b border-border pb-8">
-        <p className="eyebrow">Commerce overview</p>
+      <header className="grid gap-6 border-b border-border pb-8 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+        <p className="eyebrow">Tableau de bord</p>
         <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
-          Admin workspace
+          Gérer evoflex simplement.
         </h1>
         <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-          Manage the catalog and editorial storefront through focused,
-          permission-protected tools.
+          Les actions fréquentes sont regroupées ici: accueil, produits, images
+          et stocks. Le reste reste accessible sans surcharger l’interface.
         </p>
+        </div>
+        <Button href="/" variant="secondary" className="justify-center">
+          Voir le site
+        </Button>
       </header>
 
       <section className="mt-8 grid gap-px border border-border bg-border sm:grid-cols-2 xl:grid-cols-4">
@@ -71,7 +94,7 @@ export default async function AdminDashboardPage() {
               {error ? "—" : (count ?? 0)}
             </p>
             <p className="mt-3 text-xs text-charcoal">
-              {error ? "Unavailable until migration is applied" : "Live database total"}
+              {error ? "Indisponible pour le moment" : "Total actuel"}
             </p>
           </div>
         ))}
@@ -79,21 +102,23 @@ export default async function AdminDashboardPage() {
 
       <section className="mt-12 grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
         <div className="border border-border bg-off-white p-6 sm:p-7">
-          <p className="eyebrow">Quick start</p>
-          <h2 className="mt-3 font-serif text-4xl">Daily controls</h2>
+          <p className="eyebrow">Actions rapides</p>
+          <h2 className="mt-3 font-serif text-4xl">Aujourd’hui</h2>
           <p className="mt-4 text-sm leading-7 text-charcoal">
-            Keep frequent tasks close: homepage edits, image management, product
-            updates, and inventory review.
+            Accédez directement aux tâches qui changent vraiment la boutique.
           </p>
           <div className="mt-7 flex flex-col gap-3">
             <Button href="/admin/homepage" className="w-full justify-center">
-              Edit homepage
+              Modifier l’accueil
             </Button>
             <Button href="/admin/products" variant="secondary" className="w-full justify-center">
-              Manage products
+              Gérer les produits
             </Button>
             <Button href="/admin/media" variant="ghost" className="w-full justify-between">
-              Open media library
+              Importer une image
+            </Button>
+            <Button href="/admin/inventory" variant="ghost" className="w-full justify-between">
+              Mettre à jour les stocks
             </Button>
           </div>
         </div>
@@ -101,11 +126,11 @@ export default async function AdminDashboardPage() {
         <div>
           <div className="flex items-end justify-between gap-5">
             <div>
-              <p className="eyebrow">Management areas</p>
-              <h2 className="mt-3 font-serif text-4xl">Core operations</h2>
+              <p className="eyebrow">Opérations</p>
+              <h2 className="mt-3 font-serif text-4xl">Espaces principaux</h2>
             </div>
             <p className="hidden max-w-xs text-right text-xs leading-5 text-charcoal sm:block">
-              Every write action rechecks staff permissions server-side.
+              Chaque action sensible vérifie les droits côté serveur.
             </p>
           </div>
 
@@ -131,6 +156,35 @@ export default async function AdminDashboardPage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="mt-12 border border-border bg-white p-6 sm:p-7">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="eyebrow">À vérifier</p>
+            <h2 className="mt-3 font-serif text-4xl">Points de contrôle</h2>
+          </div>
+          <p className="max-w-sm text-xs leading-5 text-charcoal">
+            Une liste courte pour garder la boutique propre avant publication.
+          </p>
+        </div>
+        <div className="mt-6 grid gap-px border border-border bg-border md:grid-cols-3">
+          {checks.map((check) => (
+            <Link
+              key={check.title}
+              href={check.href}
+              className="group bg-off-white p-5 transition-colors hover:bg-black hover:text-white"
+            >
+              <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-charcoal/55 group-hover:text-white/55">
+                Contrôle
+              </p>
+              <h3 className="mt-3 font-serif text-2xl">{check.title}</h3>
+              <p className="mt-3 text-xs leading-5 text-charcoal group-hover:text-white/65">
+                {check.description}
+              </p>
+            </Link>
+          ))}
         </div>
       </section>
     </div>

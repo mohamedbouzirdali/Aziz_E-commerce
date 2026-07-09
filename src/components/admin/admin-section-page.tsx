@@ -29,7 +29,7 @@ export async function AdminSectionPage({
         {capabilities.map((capability, index) => (
           <article key={capability} className="bg-white p-6">
             <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-charcoal/55">
-              Capability {String(index + 1).padStart(2, "0")}
+              Prévu {String(index + 1).padStart(2, "0")}
             </p>
             <h2 className="mt-4 font-serif text-2xl">{capability}</h2>
           </article>

@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 import { getAuthContext, requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Inventory" };
+export const metadata: Metadata = { title: "Stocks" };
 
 const notices: Record<string, string> = {
-  updated: "Inventory updated and its adjustment history recorded.",
-  "validation-failed": "Enter valid whole-number stock values.",
-  "below-reserved": "Stock cannot be lower than the reserved quantity.",
-  "update-failed": "Inventory could not be updated.",
+  updated: "Stock mis à jour et mouvement enregistré.",
+  "validation-failed": "Saisissez des quantités entières valides.",
+  "below-reserved": "Le stock ne peut pas être inférieur à la quantité réservée.",
+  "update-failed": "Le stock n’a pas pu être mis à jour.",
 };
 
 export default async function AdminInventoryPage({
@@ -49,13 +49,13 @@ export default async function AdminInventoryPage({
   return (
     <div>
       <header className="border-b border-border pb-8">
-        <p className="eyebrow">Stock control</p>
+        <p className="eyebrow">Contrôle des stocks</p>
         <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
-          Inventory
+          Stocks
         </h1>
         <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-          Exact quantities remain private. Every stock correction is validated
-          against reservations and written to adjustment history.
+          Ajustez les quantités disponibles sans exposer les chiffres aux
+          clientes. Chaque correction respecte les réservations.
         </p>
       </header>
 
@@ -67,13 +67,14 @@ export default async function AdminInventoryPage({
 
       {!canAdjust && (
         <p className="mt-6 border border-black/15 bg-white px-4 py-3 text-xs leading-5 text-charcoal">
-          Editors can review inventory. Only administrators can change stock.
+          Les éditeurs peuvent consulter les stocks. Seuls les administrateurs
+          peuvent les modifier.
         </p>
       )}
 
       {error ? (
         <p className="mt-8 border border-red-900/20 bg-red-50 p-5 text-sm text-red-900">
-          Inventory is unavailable until the hosted migration is applied.
+          Les stocks sont indisponibles pour le moment.
         </p>
       ) : (
         <div className="mt-8 space-y-3">
@@ -95,7 +96,7 @@ export default async function AdminInventoryPage({
                   <div>
                     <div className="flex flex-wrap items-center gap-3">
                       <p className="font-serif text-2xl">
-                        {product?.name ?? "Unknown product"}
+                        {product?.name ?? "Produit inconnu"}
                       </p>
                       <span
                         className={`border px-2 py-1 text-[8px] font-semibold uppercase tracking-[0.12em] ${
@@ -104,11 +105,15 @@ export default async function AdminInventoryPage({
                             : "border-black/15"
                         }`}
                       >
-                        {isLow ? "Low stock" : "In stock"}
+                        {available <= 0
+                          ? "Rupture"
+                          : isLow
+                            ? "Stock faible"
+                            : "En stock"}
                       </span>
                       {variant && !variant.is_active && (
                         <span className="border border-black/15 px-2 py-1 text-[8px] uppercase tracking-[0.12em] text-charcoal">
-                          Inactive variant
+                          Variante inactive
                         </span>
                       )}
                     </div>
@@ -116,8 +121,8 @@ export default async function AdminInventoryPage({
                       {variant?.title ?? level.variant_id}
                     </p>
                     <p className="mt-1 text-[9px] uppercase tracking-[0.12em] text-charcoal/55">
-                      {variant?.sku ?? "No SKU"} · Available {available} ·
-                      Reserved {level.reserved_quantity}
+                      {variant?.sku ?? "Sans SKU"} · Disponible {available} ·
+                      Réservé {level.reserved_quantity}
                     </p>
                   </div>
 
@@ -132,7 +137,7 @@ export default async function AdminInventoryPage({
                         value={level.id}
                       />
                       <label className="text-[9px] font-semibold uppercase tracking-[0.12em]">
-                        Stocked
+                        Quantité en stock
                         <input
                           name="stockedQuantity"
                           type="number"
@@ -144,7 +149,7 @@ export default async function AdminInventoryPage({
                         />
                       </label>
                       <label className="text-[9px] font-semibold uppercase tracking-[0.12em]">
-                        Low at
+                        Seuil stock faible
                         <input
                           name="lowStockThreshold"
                           type="number"
@@ -156,23 +161,23 @@ export default async function AdminInventoryPage({
                         />
                       </label>
                       <label className="text-[9px] font-semibold uppercase tracking-[0.12em]">
-                        Adjustment note
+                        Note interne
                         <input
                           name="note"
-                          placeholder="Reason for this correction"
+                          placeholder="Raison de la correction"
                           className="mt-2 min-h-11 w-full border border-border px-3 text-sm normal-case tracking-normal"
                         />
                       </label>
                       <Button type="submit" variant="secondary">
-                        Update
+                        Enregistrer
                       </Button>
                     </form>
                   ) : (
                     <div className="grid grid-cols-3 gap-px bg-border text-center">
                       {[
-                        ["Stocked", level.stocked_quantity],
-                        ["Reserved", level.reserved_quantity],
-                        ["Available", available],
+                        ["En stock", level.stocked_quantity],
+                        ["Réservé", level.reserved_quantity],
+                        ["Disponible", available],
                       ].map(([label, count]) => (
                         <div key={label} className="bg-off-white px-4 py-3">
                           <p className="text-[8px] uppercase tracking-[0.12em] text-charcoal">
@@ -190,7 +195,7 @@ export default async function AdminInventoryPage({
 
           {!levels?.length && (
             <div className="border border-border bg-white p-10 text-center">
-              <p className="font-serif text-3xl">No inventory levels yet</p>
+              <p className="font-serif text-3xl">Aucun niveau de stock</p>
             </div>
           )}
         </div>

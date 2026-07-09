@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Boxes" };
+export const metadata: Metadata = { title: "Coffrets" };
 
 export default async function AdminBoxesPage({
   searchParams,
@@ -25,27 +25,27 @@ export default async function AdminBoxesPage({
     <div>
       <header className="flex flex-col gap-6 border-b border-border pb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="eyebrow">Curated value</p>
+          <p className="eyebrow">Sélections composées</p>
           <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
-            Boxes
+            Coffrets
           </h1>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-            Compose occasion-led bundles with canonical products, clear totals,
-            and validated savings.
+            Composez des coffrets par occasion avec des produits existants, un
+            total clair et une économie lisible.
           </p>
         </div>
-        <Button href="/admin/boxes/new">New box</Button>
+        <Button href="/admin/boxes/new">Nouveau coffret</Button>
       </header>
 
       {params.notice === "box-archived" && (
         <p className="mt-6 border border-black/15 bg-white px-4 py-3 text-xs">
-          The box was archived.
+          Le coffret a été archivé.
         </p>
       )}
 
       {error ? (
         <p className="mt-8 border border-red-900/20 bg-red-50 p-5 text-sm text-red-900">
-          Boxes are unavailable until the hosted migration is applied.
+          Les coffrets sont indisponibles pour le moment.
         </p>
       ) : (
         <div className="mt-8 grid gap-px border border-border bg-border md:grid-cols-2">
@@ -75,7 +75,7 @@ export default async function AdminBoxesPage({
                 <div className="mt-8 flex items-end justify-between border-t border-border pt-5 group-hover:border-white/25">
                   <p className="text-sm">{box.box_price_tnd.toFixed(3)} TND</p>
                   <p className="text-[9px] uppercase tracking-[0.12em] text-charcoal group-hover:text-white/55">
-                    Save {savings.toFixed(3)} TND
+                    Économie {savings.toFixed(3)} TND
                   </p>
                 </div>
               </Link>

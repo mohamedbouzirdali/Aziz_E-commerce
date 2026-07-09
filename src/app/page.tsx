@@ -263,7 +263,7 @@ export default async function HomePage() {
     >
       <div className="overflow-x-clip bg-[#fbf8f2] text-[#1e1e1e]">
         <div className="relative">
-          <AdminSectionEditLink sectionKey="hero" label="Edit hero" />
+          <AdminSectionEditLink sectionKey="hero" label="Modifier le hero" />
           <EditorialHero
             eyebrow={sectionTextIgnoringLegacy(
               heroSection,
@@ -335,7 +335,7 @@ export default async function HomePage() {
         </section>
 
         <section className="page-shell relative py-14 sm:py-18 lg:py-20">
-          <AdminSectionEditLink sectionKey="new-arrivals" label="Edit products" />
+          <AdminSectionEditLink sectionKey="new-arrivals" label="Choisir les produits" />
           <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-3xl">
               <p className="eyebrow text-black/55">
@@ -382,7 +382,7 @@ export default async function HomePage() {
           id="lifestyle"
           className="page-shell relative pb-14 sm:pb-18 lg:pb-20"
         >
-          <AdminSectionEditLink sectionKey="editorial-story" label="Edit lifestyle" />
+          <AdminSectionEditLink sectionKey="editorial-story" label="Modifier l’univers" />
           <div className="relative isolate">
             <Reveal className="grid overflow-hidden border border-black/10 bg-[#ede5d8] md:grid-cols-2 md:items-stretch">
               <ImagePlaceholder
@@ -484,7 +484,7 @@ export default async function HomePage() {
         <section className="page-shell relative py-14 sm:py-18 lg:py-20">
           <AdminSectionEditLink
             sectionKey={communitySection?.section_key || "curated-edits"}
-            label="Edit community"
+            label="Modifier communauté"
           />
           <div className="relative">
             <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -559,7 +559,7 @@ export default async function HomePage() {
         </section>
 
         <div className="page-shell relative pb-14 sm:pb-18 lg:pb-20">
-          <AdminSectionEditLink sectionKey="newsletter" label="Edit newsletter" />
+          <AdminSectionEditLink sectionKey="newsletter" label="Modifier newsletter" />
           <div className="relative border border-black/10 bg-[#ede5d8]">
             <NewsletterBlock
               eyebrow={sectionTextIgnoringLegacy(

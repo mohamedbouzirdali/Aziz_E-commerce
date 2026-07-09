@@ -16,18 +16,19 @@ export function AccountAccess({
         <p className="eyebrow text-white/55">Compte client evoflex</p>
         <div>
           <h2 className="max-w-sm font-serif text-5xl leading-[0.92] sm:text-6xl">
-            Votre vestiaire,
+            Votre espace,
             <br />
-            <span className="italic">toujours à portée.</span>
+            <span className="italic">simple et fluide.</span>
           </h2>
           <p className="mt-6 max-w-sm text-sm leading-7 text-white/65">
-            Enregistrez vos pièces préférées, suivez votre accès et retrouvez un parcours d’achat plus fluide.
+            Connectez-vous pour retrouver vos favoris, gérer votre accès et
+            passer rapidement vers les outils équipe si vous êtes admin.
           </p>
           <div className="mt-8 grid gap-px bg-white/10">
             {[
-              "Liste d’envies conservée entre les sessions",
-              "Accès équipe lorsqu’il est attribué",
-              "Récupération de mot de passe et connexion sécurisée",
+              "Favoris et compte au même endroit",
+              "Accès équipe visible automatiquement",
+              "Connexion sécurisée avec récupération de mot de passe",
             ].map((item) => (
               <div key={item} className="bg-black/30 px-4 py-3 text-[10px] uppercase tracking-[0.14em] text-white/78">
                 {item}
@@ -69,7 +70,7 @@ export function AccountAccess({
 
         <div className="mx-auto max-w-md">
           <p className="eyebrow">
-            {mode === "sign-in" ? "Heureuse de vous revoir" : "Rejoindre evoflex"}
+            {mode === "sign-in" ? "Connexion" : "Créer un accès"}
           </p>
           <h3 className="mt-3 font-serif text-4xl">
             {mode === "sign-in" ? "Se connecter" : "Créer votre compte"}

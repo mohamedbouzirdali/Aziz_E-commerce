@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 import { AdminSectionPage } from "@/components/admin/admin-section-page";
 
-export const metadata: Metadata = { title: "Customers" };
+export const metadata: Metadata = { title: "Clientes" };
 
 export default function AdminCustomersPage() {
   return (
     <AdminSectionPage
-      eyebrow="Client service"
-      title="Customers"
-      description="Support customer accounts while exposing only the minimum profile information needed for service."
+      eyebrow="Service client · Bientôt"
+      title="Clientes"
+      description="Cette section servira à accompagner les comptes clientes avec uniquement les informations nécessaires au support."
       capabilities={[
-        "Find customer profiles by safe identifiers",
-        "Review consent and account state",
-        "Support address and order workflows later",
-        "Keep staff roles separate from profile data",
+        "Rechercher une cliente avec un identifiant sûr",
+        "Voir l’état du compte et les consentements",
+        "Préparer les futures adresses et commandes",
+        "Séparer les rôles équipe des profils clientes",
       ]}
-      note="Customer access will remain tightly scoped; authorization never depends on user-editable profile metadata."
+      note="Cette page reste volontairement limitée tant que les commandes persistantes ne sont pas actives."
     />
   );
 }

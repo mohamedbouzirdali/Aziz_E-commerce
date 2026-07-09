@@ -60,7 +60,7 @@ export async function saveBoxAction(
     fieldErrors.position = "Enter a valid position.";
   }
   if (!productIds.length) {
-    fieldErrors.productIds = "Choose at least one product.";
+    fieldErrors.productIds = "Choisissez au moins un produit.";
   }
 
   if (Object.keys(fieldErrors).length) {
@@ -93,7 +93,7 @@ export async function saveBoxAction(
       message:
         error?.code === "23505"
           ? "That box slug is already in use."
-          : "The box could not be saved. Review the fields and try again.",
+          : "Le coffret n’a pas pu être enregistré. Vérifiez les champs puis réessayez.",
     };
   }
 

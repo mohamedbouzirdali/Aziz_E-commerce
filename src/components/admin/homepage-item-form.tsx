@@ -54,19 +54,20 @@ export function HomepageItemForm({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-black">
-                {placementLabel || "Homepage placement"}
+                {placementLabel || "Emplacement accueil"}
               </p>
               <p className="mt-2">
-                Choose <strong>Media</strong> when this slot is mainly a photo.
-                Choose <strong>Products</strong> or <strong>Boxes</strong> only
-                when the slot should pull merchandise information.
+                Choisissez <strong>Image</strong> quand l’emplacement sert
+                surtout de visuel. Choisissez <strong>Produit</strong> ou
+                <strong> Coffret</strong> quand le contenu doit reprendre les
+                informations catalogue.
               </p>
             </div>
             <Link
               href="/admin/media"
               className="shrink-0 text-[9px] font-semibold uppercase tracking-[0.14em] text-black underline underline-offset-4"
             >
-              Upload photo
+              Importer une image
             </Link>
           </div>
         </div>
@@ -74,7 +75,7 @@ export function HomepageItemForm({
 
       <div>
         <label className={labelClass} htmlFor={`${item?.id ?? "new"}-target`}>
-          Content target
+          Contenu affiché
         </label>
         <select
           id={`${item?.id ?? "new"}-target`}
@@ -82,22 +83,22 @@ export function HomepageItemForm({
           defaultValue={currentTarget(item)}
           className={inputClass}
         >
-          <option value="placeholder">Editorial placeholder</option>
-          <optgroup label="Products">
+          <option value="placeholder">Placeholder éditorial</option>
+          <optgroup label="Produits">
             {products.map((product) => (
               <option key={product.id} value={`product:${product.id}`}>
                 {product.name} · {product.status}
               </option>
             ))}
           </optgroup>
-          <optgroup label="Boxes">
+          <optgroup label="Coffrets">
             {boxes.map((box) => (
               <option key={box.id} value={`box:${box.id}`}>
                 {box.name} · {box.status}
               </option>
             ))}
           </optgroup>
-          <optgroup label="Media">
+          <optgroup label="Images">
             {media.map((asset) => (
               <option key={asset.id} value={`media:${asset.id}`}>
                 {asset.alt_text} · {asset.object_path}
@@ -106,7 +107,7 @@ export function HomepageItemForm({
           </optgroup>
         </select>
         <p className="mt-2 text-[11px] leading-5 text-charcoal/70">
-          New photos appear here after upload in the media library.
+          Les nouvelles photos apparaissent ici après import dans la bibliothèque.
         </p>
       </div>
 
@@ -115,20 +116,20 @@ export function HomepageItemForm({
           className={labelClass}
           htmlFor={`${item?.id ?? "new"}-placeholder`}
         >
-          Image label / fallback
+          Libellé image / fallback
         </label>
         <input
           id={`${item?.id ?? "new"}-placeholder`}
           name="placeholderLabel"
           defaultValue={item?.placeholder_label ?? ""}
           className={inputClass}
-          placeholder="Campaign portrait in soft tailoring"
+          placeholder="Portrait campagne en activewear"
         />
       </div>
 
       <div>
         <label className={labelClass} htmlFor={`${item?.id ?? "new"}-title`}>
-          Title override
+          Titre personnalisé
         </label>
         <input
           id={`${item?.id ?? "new"}-title`}
@@ -140,7 +141,7 @@ export function HomepageItemForm({
 
       <div>
         <label className={labelClass} htmlFor={`${item?.id ?? "new"}-cta-label`}>
-          CTA label
+          Libellé CTA
         </label>
         <input
           id={`${item?.id ?? "new"}-cta-label`}
@@ -152,7 +153,7 @@ export function HomepageItemForm({
 
       <div className="lg:col-span-2">
         <label className={labelClass} htmlFor={`${item?.id ?? "new"}-body`}>
-          Supporting copy
+          Texte
         </label>
         <textarea
           id={`${item?.id ?? "new"}-body`}
@@ -164,7 +165,7 @@ export function HomepageItemForm({
 
       <div>
         <label className={labelClass} htmlFor={`${item?.id ?? "new"}-cta-href`}>
-          CTA path
+          Lien CTA
         </label>
         <input
           id={`${item?.id ?? "new"}-cta-href`}
@@ -191,13 +192,13 @@ export function HomepageItemForm({
               type="submit"
               formAction={deleteHomepageItemAction}
               variant="secondary"
-              loadingLabel="Deleting item..."
+              loadingLabel="Suppression..."
             >
-              Delete
+              Supprimer
             </Button>
           )}
-          <Button type="submit" loadingLabel={item ? "Saving item..." : "Adding item..."}>
-            {item ? "Save item" : "Add item"}
+          <Button type="submit" loadingLabel={item ? "Enregistrement..." : "Ajout..."}>
+            {item ? "Enregistrer" : "Ajouter"}
           </Button>
         </div>
       </div>

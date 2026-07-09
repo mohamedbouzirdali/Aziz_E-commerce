@@ -55,7 +55,7 @@ export function MediaUploader() {
     ) {
       setIsError(true);
       setMessage(
-        "Choose an AVIF, JPEG, PNG, or WebP under 10 MiB and add meaningful alt text.",
+        "Choisissez une image AVIF, JPEG, PNG ou WebP de moins de 10 Mio avec un texte alternatif clair.",
       );
       return;
     }
@@ -70,7 +70,7 @@ export function MediaUploader() {
     if (userError || !user) {
       setPending(false);
       setIsError(true);
-      setMessage("Your session expired. Sign in again before uploading.");
+      setMessage("Votre session a expiré. Reconnectez-vous avant d’importer une image.");
       return;
     }
 
@@ -89,7 +89,7 @@ export function MediaUploader() {
     if (uploadError) {
       setPending(false);
       setIsError(true);
-      setMessage("The image could not be uploaded. Check your access and retry.");
+      setMessage("L’image n’a pas pu être importée. Vérifiez vos droits puis réessayez.");
       return;
     }
 
@@ -112,7 +112,7 @@ export function MediaUploader() {
 
     formRef.current?.reset();
     setPending(false);
-    setMessage("Image uploaded and registered.");
+    setMessage("Image importée et enregistrée.");
     router.refresh();
   }
 
@@ -123,13 +123,21 @@ export function MediaUploader() {
       className="border border-border bg-white p-6 sm:p-8"
       aria-busy={pending}
     >
+      <div className="mb-6 border-b border-border pb-5">
+        <p className="eyebrow">Importer une image</p>
+        <h2 className="mt-3 font-serif text-3xl">Ajouter un visuel</h2>
+        <p className="mt-3 max-w-2xl text-xs leading-6 text-charcoal">
+          Ajoutez une image une seule fois, puis réutilisez-la sur l’accueil,
+          les produits ou les coffrets.
+        </p>
+      </div>
       <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr_auto] lg:items-end">
         <div>
           <label
             htmlFor="media-file"
             className="text-[9px] font-semibold uppercase tracking-[0.14em]"
           >
-            Image file
+            Fichier image
           </label>
           <input
             id="media-file"
@@ -146,7 +154,7 @@ export function MediaUploader() {
             htmlFor="media-alt"
             className="text-[9px] font-semibold uppercase tracking-[0.14em]"
           >
-            Accessible alt text
+            Texte alternatif
           </label>
           <input
             id="media-alt"
@@ -154,30 +162,30 @@ export function MediaUploader() {
             required
             minLength={3}
             disabled={pending}
-            placeholder="Woman wearing a structured black blazer"
+            placeholder="Femme portant un ensemble actif sage"
             className="mt-2 min-h-12 w-full border border-border px-4 text-sm outline-none focus:border-black"
           />
         </div>
         <Button
           type="submit"
           loading={pending}
-          loadingLabel="Uploading"
+          loadingLabel="Import en cours"
           className="w-full lg:w-auto"
         >
-          Upload image
+          Importer
         </Button>
       </div>
 
       <div className="mt-5 min-h-5" aria-live="polite">
         {pending ? (
-          <InlineLoader label="Preparing asset" size="sm" />
+          <InlineLoader label="Préparation de l’image" size="sm" />
         ) : message ? (
           <p className={`text-xs ${isError ? "text-red-800" : "text-charcoal"}`}>
             {message}
           </p>
         ) : (
           <p className="text-xs text-charcoal">
-            Maximum 10 MiB. Alt text is required before the asset can be used.
+            Maximum 10 Mio. Le texte alternatif est requis avant utilisation.
           </p>
         )}
       </div>

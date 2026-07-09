@@ -3,17 +3,17 @@ import { TaxonomyManager } from "@/components/admin/taxonomy-manager";
 import { getAuthContext, requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Categories" };
+export const metadata: Metadata = { title: "Catégories" };
 
 const notices: Record<string, string> = {
-  created: "Category created.",
-  updated: "Category updated.",
-  deleted: "Category deleted.",
-  "validation-failed": "Review the name, slug, and position.",
-  "slug-exists": "That category slug already exists.",
-  "save-failed": "The category could not be saved.",
-  "delete-failed": "The category could not be deleted.",
-  "in-use": "Move products out of this category before deleting it.",
+  created: "Catégorie créée.",
+  updated: "Catégorie mise à jour.",
+  deleted: "Catégorie supprimée.",
+  "validation-failed": "Vérifiez le nom, le slug et la position.",
+  "slug-exists": "Ce slug de catégorie existe déjà.",
+  "save-failed": "La catégorie n’a pas pu être enregistrée.",
+  "delete-failed": "La catégorie n’a pas pu être supprimée.",
+  "in-use": "Déplacez les produits de cette catégorie avant suppression.",
 };
 
 export default async function AdminCategoriesPage({
@@ -33,13 +33,13 @@ export default async function AdminCategoriesPage({
   return (
     <div>
       <header className="border-b border-border pb-8">
-        <p className="eyebrow">Discovery</p>
+        <p className="eyebrow">Découverte</p>
         <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
-          Categories
+          Catégories
         </h1>
         <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-          Control the primary browsing paths customers use to understand and
-          compare the catalog.
+          Gérez les chemins principaux qui aident les clientes à parcourir le
+          catalogue.
         </p>
       </header>
       {params.notice && notices[params.notice] && (
@@ -50,7 +50,7 @@ export default async function AdminCategoriesPage({
       <div className="mt-8">
         {error ? (
           <p className="border border-red-900/20 bg-red-50 p-5 text-sm text-red-900">
-            Categories are unavailable until the hosted migration is applied.
+            Les catégories sont indisponibles pour le moment.
           </p>
         ) : (
           <TaxonomyManager

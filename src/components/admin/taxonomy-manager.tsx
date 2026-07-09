@@ -27,12 +27,13 @@ export function TaxonomyManager({
   rows: TaxonomyRow[];
   canDelete: boolean;
 }) {
-  const singularLabel = kind === "category" ? "Category" : "Collection";
+  const singularLabel = kind === "category" ? "Catégorie" : "Collection";
+  const emptyLabel = kind === "category" ? "Aucune catégorie" : "Aucune collection";
 
   return (
     <div className="space-y-8">
       <section className="border border-border bg-white p-6">
-        <p className="eyebrow">Create {kind}</p>
+        <p className="eyebrow">Créer une {singularLabel.toLowerCase()}</p>
         <form
           action={saveTaxonomyAction}
           className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1.5fr_100px_auto]"
@@ -40,7 +41,7 @@ export function TaxonomyManager({
           <input type="hidden" name="kind" value={kind} />
           <div>
             <label className={labelClass} htmlFor={`new-${kind}-name`}>
-              Name
+              Nom
             </label>
             <input
               id={`new-${kind}-name`}
@@ -96,7 +97,7 @@ export function TaxonomyManager({
               />
               Active
             </label>
-            <Button type="submit">Create</Button>
+            <Button type="submit">Créer</Button>
           </div>
         </form>
       </section>
@@ -112,7 +113,7 @@ export function TaxonomyManager({
               <input type="hidden" name="id" value={row.id} />
               <div>
                 <label className={labelClass} htmlFor={`${row.id}-name`}>
-                  Name
+                  Nom
                 </label>
                 <input
                   id={`${row.id}-name`}
@@ -172,7 +173,7 @@ export function TaxonomyManager({
                   Active
                 </label>
                 <Button type="submit" variant="secondary">
-                  Save
+                  Enregistrer
                 </Button>
               </div>
             </form>
@@ -188,7 +189,7 @@ export function TaxonomyManager({
                   type="submit"
                   className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-800 underline decoration-red-800/30 underline-offset-4"
                 >
-                  Delete unused {singularLabel.toLowerCase()}
+                  Supprimer cette {singularLabel.toLowerCase()}
                 </button>
               </form>
             )}
@@ -197,7 +198,7 @@ export function TaxonomyManager({
 
         {!rows.length && (
           <div className="border border-border bg-white p-10 text-center">
-            <p className="font-serif text-3xl">No {kind}s yet</p>
+            <p className="font-serif text-3xl">{emptyLabel}</p>
           </div>
         )}
       </section>

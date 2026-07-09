@@ -3,7 +3,7 @@ import { ProductForm } from "@/components/admin/product-form";
 import { requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "New Product" };
+export const metadata: Metadata = { title: "Nouveau produit" };
 
 export default async function NewProductPage() {
   await requireStaff();
@@ -34,13 +34,13 @@ export default async function NewProductPage() {
   return (
     <div>
       <header className="border-b border-border pb-8">
-        <p className="eyebrow">Catalog · New record</p>
+        <p className="eyebrow">Catalogue · Nouvelle fiche</p>
         <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
-          Create product
+          Nouveau produit
         </h1>
         <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-          Start as a draft, define its sellable combinations, then publish when
-          product content and imagery are ready.
+          Créez la fiche en brouillon, définissez les variantes, puis publiez
+          lorsque les textes et images sont prêts.
         </p>
       </header>
       <div className="mt-8">

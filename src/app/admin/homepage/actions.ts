@@ -104,7 +104,7 @@ export async function replaceHomepageItemImageAction(
     .single();
 
   if (mediaError || !media) {
-    return { ok: false, message: "The uploaded image could not be registered." };
+    return { ok: false, message: "L’image importée n’a pas pu être enregistrée." };
   }
 
   const { error: updateError } = await supabase
@@ -122,7 +122,7 @@ export async function replaceHomepageItemImageAction(
       supabase.from("media_assets").delete().eq("id", media.id),
       supabase.storage.from("catalog-media").remove([input.objectPath]),
     ]);
-    return { ok: false, message: "The homepage placement could not be updated." };
+    return { ok: false, message: "L’emplacement d’accueil n’a pas pu être mis à jour." };
   }
 
   if (item.media_asset_id) {
@@ -179,7 +179,7 @@ export async function updateHomepageSectionInlineAction(
     .eq("id", input.id);
 
   if (error) {
-    return { ok: false, message: "The section could not be saved." };
+    return { ok: false, message: "La section n’a pas pu être enregistrée." };
   }
 
   revalidateHomepage(input.id);
@@ -198,7 +198,7 @@ export async function updateHomepageProductSelectionInlineAction(
     productIds.length > 8 ||
     productIds.some((id) => !/^[0-9a-f-]{36}$/i.test(id))
   ) {
-    return { ok: false, message: "Choose between 1 and 8 valid products." };
+    return { ok: false, message: "Choisissez entre 1 et 8 produits valides." };
   }
 
   const supabase = await createClient();
@@ -228,7 +228,7 @@ export async function updateHomepageProductSelectionInlineAction(
     .eq("section_id", input.sectionId);
 
   if (deleteError) {
-    return { ok: false, message: "The current product selection could not be cleared." };
+    return { ok: false, message: "La sélection actuelle n’a pas pu être vidée." };
   }
 
   const { error: insertError } = await supabase
@@ -243,7 +243,7 @@ export async function updateHomepageProductSelectionInlineAction(
     );
 
   if (insertError) {
-    return { ok: false, message: "The selected products could not be saved." };
+    return { ok: false, message: "Les produits sélectionnés n’ont pas pu être enregistrés." };
   }
 
   revalidateHomepage(input.sectionId);

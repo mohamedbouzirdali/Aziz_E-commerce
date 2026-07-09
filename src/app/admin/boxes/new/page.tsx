@@ -3,7 +3,7 @@ import { BoxForm } from "@/components/admin/box-form";
 import { requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "New Box" };
+export const metadata: Metadata = { title: "Nouveau coffret" };
 
 export default async function NewBoxPage() {
   await requireStaff();
@@ -17,13 +17,13 @@ export default async function NewBoxPage() {
   return (
     <div>
       <header className="border-b border-border pb-8">
-        <p className="eyebrow">Boxes · New record</p>
+        <p className="eyebrow">Coffrets · Nouvelle fiche</p>
         <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
-          Create box
+          Nouveau coffret
         </h1>
         <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-          Assemble a complete direction from existing products and publish it
-          only when pricing and content are ready.
+          Assemblez une sélection complète à partir des produits existants,
+          puis publiez-la lorsque le prix et le contenu sont prêts.
         </p>
       </header>
       <div className="mt-8">

@@ -56,11 +56,11 @@ export async function saveProductAction(
   }
 
   if (!colorCodes.length) {
-    fieldErrors.colorCodes = "Choose at least one color.";
+    fieldErrors.colorCodes = "Choisissez au moins une couleur.";
   }
 
   if (!sizeCodes.length) {
-    fieldErrors.sizeCodes = "Choose at least one size.";
+    fieldErrors.sizeCodes = "Choisissez au moins une taille.";
   }
 
   if (Object.keys(fieldErrors).length) {
@@ -107,7 +107,7 @@ export async function saveProductAction(
       status: "error",
       message: duplicateSlug
         ? "That product slug is already in use."
-        : "The product could not be saved. Review the fields and try again.",
+        : "Le produit n’a pas pu être enregistré. Vérifiez les champs puis réessayez.",
     };
   }
 

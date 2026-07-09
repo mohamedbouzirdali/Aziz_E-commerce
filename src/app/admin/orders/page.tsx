@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 import { AdminSectionPage } from "@/components/admin/admin-section-page";
 
-export const metadata: Metadata = { title: "Orders" };
+export const metadata: Metadata = { title: "Commandes" };
 
 export default function AdminOrdersPage() {
   return (
     <AdminSectionPage
-      eyebrow="Commerce"
-      title="Orders"
-      description="The operational home for future checkout, payment, fulfillment, return, and customer-service workflows."
+      eyebrow="Commerce · Bientôt"
+      title="Commandes"
+      description="Cette section regroupera plus tard paiement, préparation, retours et support client."
       capabilities={[
-        "Review immutable order snapshots",
-        "Track payment and fulfillment state",
-        "Manage returns without rewriting history",
-        "Search by order number and customer",
+        "Consulter les commandes validées",
+        "Suivre paiement et préparation",
+        "Gérer les retours sans modifier l’historique",
+        "Rechercher par numéro de commande ou cliente",
       ]}
-      note="Order persistence is intentionally deferred until cart and checkout contracts are finalized."
+      note="Les commandes sont différées tant que le panier persistant et le paiement ne sont pas finalisés."
     />
   );
 }

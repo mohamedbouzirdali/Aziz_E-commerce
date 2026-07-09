@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Edit Product" };
+export const metadata: Metadata = { title: "Modifier le produit" };
 
 export default async function EditProductPage({
   params,
@@ -54,13 +54,13 @@ export default async function EditProductPage({
     <div>
       <header className="flex flex-col gap-6 border-b border-border pb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="eyebrow">Catalog · Product editor</p>
+          <p className="eyebrow">Catalogue · Éditeur produit</p>
           <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
             {product.name}
           </h1>
           <p className="mt-5 text-sm text-charcoal">
-            Last updated{" "}
-            {new Intl.DateTimeFormat("en", {
+            Dernière mise à jour{" "}
+            {new Intl.DateTimeFormat("fr-FR", {
               dateStyle: "medium",
               timeStyle: "short",
             }).format(new Date(product.updated_at))}
@@ -70,7 +70,7 @@ export default async function EditProductPage({
           <form action={archiveProductAction}>
             <input type="hidden" name="id" value={product.id} />
             <Button type="submit" variant="secondary">
-              Archive product
+              Archiver le produit
             </Button>
           </form>
         )}
@@ -78,12 +78,12 @@ export default async function EditProductPage({
 
       {query.saved === "1" && (
         <p className="mt-6 border border-black/15 bg-white px-4 py-3 text-xs">
-          Product saved successfully.
+          Produit enregistré.
         </p>
       )}
       {query.notice === "archive-failed" && (
         <p className="mt-6 border border-red-900/20 bg-red-50 px-4 py-3 text-xs text-red-900">
-          The product could not be archived.
+          Le produit n’a pas pu être archivé.
         </p>
       )}
 

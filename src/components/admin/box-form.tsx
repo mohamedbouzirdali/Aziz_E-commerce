@@ -60,11 +60,11 @@ export function BoxForm({
       )}
 
       <section className="border border-border bg-white p-6 sm:p-8">
-        <p className="eyebrow">Box identity</p>
+        <p className="eyebrow">Identité du coffret</p>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div>
             <label className={labelClass} htmlFor="box-name">
-              Name
+              Nom
             </label>
             <input
               id="box-name"
@@ -77,7 +77,7 @@ export function BoxForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="box-slug">
-              URL slug
+              Slug URL
             </label>
             <input
               id="box-slug"
@@ -104,7 +104,7 @@ export function BoxForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="box-status">
-              Status
+              Statut
             </label>
             <select
               id="box-status"
@@ -112,9 +112,9 @@ export function BoxForm({
               defaultValue={box?.status ?? "draft"}
               className={inputClass}
             >
-              <option value="draft">Draft</option>
-              <option value="active">Active</option>
-              <option value="archived">Archived</option>
+              <option value="draft">Brouillon</option>
+              <option value="active">Publié</option>
+              <option value="archived">Archivé</option>
             </select>
           </div>
           <div className="md:col-span-2">
@@ -132,7 +132,7 @@ export function BoxForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="box-placeholder">
-              Image placeholder label
+              Libellé image provisoire
             </label>
             <input
               id="box-placeholder"
@@ -143,7 +143,7 @@ export function BoxForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="box-position">
-              Display position
+              Position d’affichage
             </label>
             <input
               id="box-position"
@@ -161,11 +161,11 @@ export function BoxForm({
       </section>
 
       <section className="border border-border bg-white p-6 sm:p-8">
-        <p className="eyebrow">Pricing</p>
+        <p className="eyebrow">Prix</p>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div>
             <label className={labelClass} htmlFor="box-individual-total">
-              Individual total in TND
+              Total individuel en TND
             </label>
             <input
               id="box-individual-total"
@@ -181,7 +181,7 @@ export function BoxForm({
           </div>
           <div>
             <label className={labelClass} htmlFor="box-price">
-              Box price in TND
+              Prix coffret en TND
             </label>
             <input
               id="box-price"
@@ -199,7 +199,7 @@ export function BoxForm({
       </section>
 
       <section className="border border-border bg-white p-6 sm:p-8">
-        <p className="eyebrow">Included products</p>
+        <p className="eyebrow">Produits inclus</p>
         <div className="mt-6 grid gap-px border border-border bg-border md:grid-cols-2">
           {products.map((product) => (
             <label
@@ -232,15 +232,15 @@ export function BoxForm({
 
       <div className="sticky bottom-4 z-10 flex flex-col gap-3 border border-border bg-white/95 p-4 shadow-[0_12px_35px_rgba(17,17,17,0.1)] backdrop-blur sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-5 text-charcoal">
-          Product membership and pricing are saved together.
+          Les produits inclus et le prix sont enregistrés ensemble.
         </p>
         <Button
           type="submit"
           loading={pending}
-          loadingLabel="Saving box"
+          loadingLabel="Enregistrement"
           className="w-full sm:w-auto"
         >
-          {box ? "Save box" : "Create box"}
+          {box ? "Enregistrer le coffret" : "Créer le coffret"}
         </Button>
       </div>
     </form>

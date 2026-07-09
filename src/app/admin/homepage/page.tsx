@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { requireStaff } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata: Metadata = { title: "Homepage" };
+export const metadata: Metadata = { title: "Accueil du site" };
 
 const inputClass =
   "mt-2 min-h-11 w-full border border-border bg-white px-3 text-sm outline-none transition-colors focus:border-black";
@@ -16,10 +16,10 @@ const labelClass =
   "text-[9px] font-semibold uppercase tracking-[0.14em] text-charcoal";
 
 const notices: Record<string, string> = {
-  "section-saved": "Section settings saved.",
-  "section-moved": "Section order updated.",
-  "section-save-failed": "The section could not be saved.",
-  "move-failed": "The section could not be moved.",
+  "section-saved": "Section enregistrée.",
+  "section-moved": "Ordre des sections mis à jour.",
+  "section-save-failed": "La section n’a pas pu être enregistrée.",
+  "move-failed": "La section n’a pas pu être déplacée.",
 };
 
 export default async function AdminHomepagePage({
@@ -38,14 +38,13 @@ export default async function AdminHomepagePage({
   return (
     <div>
       <header className="border-b border-border pb-8">
-        <p className="eyebrow">Editorial storefront</p>
+        <p className="eyebrow">Accueil éditorial</p>
         <h1 className="mt-4 font-serif text-5xl leading-none sm:text-6xl">
-          Homepage
+          Accueil du site
         </h1>
         <p className="mt-5 max-w-2xl text-sm leading-7 text-charcoal">
-          Manage the fixed storefront structure without duplicating product,
-          box, or media records. Reordering is transactional and visibility is
-          enforced by database policy.
+          Gérez les sections visibles sans dupliquer les produits, coffrets ou
+          images. Les changements restent protégés par les droits admin.
         </p>
       </header>
 
@@ -58,45 +57,45 @@ export default async function AdminHomepagePage({
       <section className="mt-8 grid gap-px border border-border bg-border lg:grid-cols-3">
         <div className="bg-white p-5 sm:p-6">
           <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
-            Fast image edits
+            Modification rapide
           </p>
-          <h2 className="mt-3 font-serif text-3xl">Edit on the homepage</h2>
+          <h2 className="mt-3 font-serif text-3xl">Modifier depuis la page</h2>
           <p className="mt-3 text-xs leading-6 text-charcoal">
-            Open the public homepage while signed in as admin. Image placements
-            show an edit button directly on top of the picture.
+            Ouvrez l’accueil en étant connectée admin. Les sections affichent
+            un bouton de modification directement sur la page.
           </p>
           <Button href="/" className="mt-5 w-full justify-center">
-            Open storefront editor
+            Ouvrir l’éditeur public
           </Button>
         </div>
         <div className="bg-white p-5 sm:p-6">
           <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
-            Upload images
+            Images
           </p>
-          <h2 className="mt-3 font-serif text-3xl">Media library</h2>
+          <h2 className="mt-3 font-serif text-3xl">Bibliothèque</h2>
           <p className="mt-3 text-xs leading-6 text-charcoal">
-            Upload a new photo once, add alt text, then reuse it in homepage
-            sections, products, or boxes.
+            Importez une photo une fois, ajoutez son texte alternatif, puis
+            réutilisez-la dans les sections, produits ou coffrets.
           </p>
           <Button href="/admin/media" variant="secondary" className="mt-5 w-full justify-center">
-            Upload or manage photos
+            Importer ou gérer
           </Button>
         </div>
         <div className="bg-off-white p-5 sm:p-6">
           <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
-            Section structure
+            Structure
           </p>
-          <h2 className="mt-3 font-serif text-3xl">Pick what appears</h2>
+          <h2 className="mt-3 font-serif text-3xl">Choisir le contenu</h2>
           <p className="mt-3 text-xs leading-6 text-charcoal">
-            Use the section cards below to change copy, reorder blocks, and
-            choose which product, box, or media asset each placement uses.
+            Utilisez les cartes ci-dessous pour changer les textes, l’ordre et
+            les éléments affichés.
           </p>
         </div>
       </section>
 
       {error ? (
         <p className="mt-8 border border-red-900/20 bg-red-50 p-5 text-sm text-red-900">
-          Homepage content is unavailable until the hosted migration is applied.
+          Le contenu de l’accueil est indisponible pour le moment.
         </p>
       ) : (
         <div className="mt-8 space-y-5">
@@ -120,7 +119,7 @@ export default async function AdminHomepagePage({
                       {section.homepage_section_items[0]?.count ?? 0} items
                     </span>
                     <span className="border border-border bg-off-white px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.14em]">
-                      {section.is_visible ? "Visible" : "Hidden"}
+                      {section.is_visible ? "Visible" : "Masquée"}
                     </span>
                     <span className="border border-border bg-off-white px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.14em]">
                       {section.theme.replace("_", " ")}
@@ -137,7 +136,7 @@ export default async function AdminHomepagePage({
                       disabled={index === 0}
                       aria-label={`Move ${section.section_key} up`}
                     >
-                      Up
+                      Monter
                     </Button>
                   </form>
                   <form action={moveHomepageSectionAction}>
@@ -149,18 +148,18 @@ export default async function AdminHomepagePage({
                       disabled={index === sections.length - 1}
                       aria-label={`Move ${section.section_key} down`}
                     >
-                      Down
+                      Descendre
                     </Button>
                   </form>
                   <Button href={`/admin/homepage/${section.id}`}>
-                    Edit items
+                    Modifier les éléments
                   </Button>
                 </div>
               </div>
 
               <details className="border-t border-border">
                 <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 text-[10px] font-semibold uppercase tracking-[0.16em] [&::-webkit-details-marker]:hidden">
-                  Section copy and visibility
+                  Texte et visibilité
                   <span aria-hidden className="text-base">+</span>
                 </summary>
                 <form
@@ -170,7 +169,7 @@ export default async function AdminHomepagePage({
                   <input type="hidden" name="id" value={section.id} />
                   <div>
                     <label className={labelClass} htmlFor={`${section.id}-eyebrow`}>
-                      Eyebrow
+                      Petit libellé
                     </label>
                     <input
                       id={`${section.id}-eyebrow`}
@@ -181,7 +180,7 @@ export default async function AdminHomepagePage({
                   </div>
                   <div>
                     <label className={labelClass} htmlFor={`${section.id}-heading`}>
-                      Heading
+                      Titre
                     </label>
                     <input
                       id={`${section.id}-heading`}
@@ -192,7 +191,7 @@ export default async function AdminHomepagePage({
                   </div>
                   <div className="lg:col-span-2">
                     <label className={labelClass} htmlFor={`${section.id}-body`}>
-                      Supporting copy
+                      Texte
                     </label>
                     <textarea
                       id={`${section.id}-body`}
@@ -203,7 +202,7 @@ export default async function AdminHomepagePage({
                   </div>
                   <div>
                     <label className={labelClass} htmlFor={`${section.id}-theme`}>
-                      Theme
+                      Thème
                     </label>
                     <select
                       id={`${section.id}-theme`}
@@ -211,9 +210,9 @@ export default async function AdminHomepagePage({
                       defaultValue={section.theme}
                       className={inputClass}
                     >
-                      <option value="light">Light</option>
-                      <option value="off_white">Off white</option>
-                      <option value="dark">Dark</option>
+                      <option value="light">Clair</option>
+                      <option value="off_white">Ivoire</option>
+                      <option value="dark">Sombre</option>
                     </select>
                   </div>
                   <div className="flex flex-wrap items-end justify-between gap-4">
@@ -224,10 +223,10 @@ export default async function AdminHomepagePage({
                         defaultChecked={section.is_visible}
                         className="size-4 accent-black"
                       />
-                      Visible on storefront
+                      Visible sur le site
                     </label>
-                    <Button type="submit" variant="secondary" loadingLabel="Saving section...">
-                      Save section
+                    <Button type="submit" variant="secondary" loadingLabel="Enregistrement...">
+                      Enregistrer
                     </Button>
                   </div>
                 </form>
@@ -238,9 +237,9 @@ export default async function AdminHomepagePage({
       )}
 
       <footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6 text-xs text-charcoal">
-        <p>Section keys and types are intentionally fixed.</p>
+        <p>Les clés de sections sont fixes pour protéger la mise en page.</p>
         <Link href="/" className="link-underline font-semibold text-black">
-          View storefront
+          Voir le site
         </Link>
       </footer>
     </div>
