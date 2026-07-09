@@ -343,8 +343,8 @@ storefront route is verified against hosted data.
 - Clarified homepage placement forms with an explicit media-library upload link
   and guidance for choosing media versus products or boxes
 - Validation: `npm run lint`, `npm run typecheck`, `npm run build`
-- Commit: current commit containing this entry
-- Production: pending deployment in this pass
+- Commit: `8299f40`
+- Production: pushed to `main`; Vercel deployment not verified in this pass
 
 ### 2026-06-23 — Deterministic mobile header layout
 
