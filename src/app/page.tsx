@@ -19,6 +19,7 @@ import {
   type HomepageContentItem,
   type HomepageContentSection,
 } from "@/lib/homepage/content";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "evoflex | Sport et lifestyle premium",
@@ -180,11 +181,31 @@ function communityGalleryItems(
   });
 }
 
+async function getHomepageAdminProductChoices(isAdmin: boolean) {
+  if (!isAdmin) return [];
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("id, slug, name, status")
+      .neq("status", "archived")
+      .order("name");
+
+    if (error) return [];
+    return data ?? [];
+  } catch {
+    return [];
+  }
+}
+
 export default async function HomePage() {
   const [cmsSections, auth] = await Promise.all([
     getHomepageContent(),
     getAuthContext(),
   ]);
+  const isAdmin = auth?.roles.includes("admin") ?? false;
+  const adminProductChoices = await getHomepageAdminProductChoices(isAdmin);
   const sectionMap = new Map(
     (cmsSections ?? []).map((section) => [section.section_key, section]),
   );
@@ -197,9 +218,16 @@ export default async function HomePage() {
       {
         id: section.id,
         sectionKey: section.section_key,
+        type: section.section_type,
         eyebrow: section.eyebrow ?? "",
         heading: section.heading ?? "",
         body: section.body ?? "",
+        imageItemId:
+          section.items.find((item) => !item.product_id && !item.box_id)?.id ??
+          null,
+        selectedProductIds: section.items
+          .map((item) => item.product_id)
+          .filter((id): id is string => Boolean(id)),
       },
     ]),
   );
@@ -211,11 +239,15 @@ export default async function HomePage() {
     sectionMap.get("curated-edits") ?? sectionMap.get("categories");
   const newsletterSection = sectionMap.get("newsletter");
 
+  const heroItem = heroSection?.items[0];
   const lifestyleItem = lifestyleSection?.items[0];
   const heroImages: EditorialHeroImage[] = [
     {
-      label: "Campagne vestiaire sport premium",
-      src: heroFallbackImage,
+      label:
+        heroItem?.media?.altText ||
+        heroItem?.placeholder_label ||
+        "Campagne vestiaire sport premium",
+      src: heroItem?.media?.url || heroFallbackImage,
     },
   ];
 
@@ -224,9 +256,10 @@ export default async function HomePage() {
 
   return (
     <AdminStorefrontControlsProvider
-      initialIsAdmin={auth?.roles.includes("admin") ?? false}
+      initialIsAdmin={isAdmin}
       initialSectionIds={sectionIds}
       initialSections={editableSections}
+      productChoices={adminProductChoices}
     >
       <div className="overflow-x-clip bg-[#fbf8f2] text-[#1e1e1e]">
         <div className="relative">

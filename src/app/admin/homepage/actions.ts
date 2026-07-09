@@ -30,6 +30,11 @@ type UpdateHomepageSectionInlineInput = {
   body: string;
 };
 
+type UpdateHomepageProductSelectionInput = {
+  sectionId: string;
+  productIds: string[];
+};
+
 function value(formData: FormData, key: string) {
   const entry = formData.get(key);
   return typeof entry === "string" ? entry.trim() : "";
@@ -178,6 +183,70 @@ export async function updateHomepageSectionInlineAction(
   }
 
   revalidateHomepage(input.id);
+  return { ok: true };
+}
+
+export async function updateHomepageProductSelectionInlineAction(
+  input: UpdateHomepageProductSelectionInput,
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  await requireStaff();
+  const productIds = Array.from(new Set(input.productIds));
+
+  if (
+    !/^[0-9a-f-]{36}$/i.test(input.sectionId) ||
+    productIds.length < 1 ||
+    productIds.length > 8 ||
+    productIds.some((id) => !/^[0-9a-f-]{36}$/i.test(id))
+  ) {
+    return { ok: false, message: "Choose between 1 and 8 valid products." };
+  }
+
+  const supabase = await createClient();
+  const { data: section, error: sectionError } = await supabase
+    .from("homepage_sections")
+    .select("id, section_type")
+    .eq("id", input.sectionId)
+    .maybeSingle();
+
+  if (sectionError || !section || section.section_type !== "product_grid") {
+    return { ok: false, message: "This section cannot display products." };
+  }
+
+  const { data: existingProducts, error: productsError } = await supabase
+    .from("products")
+    .select("id")
+    .in("id", productIds)
+    .neq("status", "archived");
+
+  if (productsError || (existingProducts ?? []).length !== productIds.length) {
+    return { ok: false, message: "One or more selected products are unavailable." };
+  }
+
+  const { error: deleteError } = await supabase
+    .from("homepage_section_items")
+    .delete()
+    .eq("section_id", input.sectionId);
+
+  if (deleteError) {
+    return { ok: false, message: "The current product selection could not be cleared." };
+  }
+
+  const { error: insertError } = await supabase
+    .from("homepage_section_items")
+    .insert(
+      productIds.map((productId, position) => ({
+        section_id: input.sectionId,
+        product_id: productId,
+        position,
+        is_visible: true,
+      })),
+    );
+
+  if (insertError) {
+    return { ok: false, message: "The selected products could not be saved." };
+  }
+
+  revalidateHomepage(input.sectionId);
   return { ok: true };
 }
 

@@ -163,7 +163,8 @@ Storefront:
 - Admin-only public homepage controls now appear on the live homepage for hero,
   featured products, lifestyle, community, and newsletter sections, with
   server-confirmed admin state passed into the client controls provider and
-  simple inline section-copy editing without leaving the homepage
+  inline section-copy editing, image replacement, and featured-product
+  selection without leaving the homepage
 - Homepage storytelling is now more image-first, with a fixed hero-then-rail
   sequence and remote fashion-image fallbacks when CMS media has not been
   replaced yet
@@ -336,6 +337,18 @@ storefront route is verified against hosted data.
 - Production: not deployed in this pass
 
 ## Execution Log
+
+### 2026-07-09 — Inline homepage image and product editing
+
+- Extended the inline homepage section editor with image upload/replacement for
+  sections that have image placements
+- Added checkbox product selection for the homepage product-grid section,
+  backed by hosted Supabase product IDs and saved directly from the homepage
+- Updated the hero image to read from the CMS media item when present so inline
+  image replacement is immediately reflected on the storefront
+- Validation: `npm run lint`, `npm run typecheck`, `npm run build`
+- Commit: current commit containing this entry
+- Production: pending deployment in this pass
 
 ### 2026-07-09 — Inline homepage section editing
 

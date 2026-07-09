@@ -15,6 +15,7 @@ import {
 import { useRouter } from "next/navigation";
 import {
   replaceHomepageItemImageAction,
+  updateHomepageProductSelectionInlineAction,
   updateHomepageSectionInlineAction,
 } from "@/app/admin/homepage/actions";
 import { InlineLoader } from "@/components/loaders";
@@ -52,20 +53,32 @@ type AdminStorefrontContextValue = {
   isAdmin: boolean;
   sectionIds: Record<string, string>;
   sections: Record<string, InlineHomepageSection>;
+  productChoices: InlineHomepageProductChoice[];
+};
+
+type InlineHomepageProductChoice = {
+  id: string;
+  slug: string;
+  name: string;
+  status: string;
 };
 
 type InlineHomepageSection = {
   id: string;
   sectionKey: string;
+  type: string;
   eyebrow: string;
   heading: string;
   body: string;
+  imageItemId: string | null;
+  selectedProductIds: string[];
 };
 
 const AdminStorefrontContext = createContext<AdminStorefrontContextValue>({
   isAdmin: false,
   sectionIds: {},
   sections: {},
+  productChoices: [],
 });
 
 export function AdminStorefrontControlsProvider({
@@ -73,17 +86,21 @@ export function AdminStorefrontControlsProvider({
   initialIsAdmin = false,
   initialSectionIds = {},
   initialSections = {},
+  productChoices: initialProductChoices = [],
 }: {
   children: ReactNode;
   initialIsAdmin?: boolean;
   initialSectionIds?: Record<string, string>;
   initialSections?: Record<string, InlineHomepageSection>;
+  productChoices?: InlineHomepageProductChoice[];
 }) {
   const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
   const [sectionIds, setSectionIds] =
     useState<Record<string, string>>(initialSectionIds);
   const [sections, setSections] =
     useState<Record<string, InlineHomepageSection>>(initialSections);
+  const [productChoices, setProductChoices] =
+    useState<InlineHomepageProductChoice[]>(initialProductChoices);
 
   useEffect(() => {
     if (initialIsAdmin && Object.keys(initialSectionIds).length > 0) return;
@@ -111,9 +128,27 @@ export function AdminStorefrontControlsProvider({
 
       const { data: sections } = await supabase
         .from("homepage_sections")
-        .select("id, section_key, eyebrow, heading, body");
+        .select("id, section_key, section_type, eyebrow, heading, body");
+      const { data: items } = await supabase
+        .from("homepage_section_items")
+        .select("id, section_id, product_id, box_id")
+        .eq("is_visible", true)
+        .order("position");
+      const { data: products } = await supabase
+        .from("products")
+        .select("id, slug, name, status")
+        .neq("status", "archived")
+        .order("name");
 
       if (!active) return;
+      const itemsBySection = new Map<string, NonNullable<typeof items>>();
+
+      (items ?? []).forEach((item) => {
+        itemsBySection.set(item.section_id, [
+          ...(itemsBySection.get(item.section_id) ?? []),
+          item,
+        ]);
+      });
 
       setIsAdmin(true);
       setSectionIds(
@@ -126,17 +161,36 @@ export function AdminStorefrontControlsProvider({
       );
       setSections(
         Object.fromEntries(
-          (sections ?? []).map((section) => [
-            section.section_key,
-            {
-              id: section.id,
-              sectionKey: section.section_key,
-              eyebrow: section.eyebrow ?? "",
-              heading: section.heading ?? "",
-              body: section.body ?? "",
-            },
-          ]),
+          (sections ?? []).map((section) => {
+            const sectionItems = itemsBySection.get(section.id) ?? [];
+
+            return [
+              section.section_key,
+              {
+                id: section.id,
+                sectionKey: section.section_key,
+                type: section.section_type,
+                eyebrow: section.eyebrow ?? "",
+                heading: section.heading ?? "",
+                body: section.body ?? "",
+                imageItemId:
+                  sectionItems.find((item) => !item.product_id && !item.box_id)
+                    ?.id ?? null,
+                selectedProductIds: sectionItems
+                  .map((item) => item.product_id)
+                  .filter((id): id is string => Boolean(id)),
+              },
+            ];
+          }),
         ),
+      );
+      setProductChoices(
+        (products ?? []).map((product) => ({
+          id: product.id,
+          slug: product.slug,
+          name: product.name,
+          status: product.status,
+        })),
       );
     }
 
@@ -148,8 +202,8 @@ export function AdminStorefrontControlsProvider({
   }, [initialIsAdmin, initialSectionIds]);
 
   const contextValue = useMemo(
-    () => ({ isAdmin, sectionIds, sections }),
-    [isAdmin, sectionIds, sections],
+    () => ({ isAdmin, sectionIds, sections, productChoices }),
+    [isAdmin, sectionIds, sections, productChoices],
   );
 
   return (
@@ -174,7 +228,7 @@ export function AdminSectionEditLink({
   sectionKey: string;
   label?: string;
 }) {
-  const { isAdmin, sections } = useContext(AdminStorefrontContext);
+  const { isAdmin, sections, productChoices } = useContext(AdminStorefrontContext);
   const section = sections[sectionKey];
   const router = useRouter();
   const reduceMotion = useReducedMotion();
@@ -182,15 +236,29 @@ export function AdminSectionEditLink({
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const close = useCallback(() => {
     if (pending) return;
     formRef.current?.reset();
     setMessage(null);
+    setPreviewUrl(null);
     setOpen(false);
   }, [pending]);
   const dialog = useDialog(open, close);
 
+  useEffect(
+    () => () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    },
+    [previewUrl],
+  );
+
   if (!isAdmin || !section) return null;
+
+  function selectPreview(file: File | undefined) {
+    setPreviewUrl(file && file.size > 0 ? URL.createObjectURL(file) : null);
+    setMessage(null);
+  }
 
   async function save(formData: FormData) {
     if (!section) return;
@@ -204,13 +272,94 @@ export function AdminSectionEditLink({
       body: String(formData.get("body") ?? "").trim(),
     });
 
-    setPending(false);
-
     if (!result.ok) {
+      setPending(false);
       setMessage(result.message);
       return;
     }
 
+    if (section.type === "product_grid") {
+      const productIds = formData
+        .getAll("productIds")
+        .filter((value): value is string => typeof value === "string");
+      const productsResult = await updateHomepageProductSelectionInlineAction({
+        sectionId: section.id,
+        productIds,
+      });
+
+      if (!productsResult.ok) {
+        setPending(false);
+        setMessage(productsResult.message);
+        return;
+      }
+    }
+
+    const file = formData.get("file");
+
+    if (section.imageItemId && file instanceof File && file.size > 0) {
+      const altText = String(formData.get("altText") ?? "").trim();
+
+      if (
+        !allowedMimeTypes.has(file.type) ||
+        file.size > maxFileSize ||
+        altText.length < 3
+      ) {
+        setPending(false);
+        setMessage(
+          "Choose an AVIF, JPEG, PNG, or WebP under 10 MiB and add meaningful alt text.",
+        );
+        return;
+      }
+
+      const supabase = createClient();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        setPending(false);
+        setMessage("Your admin session expired. Sign in again before uploading.");
+        return;
+      }
+
+      const objectPath = `catalog/${user.id}/${crypto.randomUUID()}.${
+        extensions[file.type]
+      }`;
+      const dimensions = await getImageDimensions(file);
+      const { error: uploadError } = await supabase.storage
+        .from("catalog-media")
+        .upload(objectPath, file, {
+          cacheControl: "3600",
+          contentType: file.type,
+          upsert: false,
+        });
+
+      if (uploadError) {
+        setPending(false);
+        setMessage("The image could not be uploaded. Check your access and retry.");
+        return;
+      }
+
+      const imageResult = await replaceHomepageItemImageAction({
+        itemId: section.imageItemId,
+        objectPath,
+        altText,
+        width: dimensions.width,
+        height: dimensions.height,
+        mimeType: file.type,
+        fileSizeBytes: file.size,
+      });
+
+      if (!imageResult.ok) {
+        await supabase.storage.from("catalog-media").remove([objectPath]);
+        setPending(false);
+        setMessage(imageResult.message);
+        return;
+      }
+    }
+
+    setPending(false);
     setOpen(false);
     router.refresh();
   }
@@ -322,6 +471,100 @@ export function AdminSectionEditLink({
                   />
                 </div>
 
+                {section.imageItemId && (
+                  <div className="border border-border bg-white p-4">
+                    <p className="text-[9px] font-semibold uppercase tracking-[0.14em]">
+                      Section image
+                    </p>
+                    <div className="mt-4 grid gap-4 sm:grid-cols-[0.7fr_1.3fr]">
+                      <div className="aspect-[4/5] overflow-hidden border border-border bg-off-white">
+                        {previewUrl ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={previewUrl}
+                            alt="Selected upload preview"
+                            className="size-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex size-full items-center justify-center p-5 text-center text-[9px] uppercase tracking-[0.14em] text-charcoal/55">
+                            Optional replacement
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <label
+                          htmlFor={`${section.id}-file`}
+                          className="text-[9px] font-semibold uppercase tracking-[0.14em]"
+                        >
+                          Upload photo
+                        </label>
+                        <input
+                          id={`${section.id}-file`}
+                          name="file"
+                          type="file"
+                          accept="image/avif,image/jpeg,image/png,image/webp"
+                          disabled={pending}
+                          onChange={(event) => selectPreview(event.target.files?.[0])}
+                          className="mt-2 block min-h-12 w-full border border-border bg-off-white px-3 py-2 text-xs file:mr-3 file:border-0 file:bg-black file:px-3 file:py-2 file:text-[8px] file:font-semibold file:uppercase file:tracking-[0.12em] file:text-white"
+                        />
+                        <label
+                          htmlFor={`${section.id}-alt`}
+                          className="mt-4 block text-[9px] font-semibold uppercase tracking-[0.14em]"
+                        >
+                          Alt text
+                        </label>
+                        <input
+                          id={`${section.id}-alt`}
+                          name="altText"
+                          disabled={pending}
+                          defaultValue={section.heading || section.sectionKey}
+                          className="mt-2 min-h-12 w-full border border-border bg-off-white px-4 text-sm outline-none focus:border-black"
+                        />
+                        <p className="mt-3 text-xs leading-5 text-charcoal/70">
+                          Leave empty to keep the current image. Maximum 10 MiB.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {section.type === "product_grid" && (
+                  <div className="border border-border bg-white p-4">
+                    <p className="text-[9px] font-semibold uppercase tracking-[0.14em]">
+                      Products shown in this section
+                    </p>
+                    <p className="mt-2 text-xs leading-5 text-charcoal/70">
+                      Tick the products to feature. The first four selected items
+                      are shown on the homepage.
+                    </p>
+                    <div className="mt-4 grid max-h-72 gap-2 overflow-y-auto pr-1 sm:grid-cols-2">
+                      {productChoices.map((product) => (
+                        <label
+                          key={product.id}
+                          className="flex min-h-12 cursor-pointer items-center gap-3 border border-border bg-off-white px-3 py-2 text-xs transition-colors hover:border-black"
+                        >
+                          <input
+                            type="checkbox"
+                            name="productIds"
+                            value={product.id}
+                            defaultChecked={section.selectedProductIds.includes(product.id)}
+                            disabled={pending}
+                            className="size-4 accent-black"
+                          />
+                          <span className="min-w-0">
+                            <span className="block truncate font-medium">
+                              {product.name}
+                            </span>
+                            <span className="block truncate text-[10px] uppercase tracking-[0.12em] text-charcoal/55">
+                              {product.status}
+                            </span>
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div className="min-h-6" aria-live="polite">
                   {pending ? (
                     <InlineLoader label="Saving section" size="sm" />
@@ -329,7 +572,7 @@ export function AdminSectionEditLink({
                     <p className="text-xs leading-5 text-red-800">{message}</p>
                   ) : (
                     <p className="text-xs leading-5 text-charcoal">
-                      Product choices and image uploads stay in the full homepage manager.
+                      Save applies copy, image, and product changes for this section.
                     </p>
                   )}
                 </div>
